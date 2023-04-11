@@ -1,0 +1,40 @@
+name: ronin-recon
+summary: A micro-framework and tool for performing reconnaissance.
+description: |
+  ronin-recon is a micro-framework and tool for performing reconnaissance.
+  ronin-recon uses multiple workers which process different data types
+  (IP, host, URL, etc) and produce new values. ronin-recon contains built-in
+  recon workers and supports loading additional 3rd-party workers from Ruby
+  files or 3rd-party git repositories. ronin-recon has a unique queue design
+  and uses asynchronous I/O to maximize efficiency. ronin-recon can lookup
+  IPs addresses, nameservers, mailservers, bruteforce sub-domains, port scan
+  IPs, discover services, and spider websites.
+
+license: LGPL-3.0
+authors: Postmodern
+email: postmodern.mod3@gmail.com
+homepage: https://ronin-rb.dev/
+has_yard: true
+
+metadata:
+  documentation_uri: https://ronin-rb.dev/docs/ronin-recon
+  source_code_uri:   https://github.com/ronin-rb/ronin-recon
+  bug_tracker_uri:   https://github.com/ronin-rb/ronin-recon/issues
+  changelog_uri:     https://github.com/ronin-rb/ronin-recon/blob/main/ChangeLog.md
+  rubygems_mfa_required: 'true'
+
+generated_files:
+ - man/ronin-recon.1
+
+required_ruby_version: ">= 3.0.0"
+
+dependencies:
+  async-io: ~> 1.0
+  async-dns: ~> 1.0
+  # Ronin dependencies:
+  ronin-support: ~> 1.0
+  ronin-core: ~> 0.1
+  ronin-repos: ~> 0.1
+
+development_dependencies:
+  bundler: ~> 2.0

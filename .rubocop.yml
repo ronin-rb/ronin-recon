@@ -1,0 +1,32 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.1
+
+inherit_gem:
+  rubocop-ronin: rubocop.yml
+
+#
+# ronin-recon specific exceptions
+#
+
+# Empty classes
+Lint/EmptyClass:
+  Exclude:
+    - 'lib/ronin/recon/value.rb'
+    - 'lib/ronin/recon/message/shutdown.rb'
+
+# Allow Value classes to not call super() in their initialize
+Lint/MissingSuper:
+  Exclude:
+    - 'lib/ronin/recon/values/*.rb'
+
+# Worker#initialize exists for documentation purposes
+Lint/UselessMethodDefinition:
+  Exclude:
+    - 'lib/ronin/recon/worker.rb'
+
+# until is better suited for waiting until the Engine is "empty"
+Style/WhileUntilModifier:
+  Exclude:
+    - 'lib/ronin/recon/engine.rb'

@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+root = File.expand_path(File.join(__dir__,'..'))
+if File.file?(File.join(root,'Gemfile.lock'))
+  Dir.chdir(root) do
+    require 'bundler/setup'
+  rescue LoadError => e
+    warn e.message
+    warn "Run `gem install bundler` to install Bundler"
+    exit(-1)
+  end
+end
+
+require 'ronin/recon/cli'
+Ronin::Recon::CLI.start
