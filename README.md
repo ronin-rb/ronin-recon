@@ -50,6 +50,7 @@ Arguments:
 
 Commands:
     help
+    workers
 ```
 
 ## Examples

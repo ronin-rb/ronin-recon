@@ -25,6 +25,7 @@ metadata:
 
 generated_files:
  - man/ronin-recon.1
+ - man/ronin-recon-workers.1
 
 required_ruby_version: ">= 3.0.0"
 
