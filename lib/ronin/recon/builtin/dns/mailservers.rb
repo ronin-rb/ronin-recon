@@ -31,6 +31,11 @@ module Ronin
 
           register 'dns/mailservers'
 
+          summary 'Looks up the mailservers of a domain'
+          description <<~DESC
+            Queries the mailservers (MX records) for a domain name.
+          DESC
+
           accepts Domain
 
           #

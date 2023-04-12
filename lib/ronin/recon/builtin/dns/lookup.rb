@@ -32,6 +32,12 @@ module Ronin
 
           register 'dns/lookup'
 
+          summary 'Looks up the IPs of a host-name'
+          description <<~DESC
+            Resolves the IP addresses of domains, host names, nameservers,
+            and mailservers.
+          DESC
+
           accepts Domain, Host, Nameserver, Mailserver
 
           #

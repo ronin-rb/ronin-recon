@@ -31,6 +31,11 @@ module Ronin
 
           register 'dns/nameservers'
 
+          summary 'Looks up the nameservers of a domain'
+          description <<~DESC
+            Queries the nameservers (NS records) for a domain name.
+          DESC
+
           accepts Domain
 
           #
