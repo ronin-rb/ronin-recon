@@ -24,6 +24,9 @@ require 'ronin/core/params/exceptions'
 module Ronin
   module Recon
     class CLI
+      #
+      # Helper methods for loading worker classes from within CLI commands.
+      #
       module WorkerMethods
         #
         # Loads a recon worker class.
