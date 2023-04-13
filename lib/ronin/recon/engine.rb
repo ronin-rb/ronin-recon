@@ -75,7 +75,7 @@ module Ronin
       #
       # @api public
       #
-      def initialize(workers:   Workers.registry.values,
+      def initialize(workers:   Recon.registry.values,
                      max_depth: 1,
                      logger:    Console.logger,
                      &block)

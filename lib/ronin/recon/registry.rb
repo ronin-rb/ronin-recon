@@ -22,16 +22,14 @@ require 'ronin/core/class_registry'
 require 'ronin/repos/class_dir'
 
 module Ronin
+  #
+  # Namespace for various worker classes.
+  #
   module Recon
-    #
-    # Namespace for various worker classes.
-    #
-    module Workers
-      include Core::ClassRegistry
-      include Repos::ClassDir
+    include Core::ClassRegistry
+    include Repos::ClassDir
 
-      class_dir "#{__dir__}/builtin"
-      repo_class_dir 'recon'
-    end
+    class_dir "#{__dir__}/builtin"
+    repo_class_dir 'recon'
   end
 end

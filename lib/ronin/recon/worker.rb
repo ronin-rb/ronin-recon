@@ -226,7 +226,7 @@ module Ronin
       #
       def self.register(worker_id)
         id(worker_id)
-        Workers.register(worker_id,self)
+        Recon.register(worker_id,self)
       end
 
       #
