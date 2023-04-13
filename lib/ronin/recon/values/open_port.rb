@@ -106,8 +106,6 @@ module Ronin
           [@host.to_s, @number.to_i]
         end
 
-        alias to_ary to_a
-
         #
         # Converts the open port into a String.
         #
