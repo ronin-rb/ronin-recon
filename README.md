@@ -50,7 +50,72 @@ Arguments:
 
 Commands:
     help
+    run
+    test
+    worker
     workers
+```
+
+List all available recon workers:
+
+```shell
+$ ronin-recon workers
+  dns/lookup
+  dns/mailservers
+  dns/nameservers
+  dns/reverse_lookup
+  ...
+```
+
+Print info about a specific recon worker:
+
+```shell
+$ ronin-recon worker dns/lookup
+[ dns/lookup ]
+
+  Summary: Looks up the IPs of a host-name
+  Description:
+
+    Resolves the IP addresses of domains, host names, nameservers,
+    and mailservers.
+
+  Accepts:
+
+    * domains
+    * hosts
+    * nameservers
+    * mailservers
+
+```
+
+Run the recon engine on a single domain:
+
+```shell
+$ ronin-recon run --domain example.com
+```
+
+Run the recon engine on a single host-name:
+
+```shell
+$ ronin-recon run --host www.example.com
+```
+
+Run the recon engine on a single IP address:
+
+```shell
+$ ronin-recon run --ip 1.1.1.1
+```
+
+Run the recon engine on an IP range:
+
+```shell
+$ ronin-recon run --ip-range 1.1.1.1/24
+```
+
+Run the recon engine on multiple targets:
+
+```shell
+$ ronin-recon run --domain example1.com --domain example2.com --host secret.foo.example1.com --host secret.bar.example2.com --ip-range 1.1.1.1/24
 ```
 
 ## Examples
