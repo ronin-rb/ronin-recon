@@ -147,6 +147,7 @@ end
 * [ronin-support] ~> 1.0
 * [ronin-core] ~> 0.1
 * [ronin-repos] ~> 0.1
+* [ronin-nmap] ~> 0.1
 
 ## Install
 

@@ -16,6 +16,12 @@ end
 # gem 'ronin-repos',    '~> 0.1', github: "ronin-rb/ronin-repos",
 #                                 branch: 'main'
 
+gem 'ronin-db',      '~> 0.2', github: "ronin-rb/ronin-db",
+                               branch: '0.2.0'
+
+gem 'ronin-nmap',    '~> 0.1', github: "ronin-rb/ronin-nmap",
+                               branch: 'main'
+
 group :development do
   gem 'rake'
   gem 'rubygems-tasks',   '~> 0.2'
