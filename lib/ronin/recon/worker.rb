@@ -27,6 +27,8 @@ require 'ronin/core/metadata/description'
 require 'ronin/core/metadata/references'
 require 'ronin/core/params/mixin'
 
+require 'async'
+
 module Ronin
   module Recon
     #
