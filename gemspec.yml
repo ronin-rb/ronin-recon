@@ -28,6 +28,7 @@ generated_files:
  - man/ronin-recon-workers.1
  - man/ronin-recon-worker.1
  - man/ronin-recon-test.1
+ - man/ronin-recon-run.1
 
 required_ruby_version: ">= 3.0.0"
 
