@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/cli/worker_command'
+require 'ronin/recon/cli/debug_option'
 require 'ronin/recon/cli/printing'
 
 require 'ronin/core/cli/logging'
@@ -37,6 +38,7 @@ module Ronin
         # ## Options
         #
         #     -f, --file FILE                  The recon worker file to load
+        #     -D, --debug                      Enable debugging output
         #     -d, --domain DOMAIN              The domain to test the recon worker with
         #     -H, --host HOST                  The host name to test the recon worker with
         #     -I, --ip IP                      The IP address to test the recon worker with
@@ -49,6 +51,7 @@ module Ronin
         #
         class Test < WorkerCommand
 
+          include DebugOption
           include Printing
           include Core::CLI::Logging
 

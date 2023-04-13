@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/cli/command'
+require 'ronin/recon/cli/debug_option'
 require 'ronin/recon/cli/printing'
 require 'ronin/recon/registry'
 require 'ronin/recon/engine'
@@ -38,7 +39,8 @@ module Ronin
         #
         # ## Options
         #
-        #     -D, --max-depth NUM              The maximum recon depth (Default: 1)
+        #     -D, --debug                      Enable debugging output
+        #         --max-depth NUM              The maximum recon depth (Default: 1)
         #     -d, --domain DOMAIN              The domain to start reconning
         #     -H, --host HOST                  The host name to start reconning
         #     -I, --ip IP                      The IP address to start reconning
@@ -47,13 +49,13 @@ module Ronin
         #
         class Run < Command
 
+          include DebugOption
           include Printing
           include Core::CLI::Logging
 
           usage '[options] {--domain DOMAIN | --host HOST | --ip IP | --ip-range CIDR} ...'
 
-          option :max_depth, short: '-D',
-                             value: {
+          option :max_depth, value: {
                                type:    Integer,
                                usage:   'NUM',
                                default: 1

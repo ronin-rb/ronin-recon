@@ -18,6 +18,9 @@ Loads an individual worker and tests it with an input value..
 `-f`, `--file` *FILE*
   Optionally loads the recon worker from the file.
 
+`-D`, `--debug`
+  Enables debugging output.
+
 `-d`, `--domain` *DOMAIN*
   The domain to test the recon worker with.
 
