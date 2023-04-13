@@ -24,4 +24,4 @@ Postmodern <postmodern.mod3@gmail.com>
 
 ## SEE ALSO
 
-ronin-recon-worker(1) ronin-payloads-run(1)
+ronin-recon-worker(1) ronin-recon-run(1)
