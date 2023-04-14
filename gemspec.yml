@@ -30,10 +30,12 @@ generated_files:
  - man/ronin-recon-test.1
  - man/ronin-recon-run.1
  - data/subdomains-1000.txt.gz
+ - data/directory-list-2.3.txt.gz
 
 required_ruby_version: ">= 3.0.0"
 
 dependencies:
+  thread-local: ~> 1.0
   async-io: ~> 1.0
   async-dns: ~> 1.0
   async-http: ~> 0.60

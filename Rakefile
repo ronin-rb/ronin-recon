@@ -40,3 +40,11 @@ end
 file 'data/subdomains-1000.txt.gz' => 'data/subdomains-1000.txt' do
   sh 'gzip -f data/subdomains-1000.txt'
 end
+
+file 'data/directory-list-2.3-small.txt' do
+  sh 'wget -O data/directory-list-2.3-small.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/directory-list-2.3-small.txt'
+end
+
+file 'data/directory-list-2.3-small.txt.gz' => 'data/directory-list-2.3-small.txt' do
+  sh 'gzip -f data/directory-list-2.3-small.txt'
+end
