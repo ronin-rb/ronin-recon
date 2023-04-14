@@ -61,6 +61,8 @@ module Ronin
         #
         def dns_get_addresses(host)
           @dns_resolver.addresses_for(host).map(&:to_s)
+        rescue Async::DNS::ResolutionFailure
+          return []
         end
 
         #
