@@ -22,6 +22,7 @@ require 'ronin/recon/web_worker'
 require 'ronin/recon/root'
 
 require 'wordlist'
+require 'uri'
 require 'async/queue'
 require 'async/http/internet/instance'
 
@@ -71,7 +72,9 @@ module Ronin
           Async do |task|
             task.async do
               wordlist.each do |name|
-                queue << "#{base_url}/#{name}"
+                path = "/#{URI.encode_url_component(name)}"
+
+                queue << "#{base_url}#{path}"
               end
 
               # send stop messages for each sub-task
