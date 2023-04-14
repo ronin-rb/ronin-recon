@@ -21,3 +21,4 @@
 require 'ronin/recon/builtin/dns/lookup'
 require 'ronin/recon/builtin/dns/mailservers'
 require 'ronin/recon/builtin/dns/nameservers'
+require 'ronin/recon/builtin/service_scan'
