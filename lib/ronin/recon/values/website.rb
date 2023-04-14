@@ -142,7 +142,8 @@ module Ronin
         #   The base URL value for the website.
         #
         def to_s
-          if @port
+          if ((@scheme == :https) && (@port != 443)) ||
+              ((@scheme == :http) && (@port != 80))
             "#{@scheme}://#{@host}:#{@port}"
           else
             "#{@scheme}://#{@host}"
