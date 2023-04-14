@@ -50,7 +50,7 @@ module Ronin
 
         # The optional service information.
         #
-        # @return [Software, nil] service
+        # @return [String, nil] service
         attr_reader :service
 
         #
@@ -65,7 +65,7 @@ module Ronin
         # @param [:tcp, :udp] protocol
         #   The protocol of the port.
         #
-        # @param [Software, nil] service
+        # @param [String, nil] service
         #   The optional service information.
         #
         def initialize(host,number, protocol: :tcp, service: nil)
