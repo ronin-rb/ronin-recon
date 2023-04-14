@@ -64,7 +64,11 @@ $ ronin-recon workers
   dns/mailservers
   dns/nameservers
   dns/reverse_lookup
-  ...
+  dns/subdomain_enum
+  ip_range_enum
+  service_scan
+  web/dir_enum
+  web/spider
 ```
 
 Print info about a specific recon worker:
