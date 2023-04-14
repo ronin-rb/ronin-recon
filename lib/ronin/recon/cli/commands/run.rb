@@ -24,6 +24,7 @@ require 'ronin/recon/cli/printing'
 require 'ronin/recon/registry'
 require 'ronin/recon/engine'
 
+require 'ronin/db/cli/database_options'
 require 'ronin/core/cli/logging'
 
 module Ronin
@@ -45,6 +46,7 @@ module Ronin
         #     -H, --host HOST                  The host name to start reconning
         #     -I, --ip IP                      The IP address to start reconning
         #     -R, --ip-range CIDR              The IP range to start reconning
+        #         --import                     Imports each newly discovered value into the Ronin database
         #     -h, --help                       Print help information
         #
         class Run < Command
@@ -52,6 +54,7 @@ module Ronin
           include DebugOption
           include Printing
           include Core::CLI::Logging
+          include DB::CLI::DatabaseOptions
 
           usage '[options] {--domain DOMAIN | --host HOST | --ip IP | --ip-range CIDR} ...'
 
@@ -98,6 +101,8 @@ module Ronin
                               @values << Values::IPRange.new(cidr)
                             end
 
+          option :import, desc: 'Imports each newly discovered value into the Ronin database'
+
           description 'Runs the recon engine with one or more initial values'
 
           man_page 'ronin-recon-run.1'
@@ -128,9 +133,21 @@ module Ronin
               exit(-1)
             end
 
+            if options[:import]
+              require 'ronin/db'
+              require 'ronin/recon/importer'
+              db_connect
+            end
+
             engine = Engine.run(@values, max_depth: options[:max_depth]) do |value,parent|
               print_value(value,parent)
+
+              import_value(value) if options[:import]
             end
+          end
+
+          def import_value(value)
+            Importer.import_value(value)
           end
 
         end

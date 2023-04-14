@@ -29,6 +29,9 @@ Runs the recon engine with one or more initial values.
 `-R`, `--ip-range` *CIDR*
   The IP range to start reconning.
 
+`--import`
+  Imports each newly discovered value into the Ronin database.
+
 `-h`, `--help`
   Print help information
 
