@@ -120,7 +120,7 @@ module Ronin
       #
       def self.import_service(service)
         DB::Service.transaction do
-          DB::Service.find_or_create_by(name: service)
+          DB::Service.find_or_import(service)
         end
       end
 
