@@ -26,7 +26,7 @@ module Ronin
   module Recon
     module Web
       #
-      # A recon worker that performs an nmap service scan.
+      # A recon worker that spiders a website.
       #
       class Spider < WebWorker
 
