@@ -18,6 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'ronin/recon/builtin/ip_range_enum'
 require 'ronin/recon/builtin/dns/lookup'
 require 'ronin/recon/builtin/dns/mailservers'
 require 'ronin/recon/builtin/dns/nameservers'
