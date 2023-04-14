@@ -19,6 +19,9 @@ end
 # gem 'ronin-repos',    '~> 0.1', github: "ronin-rb/ronin-repos",
 #                                 branch: 'main'
 
+gem 'ronin-db-activerecord', '~> 0.2', github: "ronin-rb/ronin-db-activerecord",
+                                       branch: '0.2.0'
+
 gem 'ronin-db',      '~> 0.2', github: "ronin-rb/ronin-db",
                                branch: '0.2.0'
 
