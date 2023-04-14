@@ -63,10 +63,12 @@ module Ronin
         xml.host.open_ports.each do |open_port|
           number   = open_port.number
           protocol = open_port.protocol
+          service  = open_port.service
 
-          yield OpenPort.new(ip,number, protocol: protocol)
+          yield OpenPort.new(ip,number, protocol: protocol,
+                                        service:  service && service.name)
 
-          if (service = open_port.service)
+          if service
             host = xml.host.to_s
 
             case service.name
