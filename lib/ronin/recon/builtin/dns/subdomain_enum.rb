@@ -26,73 +26,71 @@ require 'async/queue'
 
 module Ronin
   module Recon
-    module Workers
-      module DNS
+    module DNS
+      #
+      # Finds common subdomains of a domain using a wordlist of commong
+      # subdomains.
+      #
+      class SubdomainEnum < DNSWorker
+
+        DEFAULT_WORDLIST = File.join(ROOT,'data','subdomains-1000.txt.gz')
+
+        register 'dns/subdomain_enum'
+
+        summary 'Enumerates subdomains of a domain'
+        description <<~DESC
+          Attempts to find the subdomains of a given domain by looking up
+          host names of the domain using a wordlist of common subdomains.
+        DESC
+
+        accepts Domain
+
+        param :concurrency, Integer, default: 10,
+                                     desc:    'Sets the number of async tasks'
+
+        param :wordlist, String, desc: 'Optional subdomain wordlist to use'
+
         #
-        # Finds common subdomains of a domain using a wordlist of commong
-        # subdomains.
+        # Bruteforce resolves the subdomains of a given domain.
         #
-        class SubdomainEnum < DNSWorker
+        # @param [Values::Domain] domain
+        #   The domain to bruteforce.
+        #
+        # @yield [host]
+        #   Subdomains that have DNS records will be yielded.
+        #
+        # @yieldparam [Values::Host] host
+        #   A valid subdomain of the domain.
+        #
+        def process(domain)
+          wordlist = Wordlist.open(params[:wordlist] || DEFAULT_WORDLIST)
+          queue    = Async::LimitedQueue.new(params[:concurrency])
 
-          DEFAULT_WORDLIST = File.join(ROOT,'data','subdomains-1000.txt.gz')
-
-          register 'dns/subdomain_enum'
-
-          summary 'Enumerates subdomains of a domain'
-          description <<~DESC
-            Attempts to find the subdomains of a given domain by looking up
-            host names of the domain using a wordlist of common subdomains.
-          DESC
-
-          accepts Domain
-
-          param :concurrency, Integer, default: 10,
-                                       desc:    'Sets the number of async tasks'
-
-          param :wordlist, String, desc: 'Optional subdomain wordlist to use'
-
-          #
-          # Bruteforce resolves the subdomains of a given domain.
-          #
-          # @param [Values::Domain] domain
-          #   The domain to bruteforce.
-          #
-          # @yield [host]
-          #   Subdomains that have DNS records will be yielded.
-          #
-          # @yieldparam [Values::Host] host
-          #   A valid subdomain of the domain.
-          #
-          def process(domain)
-            wordlist = Wordlist.open(params[:wordlist] || DEFAULT_WORDLIST)
-            queue    = Async::LimitedQueue.new(params[:concurrency])
-
-            Async do |task|
-              task.async do
-                wordlist.each do |name|
-                  queue << "#{name}.#{domain.name}"
-                end
-
-                # send stop messages for each sub-task
-                params[:concurrency].times do
-                  queue << nil
-                end
+          Async do |task|
+            task.async do
+              wordlist.each do |name|
+                queue << "#{name}.#{domain.name}"
               end
 
-              # spawn the sub-tasks
+              # send stop messages for each sub-task
               params[:concurrency].times do
-                task.async do
-                  while (subdomain = queue.dequeue)
-                    if dns_get_address(subdomain)
-                      yield Host.new(subdomain)
-                    end
+                queue << nil
+              end
+            end
+
+            # spawn the sub-tasks
+            params[:concurrency].times do
+              task.async do
+                while (subdomain = queue.dequeue)
+                  if dns_get_address(subdomain)
+                    yield Host.new(subdomain)
                   end
                 end
               end
             end
           end
-
         end
+
       end
     end
   end

@@ -25,17 +25,15 @@ require 'ronin/support/network/dns'
 
 module Ronin
   module Recon
-    module Workers
-      #
-      # Base class for all DNS related workers.
-      #
-      # @api public
-      #
-      class DNSWorker < Worker
+    #
+    # Base class for all DNS related workers.
+    #
+    # @api public
+    #
+    class DNSWorker < Worker
 
-        include Mixins::DNS
+      include Mixins::DNS
 
-      end
     end
   end
 end

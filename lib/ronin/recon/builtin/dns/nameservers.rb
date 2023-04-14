@@ -22,40 +22,38 @@ require 'ronin/recon/dns_worker'
 
 module Ronin
   module Recon
-    module Workers
-      module DNS
+    module DNS
+      #
+      # Finds the nameservers associated with a domaim.
+      #
+      class Nameservers < DNSWorker
+
+        register 'dns/nameservers'
+
+        summary 'Looks up the nameservers of a domain'
+        description <<~DESC
+          Queries the nameservers (NS records) for a domain name.
+        DESC
+
+        accepts Domain
+
         #
-        # Finds the nameservers associated with a domaim.
+        # Looks up the nameservers of a given domain.
         #
-        class Nameservers < DNSWorker
-
-          register 'dns/nameservers'
-
-          summary 'Looks up the nameservers of a domain'
-          description <<~DESC
-            Queries the nameservers (NS records) for a domain name.
-          DESC
-
-          accepts Domain
-
-          #
-          # Looks up the nameservers of a given domain.
-          #
-          # @param [Values::Domain] domain
-          #   The domain value.
-          #
-          # @yield [nameserver]
-          #   The discovered nameservers will be yielded.
-          #
-          # @yieldparam [Values::Nameserver] nameserver
-          #
-          def process(domain)
-            dns_get_nameservers(domain.name).each do |nameserver|
-              yield Nameserver.new(nameserver.chomp('.'))
-            end
+        # @param [Values::Domain] domain
+        #   The domain value.
+        #
+        # @yield [nameserver]
+        #   The discovered nameservers will be yielded.
+        #
+        # @yieldparam [Values::Nameserver] nameserver
+        #
+        def process(domain)
+          dns_get_nameservers(domain.name).each do |nameserver|
+            yield Nameserver.new(nameserver.chomp('.'))
           end
-
         end
+
       end
     end
   end

@@ -22,43 +22,41 @@ require 'ronin/recon/dns_worker'
 
 module Ronin
   module Recon
-    module Workers
-      module DNS
+    module DNS
+      #
+      # Finds the mailservers for the domain.
+      #
+      class Mailservers < DNSWorker
+
+        register 'dns/mailservers'
+
+        summary 'Looks up the mailservers of a domain'
+        description <<~DESC
+          Queries the mailservers (MX records) for a domain name.
+        DESC
+
+        accepts Domain
+
         #
-        # Finds the mailservers for the domain.
+        # Finds the mailservers for the given domain.
         #
-        class Mailservers < DNSWorker
-
-          register 'dns/mailservers'
-
-          summary 'Looks up the mailservers of a domain'
-          description <<~DESC
-            Queries the mailservers (MX records) for a domain name.
-          DESC
-
-          accepts Domain
-
-          #
-          # Finds the mailservers for the given domain.
-          #
-          # @param [Values::Domain] domain
-          #   The given domain value.
-          #
-          # @yield [mailserver]
-          #   Each discovered mailserver will be yielded.
-          #
-          # @yieldparam [Values::Mailserver] mailserver
-          #   A discovered mailserver.
-          #
-          def process(domain)
-            dns_get_mailservers(domain.name).each do |mailserver|
-              unless mailserver == '.'
-                yield Mailserver.new(mailserver.chomp('.'))
-              end
+        # @param [Values::Domain] domain
+        #   The given domain value.
+        #
+        # @yield [mailserver]
+        #   Each discovered mailserver will be yielded.
+        #
+        # @yieldparam [Values::Mailserver] mailserver
+        #   A discovered mailserver.
+        #
+        def process(domain)
+          dns_get_mailservers(domain.name).each do |mailserver|
+            unless mailserver == '.'
+              yield Mailserver.new(mailserver.chomp('.'))
             end
           end
-
         end
+
       end
     end
   end
