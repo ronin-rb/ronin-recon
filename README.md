@@ -144,6 +144,8 @@ end
 ## Requirements
 
 * [Ruby] >= 3.0.0
+* [async-io] ~> 1.0
+* [async-dns] ~> 1.0
 * [ronin-support] ~> 1.0
 * [ronin-core] ~> 0.1
 * [ronin-repos] ~> 0.1
