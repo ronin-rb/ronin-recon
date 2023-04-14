@@ -22,6 +22,7 @@ require 'ronin/recon/cli/worker_command'
 require 'ronin/recon/cli/debug_option'
 require 'ronin/recon/cli/printing'
 
+require 'ronin/core/cli/options/param'
 require 'ronin/core/cli/logging'
 
 module Ronin
@@ -54,6 +55,7 @@ module Ronin
           include DebugOption
           include Printing
           include Core::CLI::Logging
+          include Core::CLI::Options::Param
 
           usage '[options] {--file FILE | NAME} {--domain DOMAIN | --host HOST | --ip IP | --ip-range CIDR}'
 
@@ -116,7 +118,7 @@ module Ronin
               exit(-1)
             end
 
-            worker_class.run(@value) do |value,parent|
+            worker_class.run(@value, params: options[:params]) do |value,parent|
               print_value(value,parent)
             end
           end
