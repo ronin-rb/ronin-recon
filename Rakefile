@@ -32,3 +32,11 @@ task :docs => :yard
 
 require 'kramdown/man/task'
 Kramdown::Man::Task.new
+
+file 'data/subdomains-1000.txt' do
+  sh 'wget -O data/subdomains-1000.txt https://raw.githubusercontent.com/rbsec/dnscan/master/subdomains-1000.txt'
+end
+
+file 'data/subdomains-1000.txt.gz' => 'data/subdomains-1000.txt' do
+  sh 'gzip -f data/subdomains-1000.txt'
+end
