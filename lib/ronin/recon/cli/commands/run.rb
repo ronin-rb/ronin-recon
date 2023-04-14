@@ -40,7 +40,7 @@ module Ronin
         # ## Options
         #
         #     -D, --debug                      Enable debugging output
-        #         --max-depth NUM              The maximum recon depth (Default: 1)
+        #         --max-depth NUM              The maximum recon depth (Default: 3)
         #     -d, --domain DOMAIN              The domain to start reconning
         #     -H, --host HOST                  The host name to start reconning
         #     -I, --ip IP                      The IP address to start reconning
@@ -58,7 +58,7 @@ module Ronin
           option :max_depth, value: {
                                type:    Integer,
                                usage:   'NUM',
-                               default: 1
+                               default: 3
                              },
                              desc: 'The maximum recon depth'
 

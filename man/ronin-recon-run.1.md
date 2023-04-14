@@ -14,7 +14,7 @@ Runs the recon engine with one or more initial values.
   Enables debugging output.
 
 `--max-depth` *NUM*
-  The maximum recon depth. Defaults to depth of `1` if the option is not
+  The maximum recon depth. Defaults to depth of `3` if the option is not
   specified.
 
 `-d`, `--domain` *DOMAIN*
