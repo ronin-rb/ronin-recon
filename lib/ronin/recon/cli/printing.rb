@@ -71,9 +71,9 @@ module Ronin
         def print_value(value,parent=nil)
           if stdout.tty?
             if parent
-              log_info "Found #{format_value(value)} for #{format_value(parent)}"
+              log_info "Found new #{format_value(value)} for #{format_value(parent)}"
             else
-              log_info "Found #{format_value(value)}"
+              log_info "Found new #{format_value(value)}"
             end
           else
             puts value
