@@ -60,13 +60,15 @@ module Ronin
                                     service_scan: true,
                                     ports:        params[:ports])
 
+        address = ip.address
+
         xml.host.open_ports.each do |open_port|
           number   = open_port.number
           protocol = open_port.protocol
           service  = open_port.service
 
-          yield OpenPort.new(ip,number, protocol: protocol,
-                                        service:  service && service.name)
+          yield OpenPort.new(address,number, protocol: protocol,
+                                             service:  service && service.name)
 
           if service
             host = xml.host.to_s

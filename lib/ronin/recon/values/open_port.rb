@@ -19,9 +19,6 @@
 #
 
 require 'ronin/recon/value'
-require 'ronin/recon/values/host'
-require 'ronin/recon/values/domain'
-require 'ronin/recon/values/ip'
 
 module Ronin
   module Recon
@@ -33,10 +30,10 @@ module Ronin
       #
       class OpenPort < Value
 
-        # The host name or IP address for the open port.
+        # The IP address that the open port listens on.
         #
-        # @return [Host, Domain, IP]
-        attr_reader :host
+        # @return [String]
+        attr_reader :address
 
         # The port number.
         #
@@ -56,8 +53,8 @@ module Ronin
         #
         # Initializes the open port.
         #
-        # @param [Host, Domain, IP] host
-        #   The host name or IP address for the open port.
+        # @param [String] address
+        #   The IP address for the open port.
         #
         # @param [Integer] number
         #   The port number.
@@ -68,8 +65,8 @@ module Ronin
         # @param [String, nil] service
         #   The optional service information.
         #
-        def initialize(host,number, protocol: :tcp, service: nil)
-          @host     = host
+        def initialize(address,number, protocol: :tcp, service: nil)
+          @address  = address
           @number   = number
           @protocol = protocol
           @service  = service
@@ -84,7 +81,7 @@ module Ronin
         #
         def eql?(other)
           other.kind_of?(self.class) &&
-            @host     == other.host &&
+            @address  == other.address &&
             @number   == other.number &&
             @protocol == other.protocol &&
             @service  == other.service
@@ -96,14 +93,14 @@ module Ronin
         # @return [Integer]
         #
         def hash
-          [self.class, @host, @number, @protocol, @service].hash
+          [self.class, @address, @number, @protocol, @service].hash
         end
 
         #
         # @return [(String, Integer)]
         #
         def to_a
-          [@host.to_s, @number.to_i]
+          [@address, @number]
         end
 
         #
@@ -113,7 +110,7 @@ module Ronin
         #   The hot-name/IP and port number.
         #
         def to_s
-          "#{@host}:#{@number}"
+          "#{@address}:#{@number}"
         end
 
         #
