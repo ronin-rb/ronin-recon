@@ -178,6 +178,18 @@ gem 'ronin-recon', '~> 0.1'
 gem.add_dependency 'ronin-recon', '~> 0.1'
 ```
 
+## Post-Install
+
+### Running `nmap` / `masscan` without `sudo`
+
+You can configure `nmap` and `masscan` to run without `sudo` by setting their
+capabilities:
+
+```shell
+sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip $(which nmap)
+sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip $(which masscan)
+```
+
 ## Development
 
 1. [Fork It!](https://github.com/ronin-rb/ronin-recon/fork)
