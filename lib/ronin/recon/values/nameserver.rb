@@ -29,6 +29,17 @@ module Ronin
       # @api public
       #
       class Nameserver < Host
+
+        #
+        # Coerces the nameserver value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          {type: :nameserver, name: @name}
+        end
+
       end
     end
   end
