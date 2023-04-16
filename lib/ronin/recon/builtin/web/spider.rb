@@ -53,7 +53,9 @@ module Ronin
         #   A URL visited by the spider.
         #
         def process(website)
-          Ronin::Web::Spider.site(website.to_uri) do |agent|
+          base_uri = website.to_uri
+
+          Ronin::Web::Spider.site(base_uri.merge('/')) do |agent|
             agent.every_page do |page|
               yield URL.new(page.url.to_s)
             end
