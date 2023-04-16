@@ -77,6 +77,16 @@ module Ronin
 
         alias to_str to_s
 
+        #
+        # Coerces the host value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          {type: :host, name: @name}
+        end
+
       end
     end
   end
