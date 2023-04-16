@@ -35,14 +35,20 @@ module Ronin
         # @return [String]
         attr_reader :address
 
+        # The optional parent host name.
+        #
+        # @return [String, nil]
+        attr_reader :host
+
         #
         # Initializes the IP object.
         #
         # @param [String] address
         #   The IP address.
         #
-        def initialize(address)
+        def initialize(address, host: nil)
           @address = address
+          @host    = host
         end
 
         #
