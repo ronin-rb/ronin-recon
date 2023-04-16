@@ -23,6 +23,7 @@ require 'ronin/recon/cli/debug_option'
 require 'ronin/recon/cli/printing'
 require 'ronin/recon/registry'
 require 'ronin/recon/engine'
+require 'ronin/recon/output_formats'
 
 require 'ronin/db/cli/database_options'
 require 'ronin/core/cli/logging'
@@ -46,6 +47,9 @@ module Ronin
         #     -H, --host HOST                  The host name to start reconning
         #     -I, --ip IP                      The IP address to start reconning
         #     -R, --ip-range CIDR              The IP range to start reconning
+        #     -o, --output FILE                The output file to write results to
+        #     -F txt|list|csv|json|ndjson|dot, The output format
+        #         --output-format
         #         --import                     Imports each newly discovered value into the Ronin database
         #     -h, --help                       Print help information
         #
@@ -101,6 +105,19 @@ module Ronin
                               @values << Values::IPRange.new(cidr)
                             end
 
+          option :output, short: '-o',
+                          value: {
+                            type:  String,
+                            usage: 'FILE'
+                          },
+                          desc: 'The output file to write results to'
+
+          option :output_format, short: '-F',
+                                 value: {
+                                   type: OutputFormats::FORMATS.keys
+                                 },
+                                 desc: 'The output format'
+
           option :import, desc: 'Imports each newly discovered value into the Ronin database'
 
           description 'Runs the recon engine with one or more initial values'
@@ -133,21 +150,43 @@ module Ronin
               exit(-1)
             end
 
+            if options[:output]
+              output_file = output_format_class.open(options[:output])
+            end
+
             if options[:import]
               require 'ronin/db'
               require 'ronin/recon/importer'
               db_connect
             end
 
-            engine = Engine.run(@values, max_depth: options[:max_depth]) do |value,parent|
-              print_value(value,parent)
+            begin
+              engine = Engine.run(@values, max_depth: options[:max_depth]) do |value,parent|
+                print_value(value,parent)
 
-              import_value(value) if options[:import]
+                output_file.write(value,parent) if options[:output]
+                import_value(value)             if options[:import]
+              end
+            ensure
+              output_file.close if options[:output]
             end
           end
 
           def import_value(value)
             Importer.import_value(value)
+          end
+
+          def output_format_class
+            if options[:output_format]
+              OutputFormats::FORMATS.fetch(options[:output_format]) do
+                raise(ArgumentError,"unsupported output format: #{options[:output_format].inspect}")
+              end
+            elsif options[:output]
+              OutputFormats::FILE_EXTS.fetch(File.extname(options[:output])) do
+                print_error "cannot infer output format from output file: #{options[:output]}"
+                exit(-1)
+              end
+            end
           end
 
         end

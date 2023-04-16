@@ -29,6 +29,13 @@ Runs the recon engine with one or more initial values.
 `-R`, `--ip-range` *CIDR*
   The IP range to start reconning.
 
+`-o`, `--output` *FILE*
+  The output file to write results to.
+
+`-F`, `--output-format` `txt`\|`list`\|`csv`\|`json`\|`ndjson`\|`dot`
+  The output format. If not specified, the output format will be inferred from
+  the `--output` *FILE* extension.
+
 `--import`
   Imports each newly discovered value into the Ronin database.
 
