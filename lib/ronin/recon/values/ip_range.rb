@@ -78,6 +78,16 @@ module Ronin
 
         alias to_str to_s
 
+        #
+        # Coerces the IP range value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          {type: :ip_range, range: @range}
+        end
+
       end
     end
   end
