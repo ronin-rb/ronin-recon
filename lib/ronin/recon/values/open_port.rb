@@ -125,6 +125,23 @@ module Ronin
 
         alias to_int to_i
 
+        #
+        # Coerces the open port value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          hash = {
+            type:     :open_port,
+            address:  @address,
+            protocol: @protocol,
+            number:   @number
+          }
+          hash[:service] = @service if @service
+          return hash
+        end
+
       end
     end
   end
