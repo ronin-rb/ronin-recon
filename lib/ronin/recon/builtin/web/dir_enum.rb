@@ -71,16 +71,11 @@ module Ronin
 
           Async do |task|
             task.async do
-              wordlist.each do |name|
-                path = "/#{URI.encode_uri_component(name)}"
-
-                queue << "#{base_url}#{path}"
-              end
+              # feed the queue with the wordlist
+              wordlist.each { |name| queue << name }
 
               # send stop messages for each sub-task
-              params[:concurrency].times do
-                queue << nil
-              end
+              params[:concurrency].times { queue << nil }
             end
 
             # spawn the sub-tasks
@@ -88,7 +83,10 @@ module Ronin
               task.async do
                 http = Async::HTTP::Internet.instance
 
-                while (url = queue.dequeue)
+                while (dir = queue.dequeue)
+                  path = "/#{URI.encode_uri_component(dir)}"
+                  url  = "#{base_url}#{path}"
+
                   response = http.head(url)
 
                   if response.status == 200
