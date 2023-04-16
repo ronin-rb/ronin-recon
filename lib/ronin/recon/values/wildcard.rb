@@ -77,6 +77,16 @@ module Ronin
 
         alias to_str to_s
 
+        #
+        # Coerces the wildcard value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          {type: :wildcard, host_name: @host_name}
+        end
+
       end
     end
   end
