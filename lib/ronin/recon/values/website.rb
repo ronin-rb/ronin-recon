@@ -150,6 +150,16 @@ module Ronin
           end
         end
 
+        #
+        # Coerces the website value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        def as_json
+          {type: :website, scheme: @scheme, host: @host, port: @port}
+        end
+
       end
     end
   end
