@@ -11,3 +11,8 @@
 *.log
 *.swp
 *~
+/*.txt
+/*.csv
+/*.xml
+/*.dot
+/*.svg
