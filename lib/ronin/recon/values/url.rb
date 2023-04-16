@@ -20,6 +20,8 @@
 
 require 'ronin/recon/value'
 
+require 'uri'
+
 module Ronin
   module Recon
     module Values
@@ -30,18 +32,18 @@ module Ronin
       #
       class URL < Value
 
-        # The URL string.
+        # The parsed URI.
         #
-        # @return [String]
-        attr_reader :string
+        # @return [URI::HTTP, URI::HTTPS]
+        attr_reader :uri
 
         #
         # Initializes the URL object.
         #
-        # @param [String] string
+        # @param [URI::HTTP, URI::HTTPS, String] url
         #
-        def initialize(string)
-          @string = string
+        def initialize(url)
+          @uri = URI(url)
         end
 
         #
@@ -52,7 +54,7 @@ module Ronin
         # @return [Boolean]
         #
         def eql?(other)
-          other.kind_of?(self.class) && @string == other.string
+          other.kind_of?(self.class) && @uri == other.uri
         end
 
         #
@@ -62,8 +64,10 @@ module Ronin
         #   The hash value of {#string}.
         #
         def hash
-          [self.class, @string].hash
+          [self.class, @uri].hash
         end
+
+        alias to_uri uri
 
         #
         # Converts the URL object to a String.
@@ -72,7 +76,7 @@ module Ronin
         #   The URL string.
         #
         def to_s
-          @string.to_s
+          @uri.to_s
         end
 
         alias to_str to_s
