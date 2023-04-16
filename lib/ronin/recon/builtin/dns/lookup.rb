@@ -54,7 +54,7 @@ module Ronin
           addresses = dns_get_addresses(host.name)
 
           addresses.each do |address|
-            yield IP.new(address)
+            yield IP.new(address, host: host.name)
           end
         end
 
