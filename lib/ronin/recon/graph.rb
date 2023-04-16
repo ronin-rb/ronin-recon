@@ -53,6 +53,22 @@ module Ronin
       # @param [Value] new_value
       #   The new value node to add.
       #
+      # @return [Boolean]
+      #   Indicates whether the value node was successfully added to the graph,
+      #   or if the value node was already added to the graph.
+      #
+      # @api private
+      #
+      def add_node(new_value)
+        !@nodes.add?(new_value).nil?
+      end
+
+      #
+      # Adds a value to the graph, if it already hasn't been added.
+      #
+      # @param [Value] new_value
+      #   The new value node to add.
+      #
       # @param [Value, nil] parent_value
       #   The parent value node of the new value node.
       #
@@ -62,12 +78,9 @@ module Ronin
       #
       # @api private
       #
-      def add(new_value,parent_value=nil)
-        if parent_value
-          (@edges[new_value] ||= Set.new) << parent_value
-        end
-
-        !@nodes.add?(new_value).nil?
+      def add_edge(new_value,parent_value=nil)
+        node_parents= (@edges[new_value] ||= Set.new)
+        return node_parents.add?(parent_value)
       end
 
       #

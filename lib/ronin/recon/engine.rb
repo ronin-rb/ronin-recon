@@ -209,7 +209,7 @@ module Ronin
       # @api public
       #
       def enqueue_value(value)
-        @graph.add(value)
+        @graph.add_node(value)
         enqueue_mesg(Message::Value.new(value))
       end
 
@@ -256,13 +256,10 @@ module Ronin
           @logger.debug("Output value dequeued: #{mesg.worker.class} #{mesg.value.inspect}")
 
           # check if the value hasn't been seen yet?
-          if @graph.add(value,parent)
-            @logger.debug("Adding value #{value.inspect} to graph")
+          if @graph.add_node(value)
+            @logger.debug("Added value #{value.inspect} to graph")
 
-            # pass the value object to the callback block
-            if @callback.arity == 2
-              @callback.call(value,parent)
-            else
+            if @callback && @callback.arity == 1
               @callback.call(value)
             end
 
@@ -272,6 +269,14 @@ module Ronin
 
               # feed the message back into the engine
               enqueue_mesg(mesg)
+            end
+          end
+
+          if @graph.add_edge(value,parent)
+            @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
+
+            if @callback && @callback.arity == 2
+              @callback.call(value,parent)
             end
           end
         else
