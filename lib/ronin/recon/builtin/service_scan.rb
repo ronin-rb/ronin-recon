@@ -61,6 +61,7 @@ module Ronin
                                     ports:        params[:ports])
 
         address = ip.address
+        host    = ip.host || xml.host.hostname || address
 
         xml.host.open_ports.each do |open_port|
           number   = open_port.number
@@ -71,8 +72,6 @@ module Ronin
                                              service:  service && service.name)
 
           if service
-            host = xml.host.to_s
-
             case service.name
             when 'domain'
               yield Nameserver.new(host)
