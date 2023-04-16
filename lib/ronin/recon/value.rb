@@ -42,6 +42,18 @@ module Ronin
       end
 
       #
+      # Converts the value to a String.
+      #
+      # @return [String]
+      #   The string value of the value.
+      #
+      # @abstract
+      #
+      def to_s
+        raise(NotImplementedError,"#{self.class}#to_s was not implemented")
+      end
+
+      #
       # Converts the value into JSON.
       #
       # @return [String]
