@@ -72,7 +72,7 @@ module Ronin
           Async do |task|
             task.async do
               wordlist.each do |name|
-                path = "/#{URI.encode_url_component(name)}"
+                path = "/#{URI.encode_uri_component(name)}"
 
                 queue << "#{base_url}#{path}"
               end
