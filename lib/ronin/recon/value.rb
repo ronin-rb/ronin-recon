@@ -26,23 +26,6 @@ module Ronin
     # @abstract
     #
     class Value
-
-      #
-      # The value type.
-      #
-      # @return [Symbol]
-      #
-      # @note
-      #   This is used internally to map the value class to a printable name.
-      #
-      # @abstract
-      #
-      # @api private
-      #
-      def self.value_type
-        raise(NotImplementedError,"#{self} did not define exploit_type")
-      end
-
     end
   end
 end
