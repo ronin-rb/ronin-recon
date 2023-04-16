@@ -18,6 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'json'
+
 module Ronin
   module Recon
     #
@@ -26,6 +28,29 @@ module Ronin
     # @abstract
     #
     class Value
+
+      #
+      # Coerces the value into JSON.
+      #
+      # @return [Hash{Symbol => Object}]
+      #   The Ruby Hash that will be converted into JSON.
+      #
+      # @abstract
+      #
+      def as_json
+        raise(NotImplementedError,"#{self.class}#as_json was not implemented")
+      end
+
+      #
+      # Converts the value into JSON.
+      #
+      # @return [String]
+      #   The raw JSON string.
+      #
+      def to_json
+        as_json.to_json
+      end
+
     end
   end
 end
