@@ -74,9 +74,16 @@ module Ronin
             host = xml.host.to_s
 
             case service.name
-            when 'domain' then yield Nameserver.new(host)
-            when 'https'  then yield Website.https(host,number)
-            when 'http'   then yield Website.http(host,number)
+            when 'domain'
+              yield Nameserver.new(host)
+            when 'http'
+              if service.ssl?
+                yield Website.https(host,number)
+              else
+                yield Website.http(host,number)
+              end
+            when 'https'
+              yield Website.https(host,number)
             end
           end
         end
