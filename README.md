@@ -227,6 +227,14 @@ You should have received a copy of the GNU Lesser General Public License
 along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 
 [Ruby]: https://www.ruby-lang.org
+[thread-local]: https://github.com/socketry/thread-local#readme
+[async-io]: https://github.com/socketry/async-io#readme
+[async-dns]: https://github.com/socketry/async-dns#readme
+[async-http]: https://github.com/socketry/async-http#readme
+[wordlist]: https://github.com/postmodern/wordlist.rb#readme
 [ronin-support]: https://github.com/ronin-rb/ronin-support#readme
 [ronin-core]: https://github.com/ronin-rb/ronin-core#readme
 [ronin-repos]: https://github.com/ronin-rb/ronin-repos#readme
+[ronin-masscan]: https://github.com/ronin-rb/ronin-masscan#readme
+[ronin-nmap]: https://github.com/ronin-rb/ronin-nmap#readme
+[ronin-web-spider]: https://github.com/ronin-rb/ronin-web-spider#readme
