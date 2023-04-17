@@ -27,9 +27,10 @@ and uses asynchronous I/O to maximize efficiency.
 * Provides built-in recon workers for:
   * IP range enumeration.
   * DNS lookup of host-names.
-  * Getting nameservers.
-  * Getting mailservers.
+  * Querying nameservers.
+  * Querying mailservers.
   * DNS reverse lookup of IP addresses.
+  * DNS SRV record enumeration.
   * DNS subdomain enumeration.
   * Service/port scanning with `nmap`.
   * Web spidering.
