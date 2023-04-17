@@ -75,6 +75,8 @@ module Ronin
             case service.name
             when 'domain'
               yield Nameserver.new(host)
+            when 'smtp'
+              yield Mailserver.new(host)
             when 'http'
               if service.ssl?
                 yield Website.https(host,number)
