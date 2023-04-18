@@ -62,13 +62,11 @@ module Ronin
       #
       # Initializes the recon engine.
       #
-      # @yield [value, (value, parent)]
-      #   The given block will be saved as a callback and passed each discovered
-      #   value. If the block accepts two arguments the value and it's parent
-      #   value will be passed to the block.
+      # @yield [self]
+      #   If a block is given it will be passed the newly created engine.
       #
-      # @yieldparam [Values::Value] value
-      #   A value discovered by one of the recon workers.
+      # @yieldparam [Engine] self
+      #   The newly initialized engine.
       #
       # @yieldparam [Values::Value] parent
       #   The parent value which is associated to the discovered value.
@@ -77,9 +75,7 @@ module Ronin
       #
       def initialize(workers:   Recon.registry.values,
                      max_depth: 3,
-                     logger:    Console.logger,
-                     &block)
-
+                     logger:    Console.logger)
         @worker_classes    = {}
         @worker_tasks      = {}
         @worker_task_count = 0
@@ -89,12 +85,19 @@ module Ronin
         @max_depth    = max_depth
         @output_queue = Async::Queue.new
 
-        @logger   = logger
-        @callback = block
+        @value_callbacks         = []
+        @connection_callbacks    = []
+        @job_started_callbacks   = []
+        @job_completed_callbacks = []
+        @job_failed_callbacks    = []
+
+        @logger = logger
 
         workers.each do |worker_class|
           add_worker(worker_class)
         end
+
+        yield self if block_given?
       end
 
       #
@@ -155,6 +158,54 @@ module Ronin
         worker_class.accepts.each do |value_class|
           (@worker_classes[value_class] ||= []) << worker_class
           (@worker_tasks[value_class]   ||= []) << worker_tasks
+        end
+      end
+
+      #
+      # Registers a callback for the given event.
+      #
+      # @param [:value, :connection, :job_started, :job_completed, :job_failed] event
+      #   The event type to register the callback for.
+      #
+      # @yield [value, (value, parent), (worker_class, value, parent)]
+      #   If `:value` is given, then the given block will be passed each new value.
+      #
+      # @yield [(value, parent), (worker_class, value, parent)]
+      #   If `:connection` is given, then the given block will be passed the
+      #   discovered value and it's parent value.
+      #
+      # @yield [worker_class, value]
+      #   If `:job_started` is given, then the given block will be passed the
+      #   worker class and the input value.
+      #
+      # @yield [worker_class, value]
+      #   If `:job_completed` is given, then the given block will be passed the
+      #   worker class and the input value.
+      #
+      # @yield [worker_class, value, exception]
+      #   If `:job_failed` is given, then any exception raised by a worker will
+      #   be passed to the given block.
+      #
+      # @yieldparam [Values::Value] value
+      #   A discovered value value.
+      #
+      # @yieldparam [Values::Value] parent
+      #   The parent value of the value.
+      #
+      # @yieldparam [Class<Worker>] worker_class
+      #   The worker class.
+      #
+      # @yieldparam [RuntimeError] exception
+      #   An exception that was raised by a worker.
+      def on(event,&block)
+        case event
+        when :value         then @value_callbacks         << block
+        when :connection    then @connection_callbacks    << block
+        when :job_start     then @job_started_callbacks   << block
+        when :job_completed then @job_completed_callbacks << block
+        when :job_failed    then @job_failed_callbacks    << block
+        else
+          raise(ArgumentError,"unsupported event type: #{event.inspect}")
         end
       end
 
@@ -245,10 +296,27 @@ module Ronin
           @worker_task_count -= 1
         when Message::JobStarted
           @logger.debug("Job started: #{mesg.worker.class} #{mesg.value.inspect}")
+          @job_started_callbacks.each do |callback|
+            callback.call(mesg.worker.class,mesg.value)
+          end
+
           @value_status.job_started(mesg.worker.class,mesg.value)
-        when Message::JobCompleted, Message::JobFailed
-          @logger.debug("Job ended: #{mesg.worker.class} #{mesg.value.inspect}")
+        when Message::JobCompleted
+          @logger.debug("Job completed: #{mesg.worker.class} #{mesg.value.inspect}")
+
+          @job_completed_callbacks.each do |callback|
+            callback.call(mesg.worker.class,mesg.value)
+          end
+
           @value_status.job_completed(mesg.worker.class,mesg.value)
+        when Message::JobFailed
+          @logger.debug("Job failed: #{mesg.worker.class} #{mesg.value.inspect} #{mesg.exception.inspect}")
+
+          @job_failed_callbacks.each do |callback|
+            callback.call(mesg.worker.class,mesg.value,mesg.exception)
+          end
+
+          @value_status.job_failed(mesg.worker.class,mesg.value)
         when Message::Value
           value  = mesg.value
           parent = mesg.parent
@@ -259,8 +327,12 @@ module Ronin
           if @graph.add_node(value)
             @logger.debug("Added value #{value.inspect} to graph")
 
-            if @callback && @callback.arity == 1
-              @callback.call(value)
+            @value_callbacks.each do |callback|
+              case callback.arity
+              when 1 then callback.call(value)
+              when 2 then callback.call(value,parent)
+              else        callback.call(mesg.worker.class,value,parent)
+              end
             end
 
             # check if the message has exceeded the max depth
@@ -275,8 +347,11 @@ module Ronin
           if @graph.add_edge(value,parent)
             @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
 
-            if @callback && @callback.arity == 2
-              @callback.call(value,parent)
+            @connection_callbacks.each do |callback|
+              case callback.arity
+              when 2 then callback.call(value,parent)
+              else        callback.call(mesg.worker.class,value,parent)
+              end
             end
           end
         else

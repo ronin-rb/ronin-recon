@@ -161,11 +161,13 @@ module Ronin
             end
 
             begin
-              engine = Engine.run(@values, max_depth: options[:max_depth]) do |value,parent|
-                print_value(value,parent)
+              engine = Engine.run(@values, max_depth: options[:max_depth]) do |engine|
+                engine.on(:value) do |value,parent|
+                  print_value(value,parent)
 
-                output_file.write(value,parent) if options[:output]
-                import_value(value)             if options[:import]
+                  output_file.write(value,parent) if options[:output]
+                  import_value(value)             if options[:import]
+                end
               end
             ensure
               output_file.close if options[:output]
