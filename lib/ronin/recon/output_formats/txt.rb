@@ -20,16 +20,35 @@
 
 require 'ronin/recon/output_formats/output_file'
 
+require 'set'
+
 module Ronin
   module Recon
     module OutputFormats
       #
-      # Represents a plain-text (`.txt`) output stream.
+      # Represents a plain-text list of discovered values.
       #
       class TXT < OutputFile
 
+        # The set of previously seen values.
         #
-        # Appends a value to the TXT output stream.
+        # @return [Set<Value>]
+        attr_reader :values
+
+        #
+        # Initializes the list output format.
+        #
+        # @param [String] path
+        #   The output file path.
+        #
+        def initialize(path)
+          super(path)
+
+          @values = Set.new
+        end
+
+        #
+        # Appends a value to the list output stream.
         #
         # @param [Value] value
         #   The value to append.
@@ -37,7 +56,9 @@ module Ronin
         # @return [self]
         #
         def write(value,parent)
-          @file.puts("#{value} <- #{parent}")
+          if @values.add?(value)
+            @file.puts(value)
+          end
         end
 
       end

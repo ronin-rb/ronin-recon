@@ -1,5 +1,4 @@
 require 'ronin/recon/output_formats/txt'
-require 'ronin/recon/output_formats/list'
 require 'ronin/recon/output_formats/csv'
 require 'ronin/recon/output_formats/json'
 require 'ronin/recon/output_formats/ndjson'
@@ -11,7 +10,6 @@ module Ronin
       # Mapping of output format names to output format classes.
       FORMATS = {
         txt:    TXT,
-        list:   List,
         csv:    CSV,
         json:   JSON,
         ndjson: NDJSON,

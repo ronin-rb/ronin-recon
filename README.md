@@ -41,7 +41,6 @@ and uses asynchronous I/O to maximize efficiency.
 * Provides a simple CLI for listing workers or performing recon.
 * Supports many different output file formats:
   * TXT
-  * List
   * CSV
   * JSON
   * [NDJSON](http://ndjson.org/)
