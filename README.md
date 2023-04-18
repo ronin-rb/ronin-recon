@@ -39,6 +39,13 @@ and uses asynchronous I/O to maximize efficiency.
   3rd-party git repositories.
 * Builds a network graph of all discovered assets.
 * Provides a simple CLI for listing workers or performing recon.
+* Supports many different output file formats:
+  * TXT
+  * List
+  * CSV
+  * JSON
+  * [NDJSON](http://ndjson.org/)
+  * [GraphViz DOT](https://graphviz.org/doc/info/lang.html)
 
 ## Synopsis
 
