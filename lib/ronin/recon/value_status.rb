@@ -70,6 +70,8 @@ module Ronin
         end
       end
 
+      alias job_failed job_completed
+
       #
       # Determines if there are no more values within the queue or being
       # processed by any of the workers.
