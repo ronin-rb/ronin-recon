@@ -18,7 +18,9 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_format'
+require 'ronin/recon/output_formats/output_format'
+
+require 'set'
 
 module Ronin
   module Recon
@@ -37,20 +39,70 @@ module Ronin
         def initialize(io)
           super(io)
 
+          @values = Set.new
+
           @io.puts "digraph {"
         end
 
         #
-        # Appends a value to the GraphViz DOT output stream.
+        # Returns the descriptive type name for the value object.
+        #
+        # @param [Value] value
+        #   The value object.
+        #
+        # @return [String]
+        #   The type name for the value object.
+        #
+        # @raise [NotImplementedError]
+        #   The given value object was not supported.
+        #
+        def value_type(value)
+          case value
+          when Values::Domain     then "Domain"
+          when Values::Mailserver then "Mailserver"
+          when Values::Nameserver then "Nameserver"
+          when Values::Host       then "Host"
+          when Values::IP         then "IP address"
+          when Values::IPRange    then "IP range"
+          when Values::OpenPort   then "Open #{value.protocol.upcase} Port"
+          when Values::URL        then "URL"
+          when Values::Website    then "Website"
+          when Values::Wildcard   then "Wildcard"
+          else
+            raise(NotImplementedError,"value class #{value.class} not supported")
+          end
+        end
+
+        #
+        # Writes a value to the GraphViz DOT output stream as a node
+        # declaration.
+        #
+        # @param [Value] value
+        #   The value object to write.
+        #
+        def write_value(value)
+          name  = value.to_s
+          label = "#{value_type(value)}\n#{name}"
+
+          @io.puts "\t#{name.inspect} [label=#{label.inspect}]"
+        end
+
+        #
+        # Appends a value and it's parent value to the GraphViz DOT output
+        # stream.
         #
         # @param [Value] value
         #   The value to append.
         #
         # @param [Value] parent
+        #   The parent value of the given value.
         # 
         # @return [self]
         #
         def write(value,parent)
+          write_value(value)  if @values.add?(value)
+          write_value(parent) if @values.add?(parent)
+
           @io.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
         end
 

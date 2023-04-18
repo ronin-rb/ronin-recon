@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_format'
+require 'ronin/recon/output_formats/output_format'
 
 require 'csv'
 
