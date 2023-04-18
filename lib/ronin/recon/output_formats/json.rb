@@ -50,7 +50,7 @@ module Ronin
         # 
         # @return [self]
         #
-        def write(value,parent)
+        def write_value(value)
           @values << value.as_json
         end
 

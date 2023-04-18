@@ -38,7 +38,7 @@ module Ronin
         # 
         # @return [self]
         #
-        def write(value)
+        def write_value(value)
           JSON.dump(value.to_json,@file)
           @file.flush
         end

@@ -30,23 +30,6 @@ module Ronin
       #
       class TXT < OutputFile
 
-        # The set of previously seen values.
-        #
-        # @return [Set<Value>]
-        attr_reader :values
-
-        #
-        # Initializes the list output format.
-        #
-        # @param [String] path
-        #   The output file path.
-        #
-        def initialize(path)
-          super(path)
-
-          @values = Set.new
-        end
-
         #
         # Appends a value to the list output stream.
         #
@@ -55,11 +38,9 @@ module Ronin
         # 
         # @return [self]
         #
-        def write(value,parent)
-          if @values.add?(value)
-            @file.puts(value)
-            @file.flush
-          end
+        def write_value(value)
+          @file.puts(value)
+          @file.flush
         end
 
       end

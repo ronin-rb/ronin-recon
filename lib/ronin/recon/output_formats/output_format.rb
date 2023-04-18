@@ -49,12 +49,24 @@ module Ronin
         # @param [Values::Value] value
         #   The value to write.
         #
-        # @return [self]
+        # @abstract
+        #
+        def write_value(value)
+          raise(NotImplementedError,"#{self}#<< was not implemented")
+        end
+
+        #
+        # Writes a new connection between two values to the output stream.
+        #
+        # @param [Values::Value] value
+        #   The value to write.
+        #
+        # @param [Values::Value] parent
+        #   The parent value for the value.
         #
         # @abstract
         #
-        def write(value)
-          raise(NotImplementedError,"#{self}#<< was not implemented")
+        def write_connection(value,parent)
         end
 
         #

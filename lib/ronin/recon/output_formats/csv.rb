@@ -65,7 +65,7 @@ module Ronin
         # @param [Values::Value] value
         #   The value to append.
         # 
-        def write(value,parent)
+        def write_value(value)
           @file.write(CSV.generate_line(value_type(value),value))
           @file.flush
         end

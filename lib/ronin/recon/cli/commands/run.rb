@@ -165,8 +165,12 @@ module Ronin
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
 
-                  output_file.write(value,parent) if options[:output]
-                  import_value(value)             if options[:import]
+                  output_file.write_value(value) if options[:output]
+                  import_value(value)            if options[:import]
+                end
+
+                engine.on(:connection) do |value,parent|
+                  output_file.write_connection(value,parent) if options[:output]
                 end
               end
             ensure

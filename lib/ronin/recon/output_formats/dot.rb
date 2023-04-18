@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/recon/output_formats/output_file'
 
 require 'set'
 
@@ -28,7 +28,7 @@ module Ronin
       #
       # Represents a GraphViz DOT (`.dot`) output format.
       #
-      class Dot < OutputFormat
+      class Dot < OutputFile
 
         #
         # Initializes the GraphViz DOT (`.dot`) output format.
@@ -38,8 +38,6 @@ module Ronin
         #
         def initialize(path)
           super(path)
-
-          @values = Set.new
 
           @file.puts "digraph {"
         end
@@ -100,10 +98,7 @@ module Ronin
         # 
         # @return [self]
         #
-        def write(value,parent)
-          write_value(value)  if @values.add?(value)
-          write_value(parent) if @values.add?(parent)
-
+        def write_connection(value,parent)
           @file.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
           @file.flush
         end

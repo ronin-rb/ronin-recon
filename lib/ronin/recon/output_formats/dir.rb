@@ -64,12 +64,10 @@ module Ronin
           @files = VALUE_FILE_NAMES.transform_values do |file_name|
             File.open(File.join(@path,file_name),'w')
           end
-
-          @values = Set.new
         end
 
         #
-        # Writes a value to it's specific value.
+        # Writes a new value to it's specific file.
         #
         # @param [Values::Value] value
         #   The value to write.
@@ -81,20 +79,6 @@ module Ronin
 
           file.puts(value)
           file.flush
-        end
-
-        #
-        # Appends a value to the list output stream.
-        #
-        # @param [Values::Value] value
-        #   The value to append.
-        # 
-        # @return [self]
-        #
-        def write(value,parent)
-          if @values.add?(value)
-            write_value(value)
-          end
         end
 
         #
