@@ -67,6 +67,7 @@ module Ronin
         # 
         def write(value,parent)
           @file.write(CSV.generate_line(value_type(value),value))
+          @file.flush
         end
 
       end

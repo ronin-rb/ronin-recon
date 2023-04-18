@@ -40,6 +40,7 @@ module Ronin
         #
         def write(value)
           JSON.dump(value.to_json,@file)
+          @file.flush
         end
 
       end

@@ -85,6 +85,7 @@ module Ronin
           label = "#{value_type(value)}\n#{name}"
 
           @file.puts "\t#{name.inspect} [label=#{label.inspect}]"
+          @file.flush
         end
 
         #
@@ -104,6 +105,7 @@ module Ronin
           write_value(parent) if @values.add?(parent)
 
           @file.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
+          @file.flush
         end
 
         #

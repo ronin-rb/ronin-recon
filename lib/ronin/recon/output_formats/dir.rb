@@ -80,6 +80,7 @@ module Ronin
           end
 
           file.puts(value)
+          file.flush
         end
 
         #

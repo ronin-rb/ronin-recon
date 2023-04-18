@@ -58,6 +58,7 @@ module Ronin
         def write(value,parent)
           if @values.add?(value)
             @file.puts(value)
+            @file.flush
           end
         end
 
