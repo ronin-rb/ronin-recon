@@ -21,6 +21,7 @@
 require 'ronin/recon/output_formats/output_format'
 require 'ronin/recon/values'
 
+require 'fileutils'
 require 'set'
 
 module Ronin
@@ -59,6 +60,7 @@ module Ronin
         def initialize(path)
           super(path)
 
+          FileUtils.mkdir_p(@path)
           @files = VALUE_FILE_NAMES.transform_values do |file_name|
             File.open(File.join(@path,file_name),'w')
           end
