@@ -28,7 +28,7 @@ module Ronin
       #
       # Imports a value into the database.
       #
-      # @param [Value] value
+      # @param [Values::Value] value
       #   A discovered recon value to import.
       #
       # @return [Ronin::DB::HostName,

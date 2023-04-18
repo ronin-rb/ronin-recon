@@ -22,47 +22,49 @@ require 'json'
 
 module Ronin
   module Recon
-    #
-    # Base class for all {Values} classes.
-    #
-    # @abstract
-    #
-    class Value
-
+    module Values
       #
-      # Coerces the value into JSON.
-      #
-      # @return [Hash{Symbol => Object}]
-      #   The Ruby Hash that will be converted into JSON.
+      # Base class for all {Values} classes.
       #
       # @abstract
       #
-      def as_json
-        raise(NotImplementedError,"#{self.class}#as_json was not implemented")
-      end
+      class Value
 
-      #
-      # Converts the value to a String.
-      #
-      # @return [String]
-      #   The string value of the value.
-      #
-      # @abstract
-      #
-      def to_s
-        raise(NotImplementedError,"#{self.class}#to_s was not implemented")
-      end
+        #
+        # Coerces the value into JSON.
+        #
+        # @return [Hash{Symbol => Object}]
+        #   The Ruby Hash that will be converted into JSON.
+        #
+        # @abstract
+        #
+        def as_json
+          raise(NotImplementedError,"#{self.class}#as_json was not implemented")
+        end
 
-      #
-      # Converts the value into JSON.
-      #
-      # @return [String]
-      #   The raw JSON string.
-      #
-      def to_json
-        as_json.to_json
-      end
+        #
+        # Converts the value to a String.
+        #
+        # @return [String]
+        #   The string value of the value.
+        #
+        # @abstract
+        #
+        def to_s
+          raise(NotImplementedError,"#{self.class}#to_s was not implemented")
+        end
 
+        #
+        # Converts the value into JSON.
+        #
+        # @return [String]
+        #   The raw JSON string.
+        #
+        def to_json
+          as_json.to_json
+        end
+
+      end
     end
   end
 end

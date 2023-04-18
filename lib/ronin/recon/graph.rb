@@ -50,7 +50,7 @@ module Ronin
       #
       # Adds a value to the graph, if it already hasn't been added.
       #
-      # @param [Value] new_value
+      # @param [Values::Value] new_value
       #   The new value node to add.
       #
       # @return [Boolean]
@@ -66,7 +66,7 @@ module Ronin
       #
       # Adds a value to the graph, if it already hasn't been added.
       #
-      # @param [Value] new_value
+      # @param [Values::Value] new_value
       #   The new value node to add.
       #
       # @param [Value, nil] parent_value
@@ -86,7 +86,7 @@ module Ronin
       #
       # Determines if the value is in the graph.
       #
-      # @param [Value] value
+      # @param [Values::Value] value
       #   The value node.
       #
       # @return [Boolean]
@@ -99,7 +99,7 @@ module Ronin
       #
       # Fetches the parent value nodes for the value.
       #
-      # @param [Value] value
+      # @param [Values::Value] value
       #   The value node to lookup.
       #
       # @return [Set<Value>, nil]

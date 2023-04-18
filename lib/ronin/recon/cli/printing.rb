@@ -30,7 +30,7 @@ module Ronin
         #
         # Formats a value object into a human readable string.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value object to format.
         #
         # @return [String]
@@ -59,7 +59,7 @@ module Ronin
         #
         # Prints a newly discovered value.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to print.
         #
         # @param [Value, nil] parent

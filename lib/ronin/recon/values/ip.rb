@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/value'
+require 'ronin/recon/values/value'
 
 module Ronin
   module Recon
@@ -54,7 +54,7 @@ module Ronin
         #
         # Compares the value to another value.
         #
-        # @param [Value] other
+        # @param [Values::Value] other
         #
         # @return [Boolean]
         #

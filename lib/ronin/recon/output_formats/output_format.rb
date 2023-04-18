@@ -46,7 +46,7 @@ module Ronin
         #
         # Writes a value to the output stream.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to write.
         #
         # @return [self]

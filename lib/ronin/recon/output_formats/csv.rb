@@ -33,7 +33,7 @@ module Ronin
         #
         # Maps a value to a type Symbol.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value.
         #
         # @return [:domain, :mailserver, :nameserver, :host, :ip, :ip_range, :open_port, :url, :website, :wildcard]
@@ -62,7 +62,7 @@ module Ronin
         #
         # Appends a value to the CSV stream.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to append.
         # 
         def write(value,parent)

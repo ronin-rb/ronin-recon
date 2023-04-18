@@ -50,7 +50,7 @@ module Ronin
         #
         # Appends a value to the list output stream.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to append.
         # 
         # @return [self]

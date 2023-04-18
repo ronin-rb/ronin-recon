@@ -35,7 +35,7 @@ module Ronin
 
         # The input value object.
         #
-        # @return [Value]
+        # @return [Values::Value]
         attr_reader :value
 
         #
@@ -44,7 +44,7 @@ module Ronin
         # @param [Worker] worker
         #   The worker object.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The input value for the job.
         #
         def initialize(worker,value)

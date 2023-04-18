@@ -45,7 +45,7 @@ module Ronin
         #
         # Appends a value to the JSON stream.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to append.
         # 
         # @return [self]

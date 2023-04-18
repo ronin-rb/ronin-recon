@@ -35,7 +35,7 @@ module Ronin
 
         # The input value object.
         #
-        # @return [Value]
+        # @return [Values::Value]
         attr_reader :value
 
         # The exception.
@@ -49,7 +49,7 @@ module Ronin
         # @param [Worker] worker
         #   The worker object.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The input value object.
         #
         # @param [StandardError] exception

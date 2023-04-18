@@ -67,10 +67,10 @@ module Ronin
       #   value. If the block accepts two arguments the value and it's parent
       #   value will be passed to the block.
       #
-      # @yieldparam [Value] value
+      # @yieldparam [Values::Value] value
       #   A value discovered by one of the recon workers.
       #
-      # @yieldparam [Value] parent
+      # @yieldparam [Values::Value] parent
       #   The parent value which is associated to the discovered value.
       #
       # @api public
@@ -111,10 +111,10 @@ module Ronin
       #   If the block accepts two arguments the value and it's parent value
       #   will be passed to the block.
       #
-      # @yieldparam [Value] value
+      # @yieldparam [Values::Value] value
       #   A value discovered by one of the recon workers.
       #
-      # @yieldparam [Value] parent
+      # @yieldparam [Values::Value] parent
       #   The parent value which is associated to the discovered value.
       #
       # @return [Engine]
@@ -203,7 +203,7 @@ module Ronin
       #
       # Sends a new value into the recon engine for processing.
       #
-      # @param [Value] value
+      # @param [Values::Value] value
       #   The value object to enqueue.
       #
       # @api public

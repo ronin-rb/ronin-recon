@@ -71,7 +71,7 @@ module Ronin
         #
         # Writes a value to it's specific value.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to write.
         #
         def write_value(value)
@@ -86,7 +86,7 @@ module Ronin
         #
         # Appends a value to the list output stream.
         #
-        # @param [Value] value
+        # @param [Values::Value] value
         #   The value to append.
         # 
         # @return [self]
