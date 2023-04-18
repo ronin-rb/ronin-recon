@@ -80,7 +80,7 @@ module Ronin
         #
         # @abstract
         #
-        def <<(value)
+        def write(value)
           raise(NotImplementedError,"#{self}#<< was not implemented")
         end
 
