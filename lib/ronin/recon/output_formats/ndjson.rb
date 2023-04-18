@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/recon/output_formats/output_file'
 
 require 'json'
 
@@ -28,7 +28,7 @@ module Ronin
       #
       # Represents a newline deliminated JSON (`.ndjson`) output stream.
       #
-      class NDJSON < OutputFormat
+      class NDJSON < OutputFile
 
         #
         # Appends a value to the NDJSON stream.
@@ -39,7 +39,7 @@ module Ronin
         # @return [self]
         #
         def write(value)
-          JSON.dump(value.to_json,@io)
+          JSON.dump(value.to_json,@file)
         end
 
       end

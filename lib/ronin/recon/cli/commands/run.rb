@@ -151,7 +151,7 @@ module Ronin
             end
 
             if options[:output]
-              output_file = output_format_class.open(options[:output])
+              output_file = output_format_class.new(options[:output])
             end
 
             if options[:import]

@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/recon/output_formats/output_file'
 
 require 'csv'
 
@@ -28,7 +28,7 @@ module Ronin
       #
       # Represents a CSV (`.csv`) output stream.
       #
-      class CSV < OutputFormat
+      class CSV < OutputFile
 
         #
         # Maps a value to a type Symbol.
@@ -66,7 +66,7 @@ module Ronin
         #   The value to append.
         # 
         def write(value,parent)
-          @io.write(CSV.generate_line(value_type(value),value))
+          @file.write(CSV.generate_line(value_type(value),value))
         end
 
       end

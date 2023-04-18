@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/recon/output_formats/output_file'
 
 module Ronin
   module Recon
@@ -26,7 +26,7 @@ module Ronin
       #
       # Represents a plain-text (`.txt`) output stream.
       #
-      class TXT < OutputFormat
+      class TXT < OutputFile
 
         #
         # Appends a value to the TXT output stream.
@@ -37,7 +37,7 @@ module Ronin
         # @return [self]
         #
         def write(value,parent)
-          @io.puts("#{value} <- #{parent}")
+          @file.puts("#{value} <- #{parent}")
         end
 
       end

@@ -18,47 +18,39 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_file'
-
-require 'set'
+require 'ronin/recon/output_formats/output_format'
 
 module Ronin
   module Recon
     module OutputFormats
       #
-      # Represents a plain-text list of discovered values.
+      # Represents an output file.
       #
-      class List < OutputFile
-
-        # The set of previously seen values.
-        #
-        # @return [Set<Value>]
-        attr_reader :values
+      # @abstract
+      #
+      class OutputFile < OutputFormat
 
         #
-        # Initializes the list output format.
+        # Initializes the output file.
         #
         # @param [String] path
-        #   The output file path.
+        #   The file path to write to.
+        #
+        # @api public
         #
         def initialize(path)
           super(path)
 
-          @values = Set.new
+          @file = File.open(@path,'w')
         end
 
         #
-        # Appends a value to the list output stream.
+        # Closes the output stream.
         #
-        # @param [Value] value
-        #   The value to append.
-        # 
-        # @return [self]
+        # @api public
         #
-        def write(value,parent)
-          if @values.add?(value)
-            @file.puts(value)
-          end
+        def close
+          @file.close
         end
 
       end

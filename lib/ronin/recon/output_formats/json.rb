@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/recon/output_formats/output_file'
 
 require 'json'
 
@@ -28,16 +28,16 @@ module Ronin
       #
       # Represents a JSON (`.json`) output stream.
       #
-      class JSON < OutputFormat
+      class JSON < OutputFile
 
         #
         # Initializes the JSON output format.
         #
-        # @param [IO] io
-        #   The IO stream to write to.
+        # @param [String] path
+        #   The `.json` file path.
         #
-        def initialize(io)
-          super(io)
+        def initialize(path)
+          super(path)
 
           @values = []
         end
@@ -58,7 +58,7 @@ module Ronin
         # Writes the complete JSON Array of values and closes the IO stream.
         #
         def close
-          JSON.dump(@values.to_json,@io)
+          JSON.dump(@values.to_json,@file)
 
           super
         end

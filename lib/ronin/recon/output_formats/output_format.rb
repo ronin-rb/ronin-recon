@@ -28,46 +28,19 @@ module Ronin
       #
       class OutputFormat
 
+        # The path to write to.
+        #
+        # @return [String]
+        attr_reader :path
+
         #
         # Initializes the output file.
         #
-        # @param [IO] io
-        #   The IO stream to write to.
-        #
-        # @api semipublic
-        #
-        def initialize(io)
-          @io = io
-        end
-
-        #
-        # Opens an output file.
-        #
         # @param [String] path
-        #   The path to the new output file.
+        #   The path to write to.
         #
-        # @yield [output_file]
-        #   If a block is given, then it will be passed the opened output file.
-        #   Once the block has returned, the output file will automatically be
-        #   closed and `nil` will be returned.
-        #
-        # @yieldparam [OutputFile] output_file
-        #   The opened output file.
-        #
-        # @return [OutputFile, nil]
-        #   The newly opened output file, if no block was given.
-        #
-        # @api public
-        #
-        def self.open(path,&block)
-          output_file = new(File.new(path,'w'))
-
-          if block_given?
-            yield output_file
-            output_file.close
-          else
-            return output_file
-          end
+        def initialize(path)
+          @path = path
         end
 
         #
@@ -89,8 +62,9 @@ module Ronin
         #
         # @api public
         #
+        # @abstract
+        #
         def close
-          @io.close unless @io.tty?
         end
 
       end

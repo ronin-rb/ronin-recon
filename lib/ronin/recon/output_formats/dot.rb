@@ -33,15 +33,15 @@ module Ronin
         #
         # Initializes the GraphViz DOT (`.dot`) output format.
         #
-        # @param [IO] io
-        #   The IO stream to write to.
+        # @param [String] path
+        #   The `.dot` file to write to.
         #
-        def initialize(io)
-          super(io)
+        def initialize(path)
+          super(path)
 
           @values = Set.new
 
-          @io.puts "digraph {"
+          @file.puts "digraph {"
         end
 
         #
@@ -84,7 +84,7 @@ module Ronin
           name  = value.to_s
           label = "#{value_type(value)}\n#{name}"
 
-          @io.puts "\t#{name.inspect} [label=#{label.inspect}]"
+          @file.puts "\t#{name.inspect} [label=#{label.inspect}]"
         end
 
         #
@@ -103,14 +103,14 @@ module Ronin
           write_value(value)  if @values.add?(value)
           write_value(parent) if @values.add?(parent)
 
-          @io.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
+          @file.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
         end
 
         #
         # Writes the complete JSON Array of values and closes the IO stream.
         #
         def close
-          @io.puts "}"
+          @file.puts "}"
 
           super
         end
