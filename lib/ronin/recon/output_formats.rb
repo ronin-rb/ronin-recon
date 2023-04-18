@@ -2,6 +2,7 @@ require 'ronin/recon/output_formats/txt'
 require 'ronin/recon/output_formats/csv'
 require 'ronin/recon/output_formats/json'
 require 'ronin/recon/output_formats/ndjson'
+require 'ronin/recon/output_formats/dir'
 require 'ronin/recon/output_formats/dot'
 
 module Ronin
@@ -13,6 +14,7 @@ module Ronin
         csv:    CSV,
         json:   JSON,
         ndjson: NDJSON,
+        dir:    Dir,
         dot:    Dot
       }
 
@@ -22,6 +24,7 @@ module Ronin
         '.csv'    => CSV,
         '.json'   => JSON,
         '.ndjson' => NDJSON,
+        ''        => Dir,
         '.dot'    => Dot
       }
     end
