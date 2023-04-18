@@ -31,15 +31,42 @@ module Ronin
       class CSV < OutputFormat
 
         #
+        # Maps a value to a type Symbol.
+        #
+        # @param [Value] value
+        #   The value.
+        #
+        # @return [:domain, :mailserver, :nameserver, :host, :ip, :ip_range, :open_port, :url, :website, :wildcard]
+        #   The type Symbol.
+        #
+        # @raise [NotImplementedError]
+        #   The given value object was not supported.
+        #
+        def value_type(value)
+          case value
+          when Values::Domain     then :domain
+          when Values::Mailserver then :mailserver
+          when Values::Nameserver then :nameserver
+          when Values::Host       then :host
+          when Values::IP         then :ip
+          when Values::IPRange    then :ip_range
+          when Values::OpenPort   then :open_port
+          when Values::URL        then :url
+          when Values::Website    then :website
+          when Values::Wildcard   then :wildcard
+          else
+            raise(NotImplementedError,"value class #{value.class} not supported")
+          end
+        end
+
+        #
         # Appends a value to the CSV stream.
         #
         # @param [Value] value
         #   The value to append.
         # 
-        # @return [self]
-        #
         def write(value,parent)
-          @io.write(CSV.generate_line(value,parent))
+          @io.write(CSV.generate_line(value_type(value),value))
         end
 
       end
