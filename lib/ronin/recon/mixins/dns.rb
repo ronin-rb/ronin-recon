@@ -145,9 +145,9 @@ module Ronin
             raise(ArgumentError,"invalid record type: #{record_type.inspect}")
           end
 
-          message = @dns_resolver.query(name,record_class)
-
-          message.answer.map { |answer| answer[2] }
+          if (message = @dns_resolver.query(name,record_class))
+            message.answer.map { |answer| answer[2] }
+          end
         end
 
         #
