@@ -47,6 +47,7 @@ module Ronin
           Values::IP         => 'ips.txt',
           Values::IPRange    => 'ip_ranges.txt',
           Values::OpenPort   => 'open_ports.txt',
+          Values::Cert       => 'certs.txt',
           Values::Website    => 'websites.txt',
           Values::URL        => 'urls.txt'
         }
