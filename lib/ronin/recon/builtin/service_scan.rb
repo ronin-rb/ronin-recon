@@ -69,7 +69,8 @@ module Ronin
           service  = open_port.service
 
           yield OpenPort.new(address,number, protocol: protocol,
-                                             service:  service && service.name)
+                                             service:  service && service.name,
+                                             ssl:      service && service.ssl?)
 
           if service
             case service.name

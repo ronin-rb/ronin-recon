@@ -65,11 +65,24 @@ module Ronin
         # @param [String, nil] service
         #   The optional service information.
         #
-        def initialize(address,number, protocol: :tcp, service: nil)
+        # @param [Boolean] ssl
+        #   Indicates that the open port uses SSL/TLS.
+        #
+        def initialize(address,number, protocol: :tcp, service: nil, ssl: false)
           @address  = address
           @number   = number
           @protocol = protocol
           @service  = service
+          @ssl      = ssl
+        end
+
+        #
+        # Determines whether the open port uses SSL/TLS.
+        #
+        # @return [Boolean]
+        #
+        def ssl?
+          @ssl
         end
 
         #
