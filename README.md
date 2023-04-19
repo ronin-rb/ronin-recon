@@ -33,6 +33,8 @@ and uses asynchronous I/O to maximize efficiency.
   * DNS SRV record enumeration.
   * DNS subdomain enumeration.
   * Service/port scanning with `nmap`.
+  * Enumerates the Common Name (`CN`) and `subjectAltName`s within all SSL/TLS
+    certificates.
   * Web spidering.
   * HTTP directory enumeration.
 * Supports loading additional recon modules from Ruby files or from installed
