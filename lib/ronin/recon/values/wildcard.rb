@@ -33,15 +33,15 @@ module Ronin
         # The wildcard host name.
         #
         # @return [String]
-        attr_reader :host_name
+        attr_reader :template
 
         #
         # Initializes the wildcard host object.
         #
-        # @param [String] host_name
+        # @param [String] template
         #
-        def initialize(host_name)
-          @host_name = host_name
+        def initialize(template)
+          @template = template
         end
 
         #
@@ -52,17 +52,17 @@ module Ronin
         # @return [Boolean]
         #
         def eql?(other)
-          other.kind_of?(self.class) && @host_name == other.host_name
+          other.kind_of?(self.class) && @template == other.template
         end
 
         #
         # The "hash" value of the wildcard host name.
         #
         # @return [Integer]
-        #   The hash value of {#host_name}.
+        #   The hash value of {#template}.
         #
         def hash
-          [self.class, @host_name].hash
+          [self.class, @template].hash
         end
 
         #
@@ -72,7 +72,7 @@ module Ronin
         #   The wildcard host name.
         #
         def to_s
-          @host_name.to_s
+          @template.to_s
         end
 
         alias to_str to_s
@@ -84,7 +84,7 @@ module Ronin
         #   The Ruby Hash that will be converted into JSON.
         #
         def as_json
-          {type: :wildcard, host_name: @host_name}
+          {type: :wildcard, template: @template}
         end
 
       end
