@@ -23,41 +23,43 @@ require 'ronin/support/network/ip_range'
 
 module Ronin
   module Recon
-    #
-    # A recon worker that enumerates every IP address within an IP range.
-    #
-    class IPRangeEnum < Worker
-
-      register 'ip_range_enum'
-
-      accepts IPRange
-
-      summary 'Enumerates the IP addresses in an IP range'
-
-      description <<~DESC
-        Enumerates over every IP address in a CIDR IP range.
-      DESC
-
+    module Net
       #
-      # Enumerates an IP range.
+      # A recon worker that enumerates every IP address within an IP range.
       #
-      # @param [Values::IPRange] ip_range
-      #   The IP range value.
-      #
-      # @yield [ip]
-      #   Each IP value within the IP range will be yielded.
-      #
-      # @yieldparam [Values::IP] ip
-      #   An IP value.
-      #
-      def process(ip_range)
-        ip_range = Support::Network::IPRange.new(ip_range.range)
+      class IPRangeEnum < Worker
 
-        ip_range.each do |address|
-          yield IP.new(address)
+        register 'ip_range_enum'
+
+        accepts IPRange
+
+        summary 'Enumerates the IP addresses in an IP range'
+
+        description <<~DESC
+          Enumerates over every IP address in a CIDR IP range.
+        DESC
+
+        #
+        # Enumerates an IP range.
+        #
+        # @param [Values::IPRange] ip_range
+        #   The IP range value.
+        #
+        # @yield [ip]
+        #   Each IP value within the IP range will be yielded.
+        #
+        # @yieldparam [Values::IP] ip
+        #   An IP value.
+        #
+        def process(ip_range)
+          ip_range = Support::Network::IPRange.new(ip_range.range)
+
+          ip_range.each do |address|
+            yield IP.new(address)
+          end
         end
-      end
 
+      end
     end
   end
 end

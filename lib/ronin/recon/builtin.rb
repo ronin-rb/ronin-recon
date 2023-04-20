@@ -18,15 +18,15 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/builtin/ip_range_enum'
 require 'ronin/recon/builtin/dns/lookup'
 require 'ronin/recon/builtin/dns/mailservers'
 require 'ronin/recon/builtin/dns/nameservers'
 require 'ronin/recon/builtin/dns/subdomain_enum'
 require 'ronin/recon/builtin/dns/suffix_enum'
 require 'ronin/recon/builtin/dns/srv_enum'
-require 'ronin/recon/builtin/service_scan'
-require 'ronin/recon/builtin/cert_grab'
-require 'ronin/recon/builtin/cert_enum'
+require 'ronin/recon/builtin/net/cert_grab'
+require 'ronin/recon/builtin/net/cert_enum'
+require 'ronin/recon/builtin/net/ip_range_enum'
+require 'ronin/recon/builtin/net/service_scan'
 require 'ronin/recon/builtin/web/spider'
 require 'ronin/recon/builtin/web/dir_enum'

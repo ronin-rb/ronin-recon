@@ -74,16 +74,16 @@ List all available recon workers:
 
 ```shell
 $ ronin-recon workers
-  cert_enum
-  cert_grab
   dns/lookup
   dns/mailservers
   dns/nameservers
   dns/srv_enum
   dns/subdomain_enum
   dns/suffix_enum
-  ip_range_enum
-  service_scan
+  net/cert_enum
+  net/cert_grab
+  net/ip_range_enum
+  net/service_scan
   web/dir_enum
   web/spider
 ```
