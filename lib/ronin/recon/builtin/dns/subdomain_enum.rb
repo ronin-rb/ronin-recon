@@ -43,7 +43,7 @@ module Ronin
           host names of the domain using a wordlist of common subdomains.
         DESC
 
-        accepts Domain
+        accepts Domain, Wildcard
 
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'
@@ -53,8 +53,8 @@ module Ronin
         #
         # Bruteforce resolves the subdomains of a given domain.
         #
-        # @param [Values::Domain] domain
-        #   The domain to bruteforce.
+        # @param [Values::Domain, Values::Wildcard] domain
+        #   The domain or wildcard host name to bruteforce.
         #
         # @yield [host]
         #   Subdomains that have DNS records will be yielded.
@@ -68,8 +68,15 @@ module Ronin
 
           Async do |task|
             task.async do
-              wordlist.each do |name|
-                queue << "#{name}.#{domain.name}"
+              case domain
+              when Domain
+                wordlist.each do |name|
+                  queue << "#{name}.#{domain.name}"
+                end
+              when Wildcard
+                wordlist.each do |name|
+                  queue << domain.template.sub('*',name)
+                end
               end
 
               # send stop messages for each sub-task
