@@ -18,6 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'ronin/support/network/dns/idn'
+
 require 'async/io'
 require 'async/dns/resolver'
 
@@ -30,6 +32,9 @@ module Ronin
       # @api public
       #
       module DNS
+        # Handles International Domain Names (IDN).
+        IDN = Support::Network::DNS::IDN
+
         # @return [Async::DNS::Resolver]
         attr_reader :dns_resolver
 
@@ -60,9 +65,13 @@ module Ronin
         #   The addresses of the hostname.
         #
         def dns_get_addresses(host)
-          @dns_resolver.addresses_for(host).map(&:to_s)
-        rescue Async::DNS::ResolutionFailure
-          return []
+          host = IDN.to_ascii(host)
+
+          begin
+            @dns_resolver.addresses_for(host).map(&:to_s)
+          rescue Async::DNS::ResolutionFailure
+            return []
+          end
         end
 
         #
@@ -141,6 +150,8 @@ module Ronin
         # @see https://rubydoc.info/stdlib/resolv/Resolv/DNS/Resource
         #
         def dns_get_records(name,record_type)
+          name = IDN.to_ascii(name)
+
           record_class = RECORD_TYPES.fetch(record_type) do
             raise(ArgumentError,"invalid record type: #{record_type.inspect}")
           end
