@@ -31,8 +31,8 @@ gem 'ronin-masscan', '~> 0.1', github: "ronin-rb/ronin-masscan",
 gem 'ronin-nmap',    '~> 0.1', github: "ronin-rb/ronin-nmap",
                                branch: 'main'
 
-# gem 'ronin-web-spider',  '~> 0.1', github: "ronin-rb/ronin-web-spider",
-#                                    branch: 'main'
+gem 'ronin-web-spider',  '~> 0.2', github: "ronin-rb/ronin-web-spider",
+                                   branch: '0.2.0'
 
 group :development do
   gem 'rake'
