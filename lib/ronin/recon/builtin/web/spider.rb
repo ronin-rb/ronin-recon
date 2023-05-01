@@ -63,6 +63,15 @@ module Ronin
             agent.every_javascript_url_string do |url|
               yield URL.new(url)
             end
+
+            agent.every_javascript_path_string do |path,page|
+              url      = page.url.merge(path)
+              response = agent.get_page(url)
+
+              if response.code == 200
+                yield URL.new(url)
+              end
+            end
           end
         end
 
