@@ -121,6 +121,14 @@ module Ronin
           [self.class, @scheme, @host, @port].hash
         end
 
+        # Mapping of {#scheme} values to URI classes.
+        #
+        # @api private
+        URI_CLASSES = {
+          https: URI::HTTPS,
+          http:  URI::HTTP
+        }
+
         #
         # Converts the website into a URI.
         #
@@ -128,11 +136,7 @@ module Ronin
         #   The URI object for the website.
         #
         def to_uri
-          if @scheme == :https
-            URI::HTTPS.build(host: @host, port: @port, path: '/')
-          else
-            URI::HTTP.build(host: @host, port: @port, path: '/')
-          end
+          URI_CLASSES.fetch(@scheme).build(host: @host, port: @port, path: '/')
         end
 
         #
