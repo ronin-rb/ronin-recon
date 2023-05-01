@@ -55,7 +55,7 @@ module Ronin
         def process(website)
           base_uri = website.to_uri
 
-          Ronin::Web::Spider.site(base_uri.merge('/')) do |agent|
+          Ronin::Web::Spider.site(base_uri) do |agent|
             agent.every_ok_page do |page|
               yield URL.new(page.url)
             end

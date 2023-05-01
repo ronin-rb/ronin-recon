@@ -129,9 +129,9 @@ module Ronin
         #
         def to_uri
           if @scheme == :https
-            URI::HTTPS.build(host: @host, port: @port)
+            URI::HTTPS.build(host: @host, port: @port, path: '/')
           else
-            URI::HTTP.build(host: @host, port: @port)
+            URI::HTTP.build(host: @host, port: @port, path: '/')
           end
         end
 
