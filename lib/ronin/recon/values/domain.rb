@@ -29,6 +29,27 @@ module Ronin
       class Domain < Host
 
         #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Imdicates whether the other value is either a {Domain} and has the
+        #   same domain name, or a {Host} and shares the same domain name.
+        #
+        def ===(other)
+          case other
+          when Domain
+            @name == other.name
+          when Host
+            other.name.end_with?(".#{@name}")
+          else
+            false
+          end
+        end
+
+        #
         # Coerces the domain value into JSON.
         #
         # @return [Hash{Symbol => Object}]
