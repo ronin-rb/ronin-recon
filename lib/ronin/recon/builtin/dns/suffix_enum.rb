@@ -51,6 +51,50 @@ module Ronin
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'
 
+        # Known bad suffixes that act like wildcard domains.
+        BAD_SUFFIXES = Set[
+          'aquila.it',
+          'arab',
+          'belau.pw',
+          'biz.ni',
+          'com.ph',
+          'com.ws',
+          'co.pw',
+          'df.gov.br',
+          'ed.pw',
+          'edu.ee',
+          'edu.ps',
+          'edu.ws',
+          'gob.ni',
+          'go.pw',
+          'int.la',
+          'int.ni',
+          'lib.ee',
+          'mil.ph',
+          'mobi.tt',
+          'music',
+          'net.ph',
+          'net.ws',
+          'ngo.ph',
+          'nom.za',
+          'org.ee',
+          'org.ph',
+          'org.ws',
+          'or.pw',
+          'plo.ps',
+          'ph',
+          'vg',
+          'ws',
+          'გე',
+          'عرب',
+          '中国',
+          '中國',
+          '公司.cn',
+          '政府',
+          '網絡.cn',
+          '网络.cn'
+        ]
+
         # The public suffix list.
         #
         # @return [Ronin::Support::Network::PublicSuffixList]
@@ -88,7 +132,11 @@ module Ronin
 
           Async do |task|
             task.async do
-              @public_suffix_list.non_wildcards.icann.each do |suffix|
+              public_suffixes = @public_suffix_list.non_wildcards.icann.reject do |suffix|
+                BAD_SUFFIXES.include?(suffix.name)
+              end
+
+              public_suffixes.each do |suffix|
                 unless suffix.name == orig_suffix
                   queue << "#{domain_name}.#{suffix.name}"
                 end
