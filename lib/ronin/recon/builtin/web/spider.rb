@@ -59,6 +59,10 @@ module Ronin
             agent.every_page do |page|
               yield URL.new(page.url.to_s)
             end
+
+            agent.every_javascript_url_string do |url|
+              yield URL.new(url)
+            end
           end
         end
 
