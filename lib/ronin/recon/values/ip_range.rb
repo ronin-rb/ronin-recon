@@ -20,6 +20,8 @@
 
 require 'ronin/recon/values/value'
 
+require 'ipaddr'
+
 module Ronin
   module Recon
     module Values
@@ -32,17 +34,22 @@ module Ronin
 
         # The IP range.
         #
-        # @return [String]
+        # @return [IPAddr]
         attr_reader :range
 
         #
         # Initializes the IP range object.
         #
-        # @param [String] range
+        # @param [IPAddr, String] range
         #   The IP range string.
         #
         def initialize(range)
-          @range = range
+          @range = case range
+                   when IPAddr then range
+                   when String then IPAddr.new(range)
+                   else
+                     raise(ArgumentError,"IP range must be either an IPAddr or String: #{range.inspect}")
+                   end
         end
 
         #
@@ -85,7 +92,7 @@ module Ronin
         #   The Ruby Hash that will be converted into JSON.
         #
         def as_json
-          {type: :ip_range, range: @range}
+          {type: :ip_range, range: @range.to_s}
         end
 
       end
