@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/worker'
+require 'ronin/recon/mixins/http'
 
 module Ronin
   module Recon
@@ -26,6 +27,9 @@ module Ronin
     # Base class for all web related workers.
     #
     class WebWorker < Worker
+
+      include Mixins::HTTP
+
     end
   end
 end
