@@ -147,7 +147,7 @@ module Ronin
         #
         def to_s
           if ((@scheme == :https) && (@port != 443)) ||
-              ((@scheme == :http) && (@port != 80))
+             ((@scheme == :http)  && (@port != 80))
             "#{@scheme}://#{@host}:#{@port}"
           else
             "#{@scheme}://#{@host}"
