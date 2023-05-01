@@ -56,8 +56,10 @@ module Ronin
           base_uri = website.to_uri
 
           Ronin::Web::Spider.site(base_uri) do |agent|
-            agent.every_ok_page do |page|
-              yield URL.new(page.url)
+            agent.every_page do |page|
+              if RESOURCE_STATUS_CODES.include?(page.code)
+                yield URL.new(page.url)
+              end
             end
 
             agent.every_javascript_url_string do |url,page|
