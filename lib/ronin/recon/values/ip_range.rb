@@ -53,6 +53,19 @@ module Ronin
         end
 
         #
+        # Determines if an IP address exists within the IP range.
+        #
+        # @param [IPAddr, String] ip
+        #   The IP address to test.
+        #
+        # @return [Boolean]
+        #   Indicates whether the IP address exists within the IP range.
+        #
+        def include?(ip)
+          @range.include?(ip)
+        end
+
+        #
         # Compares the value to another value.
         #
         # @param [Values::Value] other
