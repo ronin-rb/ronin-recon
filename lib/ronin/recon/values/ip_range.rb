@@ -66,6 +66,25 @@ module Ronin
         end
 
         #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Imdicates whether the other value is either another {IPRange} that
+        #   intersects with the IP range, or an {IP} and exists within the IP
+        #   range.
+        #
+        def ===(other)
+          case other
+          when IPRange then include?(other.range)
+          when IP      then include?(other.address)
+          else              false
+          end
+        end
+
+        #
         # Compares the value to another value.
         #
         # @param [Values::Value] other
