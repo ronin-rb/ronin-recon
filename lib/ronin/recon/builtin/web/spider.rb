@@ -57,7 +57,7 @@ module Ronin
 
           Ronin::Web::Spider.site(base_uri.merge('/')) do |agent|
             agent.every_page do |page|
-              yield URL.new(page.url.to_s)
+              yield URL.new(page.url)
             end
 
             agent.every_javascript_url_string do |url|
