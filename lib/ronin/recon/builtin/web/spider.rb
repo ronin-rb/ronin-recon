@@ -73,13 +73,12 @@ module Ronin
             end
 
             agent.every_javascript_path_string do |path,page|
-              uri = page.url.merge(path)
-
-              case uri
-              when URI::HTTP
-                agent.enqueue(uri)
+              if (uri = page.to_absolute(path))
+                case uri
+                when URI::HTTP
+                  agent.enqueue(uri)
+                end
               end
-            rescue URI::InvalidURIError
             end
           end
         end
