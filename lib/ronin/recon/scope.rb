@@ -1,0 +1,118 @@
+# frozen_string_literal: true
+#
+# ronin-recon - A micro-framework and tool for performing reconnaissance.
+#
+# Copyright (c) 2023 Hal Brodigan (postmodern.mod3@gmail.com)
+#
+# ronin-recon is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# ronin-recon is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+require 'ronin/recon/values/host'
+require 'ronin/recon/values/domain'
+require 'ronin/recon/values/ip_range'
+require 'ronin/recon/values/ip'
+
+module Ronin
+  module Recon
+    #
+    # Defines which domains, hosts, IP addresses are considered "in scope".
+    #
+    # @api private
+    #
+    class Scope
+
+      # List of domain values which are considered "in scope".
+      #
+      # @return [Array<Values::Domain>]
+      attr_reader :domains
+
+      # List of host values which are considered "in scope".
+      #
+      # @return [Array<Values::Domain, Values::Host>]
+      attr_reader :hosts
+
+      # List of IP range values which are considered "in scope".
+      #
+      # @return [Array<Values::IPRange>]
+      attr_reader :ip_ranges
+
+      # List of IP values which are considered "in scope".
+      #
+      # @return [Array<Values::IP, Values::IPRange>]
+      attr_reader :ips
+
+      #
+      # Initializes the scope.
+      #
+      # @param [Array<Values::Domain, Values::Host, Values::IPRange, Values::IP>] values
+      #   The list of "in scope" values.
+      #
+      # @raise [NotImplementedError]
+      #   An unsupported {Value} object was given.
+      #
+      def initialize(values)
+        @domains = []
+        @hosts   = []
+
+        @ip_ranges = []
+        @ips       = []
+
+        values.each do |value|
+          case value
+          when Values::Domain
+            @domains << value
+            @hosts   << value
+          when Values::Host
+            @hosts << value
+          when Values::IPRange
+            @ip_ranges << value
+            @ips       << value
+          when Values::IP
+            @ips << value
+          else
+            raise(NotImplementedError,"scope value type not supported: #{value.inspect}")
+          end
+        end
+      end
+
+      #
+      # Determines if a value is "in scope".
+      #
+      # @param [Value] value
+      #   The value to check.
+      #
+      # @return [Boolean]
+      #   Indicates whether the value is "in scope" or not.
+      #   If the given value is not a {Values::Domain Domain},
+      #   {Values::Host Host}, {Values::IPRange IPRange}, or {Values::IP IP}
+      #   then `true` is returned by default.
+      #
+      def ===(value)
+        scope_values = case value
+                       when Values::Domain  then @domains
+                       when Values::Host    then @hosts
+                       when Values::IPRange then @ip_ranges
+                       when Values::IP      then @ips
+                       end
+
+        if scope_values
+          scope_values.any? { |scope_value| scope_value === value }
+        else
+          true
+        end
+      end
+
+    end
+  end
+end
