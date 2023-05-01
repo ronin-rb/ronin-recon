@@ -63,6 +63,7 @@ module Ronin
           when Values::IP         then "IP address"
           when Values::IPRange    then "IP range"
           when Values::OpenPort   then "Open #{value.protocol.upcase} Port"
+          when Values::Cert       then "SSL/TLS Cert"
           when Values::URL        then "URL"
           when Values::Website    then "Website"
           when Values::Wildcard   then "Wildcard"
