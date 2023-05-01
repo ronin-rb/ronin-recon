@@ -89,7 +89,7 @@ module Ronin
 
                   response = http.head(url)
 
-                  if response.status == 200
+                  if RESOURCE_STATUS_CODES.include?(response.status)
                     yield URL.new(url)
                   end
                 end
