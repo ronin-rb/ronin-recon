@@ -52,6 +52,20 @@ module Ronin
         end
 
         #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Indicates whether the other value is a kind of {IP} and has the
+        #   same address.
+        #
+        def ===(other)
+          self.class == other.class && @address == other.address
+        end
+
+        #
         # Compares the value to another value.
         #
         # @param [Values::Value] other
