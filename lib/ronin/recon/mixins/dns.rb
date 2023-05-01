@@ -158,6 +158,8 @@ module Ronin
 
           if (message = @dns_resolver.query(name,record_class))
             message.answer.map { |answer| answer[2] }
+          else
+            []
           end
         end
 
