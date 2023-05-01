@@ -61,15 +61,24 @@ module Ronin
             end
 
             agent.every_javascript_url_string do |url|
-              yield URL.new(url)
+              uri = URI.parse(url)
+
+              case uri
+              when URI::HTTP
+                yield URL.new(uri)
+              end
             end
 
             agent.every_javascript_path_string do |path,page|
-              url      = page.url.merge(path)
-              response = agent.get_page(url)
+              uri = page.url.merge(path)
 
-              if response.code == 200
-                yield URL.new(url)
+              case uri
+              when URI::HTTP
+                response = agent.get_page(uri)
+
+                if response.code == 200
+                  yield URL.new(uri)
+                end
               end
             end
           end
