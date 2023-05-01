@@ -30,7 +30,7 @@ generated_files:
  - man/ronin-recon-test.1
  - man/ronin-recon-run.1
  - data/subdomains-1000.txt.gz
- - data/directory-list-2.3.txt.gz
+ - data/combined_directories.txt.gz
 
 required_ruby_version: ">= 3.0.0"
 
