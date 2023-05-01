@@ -66,6 +66,20 @@ module Ronin
         end
 
         #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Indicates whether the other value is a kind of {Host} and has the
+        #   same host name.
+        #
+        def ===(other)
+          other.kind_of?(Host) && @name == other.name
+        end
+
+        #
         # Converts the IP object to a String.
         #
         # @return [String]
