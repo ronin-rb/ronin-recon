@@ -60,13 +60,14 @@ module Ronin
               yield URL.new(page.url)
             end
 
-            agent.every_javascript_url_string do |url|
+            agent.every_javascript_url_string do |url,page|
               uri = URI.parse(url)
 
               case uri
               when URI::HTTP
-                yield URL.new(uri)
+                agent.enqueue(uri)
               end
+            rescue URI::InvalidURIError
             end
 
             agent.every_javascript_path_string do |path,page|
@@ -74,12 +75,9 @@ module Ronin
 
               case uri
               when URI::HTTP
-                response = agent.get_page(uri)
-
-                if response.code == 200
-                  yield URL.new(uri)
-                end
+                agent.enqueue(uri)
               end
+            rescue URI::InvalidURIError
             end
           end
         end
