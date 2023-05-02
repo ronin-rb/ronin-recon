@@ -37,20 +37,10 @@ module Ronin
       # @return [Array<Values::Domain>]
       attr_reader :domains
 
-      # List of host values which are considered "in scope".
-      #
-      # @return [Array<Values::Domain, Values::Host>]
-      attr_reader :hosts
-
       # List of IP range values which are considered "in scope".
       #
       # @return [Array<Values::IPRange>]
       attr_reader :ip_ranges
-
-      # List of IP values which are considered "in scope".
-      #
-      # @return [Array<Values::IP, Values::IPRange>]
-      attr_reader :ips
 
       #
       # Initializes the scope.
@@ -62,24 +52,13 @@ module Ronin
       #   An unsupported {Value} object was given.
       #
       def initialize(values)
-        @domains = []
-        @hosts   = []
-
+        @domains   = []
         @ip_ranges = []
-        @ips       = []
 
         values.each do |value|
           case value
-          when Values::Domain
-            @domains << value
-            @hosts   << value
-          when Values::Host
-            @hosts << value
-          when Values::IPRange
-            @ip_ranges << value
-            @ips       << value
-          when Values::IP
-            @ips << value
+          when Values::Domain  then @domains   << value
+          when Values::IPRange then @ip_ranges << value
           else
             raise(NotImplementedError,"scope value type not supported: #{value.inspect}")
           end
@@ -100,10 +79,10 @@ module Ronin
       #
       def include?(value)
         scope_values = case value
-                       when Values::Domain  then @domains
-                       when Values::Host    then @hosts
-                       when Values::IPRange then @ip_ranges
-                       when Values::IP      then @ips
+                       when Values::Host
+                         @domains
+                       when Values::IP, Values::IPRange
+                         @ip_ranges
                        end
 
         if (scope_values && !scope_values.empty?)
