@@ -106,7 +106,7 @@ module Ronin
                        when Values::IP      then @ips
                        end
 
-        if scope_values
+        if (scope_values && !scope_values.empty?)
           scope_values.any? { |scope_value| scope_value === value }
         else
           true
