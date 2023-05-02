@@ -21,6 +21,7 @@
 require 'ronin/recon/worker_tasks'
 require 'ronin/recon/value_status'
 require 'ronin/recon/graph'
+require 'ronin/recon/scope'
 require 'ronin/recon/message/worker_started'
 require 'ronin/recon/message/worker_stopped'
 require 'ronin/recon/message/job_started'
@@ -30,6 +31,7 @@ require 'ronin/recon/message/value'
 require 'ronin/recon/message/shutdown'
 require 'ronin/recon/builtin'
 
+require 'set'
 require 'console/logger'
 require 'async/queue'
 
@@ -39,6 +41,16 @@ module Ronin
     # The recon engine which enqueues and dequeues values from workers.
     #
     class Engine
+
+      # Recon values.
+      #
+      # @return [Set<Value>]
+      attr_reader :values
+
+      # The scope to constrain recon to.
+      #
+      # @return [Scope]
+      attr_reader :scope
 
       # The status of all values in the queue.
       #
@@ -73,9 +85,12 @@ module Ronin
       #
       # @api public
       #
-      def initialize(workers:   Recon.registry.values,
-                     max_depth: 3,
-                     logger:    Console.logger)
+      def initialize(values, workers:   Recon.registry.values,
+                             max_depth: 3,
+                             logger:    Console.logger)
+        @values = Set.new(values)
+        @scope  = Scope.new(values)
+
         @worker_classes    = {}
         @worker_tasks      = {}
         @worker_task_count = 0
@@ -126,12 +141,12 @@ module Ronin
       # @api public
       #
       def self.run(values,**kwargs,&block)
-        engine = new(**kwargs,&block)
+        engine = new(values,**kwargs,&block)
 
         # start the engine in it's own Async task
         Async do |task|
           # start the engine
-          engine.start(values,task)
+          engine.start(task)
         end
 
         return engine
@@ -337,10 +352,13 @@ module Ronin
 
             # check if the message has exceeded the max depth
             if @max_depth && mesg.depth < @max_depth
-              @logger.debug("Re-enqueueing value: #{value.inspect} ...")
+              # check if the new value is "in scope"
+              if @scope.include?(value)
+                @logger.debug("Re-enqueueing value: #{value.inspect} ...")
 
-              # feed the message back into the engine
-              enqueue_mesg(mesg)
+                # feed the message back into the engine
+                enqueue_mesg(mesg)
+              end
             end
           end
 
@@ -370,9 +388,9 @@ module Ronin
       #
       # @api private
       #
-      def start(values,task=Async::Task.current)
+      def start(task=Async::Task.current)
         # enqueue the input values for processing
-        values.each do |value|
+        @values.each do |value|
           enqueue_value(value)
         end
 
