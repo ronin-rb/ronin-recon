@@ -98,7 +98,7 @@ module Ronin
       #   {Values::Host Host}, {Values::IPRange IPRange}, or {Values::IP IP}
       #   then `true` is returned by default.
       #
-      def ===(value)
+      def include?(value)
         scope_values = case value
                        when Values::Domain  then @domains
                        when Values::Host    then @hosts
