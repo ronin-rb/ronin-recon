@@ -350,10 +350,10 @@ module Ronin
               end
             end
 
-            # check if the message has exceeded the max depth
-            if @max_depth.nil? || mesg.depth < @max_depth
-              # check if the new value is "in scope"
-              if @scope.include?(value)
+            # check if the new value is "in scope"
+            if @scope.include?(value)
+              # check if the message has exceeded the max depth
+              if @max_depth.nil? || mesg.depth < @max_depth
                 @logger.debug("Re-enqueueing value: #{value.inspect} ...")
 
                 # feed the message back into the engine
