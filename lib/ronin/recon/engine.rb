@@ -66,7 +66,7 @@ module Ronin
 
       # The maximum depth to recon.
       #
-      # @return [Integer]
+      # @return [Integer, nil]
       #
       # @api public
       attr_reader :max_depth
@@ -351,7 +351,7 @@ module Ronin
             end
 
             # check if the message has exceeded the max depth
-            if @max_depth && mesg.depth < @max_depth
+            if @max_depth.nil? || mesg.depth < @max_depth
               # check if the new value is "in scope"
               if @scope.include?(value)
                 @logger.debug("Re-enqueueing value: #{value.inspect} ...")
