@@ -86,7 +86,7 @@ module Ronin
       # @api public
       #
       def initialize(values, workers:   Recon.registry.values,
-                             max_depth: 3,
+                             max_depth: nil,
                              logger:    Console.logger)
         @values = Set.new(values)
         @scope  = Scope.new(values)
