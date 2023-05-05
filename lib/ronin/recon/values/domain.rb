@@ -44,6 +44,8 @@ module Ronin
             @name == other.name
           when Host
             other.name.end_with?(".#{@name}")
+          when IP
+            other.host && other.host.end_with?(".#{@name}")
           else
             false
           end
