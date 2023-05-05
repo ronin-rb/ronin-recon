@@ -46,6 +46,9 @@ module Ronin
         # @param [String] address
         #   The IP address.
         #
+        # @param [String, nil] host
+        #   The host name for the IP address.
+        #
         def initialize(address, host: nil)
           @address = address
           @host    = host
