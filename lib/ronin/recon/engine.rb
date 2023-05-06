@@ -413,6 +413,16 @@ module Ronin
         end
       end
 
+      #
+      # The discovered recon values.
+      #
+      # @return [Set<Value>]
+      #   The set of discovered recon values.
+      #
+      def values
+        @graph.nodes
+      end
+
     end
   end
 end
