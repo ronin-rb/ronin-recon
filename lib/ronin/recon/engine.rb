@@ -42,11 +42,6 @@ module Ronin
     #
     class Engine
 
-      # Recon values.
-      #
-      # @return [Set<Value>]
-      attr_reader :values
-
       # The scope to constrain recon to.
       #
       # @return [Scope]
@@ -88,8 +83,7 @@ module Ronin
       def initialize(values, workers:   Recon.registry.values,
                              max_depth: nil,
                              logger:    Console.logger)
-        @values = Set.new(values)
-        @scope  = Scope.new(values)
+        @scope = Scope.new(values)
 
         @worker_classes    = {}
         @worker_tasks      = {}
@@ -389,8 +383,8 @@ module Ronin
       # @api private
       #
       def start(task=Async::Task.current)
-        # enqueue the input values for processing
-        @values.each do |value|
+        # enqueue the scope values for processing
+        @scope.values.each do |value|
           enqueue_value(value)
         end
 
