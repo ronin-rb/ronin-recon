@@ -24,6 +24,27 @@ require 'ronin/db'
 
 module Ronin
   module Recon
+    #
+    # Handles importing recon values into [ronin-db].
+    #
+    # [ronin-db]: https://github.com/ronin-rb/ronin-db#readme
+    #
+    # ## Examples
+    #
+    #     require 'ronin/db'
+    #     require 'ronin/recon/importer'
+    #
+    #     Ronin::DB.connect
+    #
+    #     values = [Ronin::Recon::Values::Domain.new('...'), ...]
+    #
+    #     Ronin::Recon::Engine.run(values) do |engine|
+    #       engine.on(:value) do |value|
+    #         puts "Fond new value #{value}"
+    #         Ronin::Recon::Importer.import_value(value)
+    #       end
+    #     end
+    #
     module Importer
       #
       # Imports a value into the database.
