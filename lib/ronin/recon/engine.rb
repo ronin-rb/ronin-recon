@@ -374,9 +374,6 @@ module Ronin
       #
       # Starts the recon engine.
       #
-      # @param [Array<Value>] values
-      #   The initial values to enqueue into the recon engine.
-      #
       # @param [Async::Task] task
       #   The async task to run the recon engine under.
       #
