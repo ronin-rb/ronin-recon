@@ -34,7 +34,7 @@ module Ronin
 
       # List of domain or IP range values which are considered "in scope".
       #
-      # @return [Array<Values::Domain, Values::IPRange>]
+      # @return [Array<Values::Domain, Values::Host, Values::IPRange, Values::IP>]
       attr_reader :values
 
       #
@@ -44,7 +44,7 @@ module Ronin
       #   The list of "in scope" values.
       #
       # @raise [NotImplementedError]
-      #   An unsupported {Value} object was given.
+      #   An unsupported value object was given.
       #
       def initialize(values)
         @values = []
