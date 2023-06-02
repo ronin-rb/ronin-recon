@@ -8,30 +8,30 @@ platform :jruby do
   gem 'jruby-openssl', '~> 0.7'
 end
 
-# gem 'wordlist', '~> 1.0', github: "postmodern/wordlist",
+# gem 'wordlist', '~> 1.0', github: 'postmodern/wordlist',
 #                           branch: 'main'
 
 # Ronin dependencies
-gem 'ronin-support',  '~> 1.0', github: "ronin-rb/ronin-support",
+gem 'ronin-support',  '~> 1.0', github: 'ronin-rb/ronin-support',
                                 branch: 'main'
-# gem 'ronin-core',     '~> 0.1', github: "ronin-rb/ronin-core",
+# gem 'ronin-core',     '~> 0.1', github: 'ronin-rb/ronin-core',
 #                                 branch: 'main'
-# gem 'ronin-repos',    '~> 0.1', github: "ronin-rb/ronin-repos",
+# gem 'ronin-repos',    '~> 0.1', github: 'ronin-rb/ronin-repos',
 #                                 branch: 'main'
 
-gem 'ronin-db-activerecord', '~> 0.2', github: "ronin-rb/ronin-db-activerecord",
+gem 'ronin-db-activerecord', '~> 0.2', github: 'ronin-rb/ronin-db-activerecord',
                                        branch: '0.2.0'
 
-gem 'ronin-db',      '~> 0.2', github: "ronin-rb/ronin-db",
+gem 'ronin-db',      '~> 0.2', github: 'ronin-rb/ronin-db',
                                branch: '0.2.0'
 
-gem 'ronin-masscan', '~> 0.1', github: "ronin-rb/ronin-masscan",
+gem 'ronin-masscan', '~> 0.1', github: 'ronin-rb/ronin-masscan',
                                branch: 'main'
 
-gem 'ronin-nmap',    '~> 0.1', github: "ronin-rb/ronin-nmap",
+gem 'ronin-nmap',    '~> 0.1', github: 'ronin-rb/ronin-nmap',
                                branch: 'main'
 
-gem 'ronin-web-spider',  '~> 0.2', github: "ronin-rb/ronin-web-spider",
+gem 'ronin-web-spider',  '~> 0.2', github: 'ronin-rb/ronin-web-spider',
                                    branch: '0.2.0'
 
 group :development do
