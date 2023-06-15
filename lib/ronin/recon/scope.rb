@@ -18,8 +18,9 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/values/host'
+require 'ronin/recon/values/wildcard'
 require 'ronin/recon/values/domain'
+require 'ronin/recon/values/host'
 require 'ronin/recon/values/ip_range'
 require 'ronin/recon/values/ip'
 
@@ -40,19 +41,24 @@ module Ronin
       #
       # Initializes the scope.
       #
-      # @param [Array<Values::Domain, Values::Host, Values::IPRange, Values::IP>] values
+      # @param [Array<Values::Wildcard, Values::Domain, Values::Host, Values::IPRange, Values::IP>] values
       #   The list of "in scope" values.
       #
       # @raise [NotImplementedError]
       #   An unsupported value object was given.
       #
       def initialize(values)
-        @values = []
+        @values = values
+
+        @host_values = []
+        @ip_values   = []
 
         values.each do |value|
           case value
-          when Values::Domain, Values::IPRange
-            @values << value
+          when Values::Wildcard, Values::Domain, Values::IPRange
+            @host_values << value
+          when Values::IP, Values::IPRange
+            @ip_values << value
           else
             raise(NotImplementedError,"scope value type not supported: #{value.inspect}")
           end
@@ -72,9 +78,15 @@ module Ronin
       #   then `true` is returned by default.
       #
       def include?(value)
-        case value
-        when Values::Host, Values::IP, Values::IPRange
-          @values.any? { |scope_value| scope_value === value }
+        scope_values = case value
+                       when Values::Wildcard, Values::Domain, Values::Host
+                         @host_values
+                       when Values::IP, Values::IPRange
+                         @ip_values
+                       end
+
+        if (scope_values && !scope_values.empty?)
+          scope_values.any? { |scope_value| scope_value === value }
         else
           true
         end
