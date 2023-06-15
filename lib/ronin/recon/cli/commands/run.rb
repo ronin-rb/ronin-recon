@@ -172,6 +172,15 @@ module Ronin
                 engine.on(:connection) do |value,parent|
                   output_file.write_connection(value,parent) if options[:output]
                 end
+
+                engine.on(:job_failed) do |worker,value,exception|
+                  log_error "[#{worker.id}] job failed for value #{value}:"
+                  log_error "  #{exception.class}: #{exception.message}"
+
+                  exception.backtrace.each do |line|
+                    log_error "    #{line}"
+                  end
+                end
               end
             ensure
               output_file.close if options[:output]
