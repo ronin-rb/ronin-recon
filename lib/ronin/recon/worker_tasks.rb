@@ -106,7 +106,14 @@ module Ronin
       # Runs the worker.
       #
       def run
-        until (mesg = @input_queue.dequeue) == Message::SHUTDOWN
+        # HACK: for some reason `until (mesg = ...) == Message::SHUTDOWn)`
+        # causes `Message::SHUTDOWN` objects to slip by. Changing it to a
+        # `loop do` fixes this for some reason.
+        loop do
+          if (mesg = @input_queue.dequeue) == Message::SHUTDOWN
+            break
+          end
+
           value = mesg.value
 
           enqueue(Message::JobStarted.new(@worker,value))
