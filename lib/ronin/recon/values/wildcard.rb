@@ -19,6 +19,8 @@
 #
 
 require 'ronin/recon/values/value'
+require 'ronin/recon/values/domain'
+require 'ronin/recon/values/host'
 
 module Ronin
   module Recon
@@ -42,6 +44,8 @@ module Ronin
         #
         def initialize(template)
           @template = template
+
+          @prefix, @suffix = template.split('*',2)
         end
 
         #
@@ -53,6 +57,27 @@ module Ronin
         #
         def eql?(other)
           other.kind_of?(self.class) && @template == other.template
+        end
+
+        #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Wildcard, Domain, Host, Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Imdicates whether the other value is either a {Domain} and has the
+        #   same domain name, or a {Host} and shares the same domain name.
+        #
+        def ===(other)
+          case other
+          when Wildcard
+            eql?(other)
+          when Domain, Host
+            other.name.start_with?(@prefix) && other.name.end_with?(@suffix)
+          else
+            false
+          end
         end
 
         #
