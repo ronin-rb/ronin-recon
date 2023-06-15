@@ -109,7 +109,7 @@ module Ronin
         until (mesg = @input_queue.dequeue) == Message::SHUTDOWN
           value = mesg.value
 
-          @output_queue.enqueue(Message::JobStarted.new(@worker,value))
+          enqueue(Message::JobStarted.new(@worker,value))
 
           begin
             @worker.process(value) do |result|
@@ -119,12 +119,12 @@ module Ronin
                                                      parent: value,
                                                      depth:  mesg.depth + 1)
 
-              @output_queue.enqueue(new_value)
+              enqueue(new_value)
             end
 
-            @output_queue.enqueue(Message::JobCompleted.new(@worker,value))
+            enqueue(Message::JobCompleted.new(@worker,value))
           rescue => error
-            @output_queue.enqueue(Message::JobFailed.new(@worker,value,error))
+            enqueue(Message::JobFailed.new(@worker,value,error))
           end
         end
 
@@ -153,7 +153,7 @@ module Ronin
       #
       def started!
         # send a message to the engine that the worker task has started
-        @output_queue.enqueue(Message::WorkerStarted.new(@worker))
+        enqueue(Message::WorkerStarted.new(@worker))
       end
 
       #
@@ -161,7 +161,18 @@ module Ronin
       #
       def stopped!
         # send a message to the engine that the worker task has stopped
-        @output_queue.enqueue(Message::WorkerStopped.new(@worker))
+        enqueue(Message::WorkerStopped.new(@worker))
+      end
+
+      private
+
+      #
+      # Sends a message to the output queue.
+      #
+      # @param [Message::JobStarted, Message::JobCompleted, Message::JobFailed, Message::Value]
+      #
+      def enqueue(mesg)
+        @output_queue.enqueue(mesg)
       end
 
     end
