@@ -39,7 +39,7 @@ module Ronin
         #
         def load_worker(name)
           Recon.load_class(name)
-        rescue ClassNotFound => error
+        rescue Recon::ClassNotFound => error
           print_error(error.message)
           exit(1)
         rescue => error
@@ -59,7 +59,7 @@ module Ronin
         #
         def load_worker_from(file)
           Recon.load_class_from_file(file)
-        rescue ClassNotFound => error
+        rescue Recon::ClassNotFound => error
           print_error(error.message)
           exit(1)
         rescue => error
