@@ -70,6 +70,7 @@ module Ronin
                 agent.enqueue(uri)
               end
             rescue URI::InvalidURIError
+              # ignore invalid URIs
             end
 
             agent.every_javascript_path_string do |path,page|

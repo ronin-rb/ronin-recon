@@ -35,7 +35,7 @@ module Ronin
         #
         # @param [Values::Value] value
         #   The value to append.
-        # 
+        #
         # @return [self]
         #
         def write_value(value)

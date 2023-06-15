@@ -381,9 +381,11 @@ module Ronin
       #
       def start(task=Async::Task.current)
         # enqueue the scope values for processing
+        # rubocop:disable Style/HashEachMethods
         @scope.values.each do |value|
           enqueue_value(value)
         end
+        # rubocop:enable Style/HashEachMethods
 
         # output consumer task
         task.async { run }

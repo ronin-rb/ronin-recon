@@ -37,8 +37,8 @@ module Ronin
         summary 'Scans an IP for services'
 
         description <<~DESC
-        Performs an nmap service scan of the given IP and retruns the open
-        ports and discovered services.
+          Performs an nmap service scan of the given IP and retruns the open
+          ports and discovered services.
         DESC
 
         param :ports, String, desc: 'Optional port list to scan'

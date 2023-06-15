@@ -96,7 +96,7 @@ module Ronin
         #
         # @param [Values::Value] parent
         #   The parent value of the given value.
-        # 
+        #
         # @return [self]
         #
         def write_connection(value,parent)

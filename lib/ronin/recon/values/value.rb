@@ -57,11 +57,14 @@ module Ronin
         #
         # Converts the value into JSON.
         #
+        # @param [Hash, nil] options
+        #   Additional options for `JSON.generate`.
+        #
         # @return [String]
         #   The raw JSON string.
         #
-        def to_json
-          as_json.to_json
+        def to_json(options=nil)
+          as_json.to_json(options)
         end
 
       end

@@ -120,7 +120,7 @@ module Ronin
         #   The domain name to bruteforce.
         #
         # @yield [new_domain]
-        #   Each new domain with a different public suffix 
+        #   Each new domain with a different public suffix.
         #
         # @yieldparam [Values::Domain] new_domain
         #   A valid domain with a different suffix.

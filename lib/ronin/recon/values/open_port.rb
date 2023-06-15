@@ -151,7 +151,9 @@ module Ronin
             protocol: @protocol,
             number:   @number
           }
+
           hash[:service] = @service if @service
+
           return hash
         end
 

@@ -61,11 +61,11 @@ module Ronin
             files = if dir
                       dir = "#{dir}/" unless dir.end_with?('/')
 
-                      Ronin::Recon::list_files.select do |file|
+                      Ronin::Recon.list_files.select do |file|
                         file.start_with?(dir)
                       end
                     else
-                      Ronin::Recon::list_files
+                      Ronin::Recon.list_files
                     end
 
             files.each do |file|

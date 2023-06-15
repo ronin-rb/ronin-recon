@@ -30,3 +30,13 @@ Lint/UselessMethodDefinition:
 Style/WhileUntilModifier:
   Exclude:
     - 'lib/ronin/recon/engine.rb'
+
+# the Values #=== methods need to compare the other value's class
+Style/ClassEqualityComparison:
+  Exclude:
+    - 'lib/ronin/recon/values/*.rb'
+
+# must use #=== to compare values
+Style/CaseEquality:
+  Exclude:
+    - 'lib/ronin/recon/scope.rb'
