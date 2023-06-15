@@ -58,8 +58,8 @@ module Ronin
         #
         def process(ip)
           xml = Nmap.scan(ip.address, verbose:      true,
-                          service_scan: true,
-                          ports:        params[:ports])
+                                      service_scan: true,
+                                      ports:        params[:ports])
 
           address = ip.address
           host    = ip.host || xml.host.hostname || address
