@@ -210,7 +210,7 @@ module Ronin
         case event
         when :value         then @value_callbacks         << block
         when :connection    then @connection_callbacks    << block
-        when :job_start     then @job_started_callbacks   << block
+        when :job_started   then @job_started_callbacks   << block
         when :job_completed then @job_completed_callbacks << block
         when :job_failed    then @job_failed_callbacks    << block
         else
