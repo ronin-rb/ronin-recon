@@ -29,7 +29,7 @@ module Ronin
       #
       class IPRangeEnum < Worker
 
-        register 'ip_range_enum'
+        register 'net/ip_range_enum'
 
         accepts IPRange
 

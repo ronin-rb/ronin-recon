@@ -30,7 +30,7 @@ module Ronin
       #
       class ServiceScan < Worker
 
-        register 'service_scan'
+        register 'net/service_scan'
 
         accepts IP
 

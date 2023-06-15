@@ -31,7 +31,7 @@ module Ronin
       #
       class CertGrab < Worker
 
-        register 'cert_grab'
+        register 'net/cert_grab'
 
         accepts OpenPort
 
