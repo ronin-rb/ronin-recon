@@ -78,11 +78,14 @@ module Ronin
         # @param [Hash, nil] options
         #   Additional options for `JSON.generate`.
         #
+        # @param [Array] args
+        #   Additional arguments for `Hash#to_json`.
+        #
         # @return [String]
         #   The raw JSON string.
         #
-        def to_json(options=nil)
-          as_json.to_json(options)
+        def to_json(*args)
+          as_json.to_json(options,*args)
         end
 
         #
