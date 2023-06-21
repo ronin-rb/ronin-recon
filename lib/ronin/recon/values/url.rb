@@ -88,7 +88,7 @@ module Ronin
         #   The Ruby Hash that will be converted into JSON.
         #
         def as_json
-          {type: :uri, url: @url.to_s}
+          {type: :url, url: @url.to_s}
         end
 
       end
