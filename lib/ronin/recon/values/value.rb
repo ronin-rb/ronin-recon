@@ -19,6 +19,7 @@
 #
 
 require 'json'
+require 'csv'
 
 module Ronin
   module Recon
@@ -82,6 +83,16 @@ module Ronin
         #
         def to_json(options=nil)
           as_json.to_json(options)
+        end
+
+        #
+        # Converts the value to a CSV row.
+        #
+        # @return [String]
+        #   The CSV row.
+        #
+        def to_csv
+          CSV.generate_line(self.class.value_type,to_s)
         end
 
       end
