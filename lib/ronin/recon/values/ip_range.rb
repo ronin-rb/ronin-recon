@@ -127,6 +127,23 @@ module Ronin
           {type: :ip_range, range: @range.to_s}
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:ip_range]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :ip_range
+        end
+
       end
     end
   end

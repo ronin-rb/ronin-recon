@@ -91,6 +91,23 @@ module Ronin
           {type: :url, url: @url.to_s}
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:url]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :url
+        end
+
       end
     end
   end

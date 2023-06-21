@@ -112,6 +112,23 @@ module Ronin
           {type: :wildcard, template: @template}
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:wildcard]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :wildcard
+        end
+
       end
     end
   end

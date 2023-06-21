@@ -31,6 +31,23 @@ module Ronin
       class Value
 
         #
+        # Returns the type or kind of recon value.
+        #
+        # @return [Symbol]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          raise(NotImplementedError,"#{self}.value_type was not defined")
+        end
+
+        #
         # Coerces the value into JSON.
         #
         # @return [Hash{Symbol => Object}]

@@ -164,6 +164,23 @@ module Ronin
           {type: :website, scheme: @scheme, host: @host, port: @port}
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:website]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :website
+        end
+
       end
     end
   end

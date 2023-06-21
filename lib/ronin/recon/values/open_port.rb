@@ -157,6 +157,23 @@ module Ronin
           return hash
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:open_port]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :open_port
+        end
+
       end
     end
   end

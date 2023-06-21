@@ -40,6 +40,23 @@ module Ronin
           {type: :mailserver, name: @name}
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:mailserver]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :mailserver
+        end
+
       end
     end
   end

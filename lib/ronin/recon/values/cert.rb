@@ -119,6 +119,23 @@ module Ronin
           @cert.to_s
         end
 
+        #
+        # Returns the type or kind of recon value.
+        #
+        # @return [:cert]
+        #
+        # @note
+        #   This is used internally to map a recon value class to a printable
+        #   type.
+        #
+        # @abstract
+        #
+        # @api private
+        #
+        def self.value_type
+          :cert
+        end
+
       end
     end
   end
