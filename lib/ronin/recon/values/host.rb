@@ -36,9 +36,10 @@ module Ronin
         attr_reader :name
 
         #
-        # Initializes the IP object.
+        # Initializes the host object.
         #
         # @param [String] name
+        #   The host name.
         #
         def initialize(name)
           @name = name
