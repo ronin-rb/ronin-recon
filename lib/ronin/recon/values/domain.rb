@@ -19,7 +19,6 @@
 #
 
 require 'ronin/recon/values/host'
-require 'ronin/recon/values/domain'
 require 'ronin/recon/values/ip'
 
 module Ronin

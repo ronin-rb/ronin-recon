@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/values/nameserver'
+require 'ronin/recon/values/host'
 
 module Ronin
   module Recon
