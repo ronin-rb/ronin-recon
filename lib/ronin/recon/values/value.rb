@@ -85,7 +85,7 @@ module Ronin
         #   The raw JSON string.
         #
         def to_json(*args)
-          as_json.to_json(options,*args)
+          as_json.to_json(*args)
         end
 
         #
@@ -95,7 +95,7 @@ module Ronin
         #   The CSV row.
         #
         def to_csv
-          CSV.generate_line(self.class.value_type,to_s)
+          CSV.generate_line([self.class.value_type,to_s])
         end
 
       end
