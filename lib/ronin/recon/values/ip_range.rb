@@ -43,6 +43,9 @@ module Ronin
         # @param [IPAddr, String] range
         #   The IP range string.
         #
+        # @raise [ArgumentError]
+        #   The given range was not an `IPAddr` or `String` object.
+        #
         def initialize(range)
           @range = case range
                    when IPAddr then range
