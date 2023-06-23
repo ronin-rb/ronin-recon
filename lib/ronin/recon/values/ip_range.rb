@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/values/value'
+require 'ronin/recon/values/ip'
 
 require 'ipaddr'
 
