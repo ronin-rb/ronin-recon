@@ -111,8 +111,6 @@ module Ronin
         #   This is used internally to map a recon value class to a printable
         #   type.
         #
-        # @abstract
-        #
         # @api private
         #
         def self.value_type
