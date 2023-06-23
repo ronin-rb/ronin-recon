@@ -1,0 +1,90 @@
+require 'spec_helper'
+require 'ronin/recon/values/domain'
+
+describe Ronin::Recon::Values::Domain do
+  let(:name) { 'example.com' }
+
+  subject { described_class.new(name) }
+
+  describe "#===" do
+    context "when given an Domain object" do
+      context "and the other Domain object has the same #name" do
+        let(:other) { described_class.new(name) }
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other Domain object has a different #name" do
+        let(:other) { described_class.new('other.com') }
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given an Host object" do
+      context "and the other Host object has a #name that ends with the Domain's #name" do
+        let(:other) { Ronin::Recon::Values::Host.new("www.#{name}") }
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other Host object has a #name that ends in a different domain name" do
+        let(:other) { Ronin::Recon::Values::Host.new("www.other.com") }
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given an IP object" do
+      context "and the other IP object has a #host that ends with the Domain's #name" do
+        let(:other) do
+          Ronin::Recon::Values::IP.new('93.184.216.34', host: "www.#{name}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other IP object has a #name that ends in a different domain name" do
+        let(:other) do
+          Ronin::Recon::Values::IP.new('127.0.0.1', host: "localhost")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given a non-Host object" do
+      let(:other) { Object.new }
+
+      it "must return false" do
+        expect(subject === other).to be(false)
+      end
+    end
+  end
+
+  describe "#as_json" do
+    it "must return a Hash containing the type: and name: attributes" do
+      expect(subject.as_json).to eq({type: :domain, name: name})
+    end
+  end
+
+  describe ".value_type" do
+    subject { described_class }
+
+    it "must return :domain " do
+      expect(subject.value_type).to be(:domain)
+    end
+  end
+end
