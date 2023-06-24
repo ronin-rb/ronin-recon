@@ -40,3 +40,4 @@ Style/ClassEqualityComparison:
 Style/CaseEquality:
   Exclude:
     - 'lib/ronin/recon/scope.rb'
+    - 'spec/**/*_spec.rb'
