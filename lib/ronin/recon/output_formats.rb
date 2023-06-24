@@ -18,16 +18,18 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/txt'
-require 'ronin/recon/output_formats/csv'
-require 'ronin/recon/output_formats/json'
-require 'ronin/recon/output_formats/ndjson'
+require 'ronin/core/output_formats/txt'
+require 'ronin/core/output_formats/csv'
+require 'ronin/core/output_formats/json'
+require 'ronin/core/output_formats/ndjson'
 require 'ronin/recon/output_formats/dir'
 require 'ronin/recon/output_formats/dot'
 
 module Ronin
   module Recon
     module OutputFormats
+      include Core::OutputFormats
+
       # Mapping of output format names to output format classes.
       FORMATS = {
         txt:    TXT,

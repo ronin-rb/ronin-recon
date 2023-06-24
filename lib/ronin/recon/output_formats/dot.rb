@@ -18,7 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_file'
+require 'ronin/core/output_formats/output_format'
+require 'ronin/recon/output_formats/graph_format'
 
 require 'set'
 
@@ -28,18 +29,20 @@ module Ronin
       #
       # Represents a GraphViz DOT (`.dot`) output format.
       #
-      class Dot < OutputFile
+      class Dot < Core::OutputFormats::OutputFormat
+
+        include GraphFormat
 
         #
         # Initializes the GraphViz DOT (`.dot`) output format.
         #
-        # @param [String] path
-        #   The `.dot` file to write to.
+        # @param [IO] io
+        #   The output stream to write to.
         #
-        def initialize(path)
-          super(path)
+        def initialize(io)
+          super(io)
 
-          @file.puts "digraph {"
+          @io.puts "digraph {"
         end
 
         #
@@ -79,12 +82,12 @@ module Ronin
         # @param [Values::Value] value
         #   The value object to write.
         #
-        def write_value(value)
+        def <<(value)
           name  = value.to_s
           label = "#{value_type(value)}\n#{name}"
 
-          @file.puts "\t#{name.inspect} [label=#{label.inspect}]"
-          @file.flush
+          @io.puts "\t#{name.inspect} [label=#{label.inspect}]"
+          @io.flush
         end
 
         #
@@ -99,16 +102,16 @@ module Ronin
         #
         # @return [self]
         #
-        def write_connection(value,parent)
-          @file.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
-          @file.flush
+        def []=(value,parent)
+          @io.puts "\t#{parent.to_s.inspect} -> #{value.to_s.inspect}"
+          @io.flush
         end
 
         #
         # Writes the complete JSON Array of values and closes the IO stream.
         #
         def close
-          @file.puts "}"
+          @io.puts "}"
 
           super
         end

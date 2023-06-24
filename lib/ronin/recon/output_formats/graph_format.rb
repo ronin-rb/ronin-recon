@@ -18,31 +18,30 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_file'
-
-require 'set'
-
 module Ronin
   module Recon
     module OutputFormats
       #
-      # Represents a plain-text list of discovered values.
+      # Indicates that an output format can contain graph information.
       #
-      class TXT < OutputFile
-
+      module GraphFormat
         #
-        # Appends a value to the list output stream.
+        # Appends a value and it's parent value to the GraphViz DOT output
+        # stream.
         #
         # @param [Values::Value] value
         #   The value to append.
         #
+        # @param [Values::Value] parent
+        #   The parent value of the given value.
+        #
         # @return [self]
         #
-        def write_value(value)
-          @file.puts(value)
-          @file.flush
+        # @abstract
+        #
+        def []=(value,parent)
+          raise(NotImplementedError,"#{self.class}#[]= was not implemented")
         end
-
       end
     end
   end

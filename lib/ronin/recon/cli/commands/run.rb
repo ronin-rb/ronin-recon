@@ -150,9 +150,9 @@ module Ronin
               exit(-1)
             end
 
-            if options[:output]
-              output_file = output_format_class.new(options[:output])
-            end
+            output_file = if options[:output]
+                            output_format_class.open(options[:output])
+                          end
 
             if options[:import]
               require 'ronin/db'
@@ -165,12 +165,14 @@ module Ronin
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
 
-                  output_file.write_value(value) if options[:output]
-                  import_value(value)            if options[:import]
+                  output_file << value if options[:output]
+                  import_value(value)  if options[:import]
                 end
 
-                engine.on(:connection) do |value,parent|
-                  output_file.write_connection(value,parent) if options[:output]
+                if output_file.kind_of?(OutputFormats::GraphFormat)
+                  engine.on(:connection) do |value,parent|
+                    output_file[value] = parent
+                  end
                 end
 
                 engine.on(:job_failed) do |worker,value,exception|

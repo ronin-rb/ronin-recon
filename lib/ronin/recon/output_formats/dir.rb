@@ -18,10 +18,9 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/output_format'
+require 'ronin/core/output_formats/output_dir'
 require 'ronin/recon/values'
 
-require 'fileutils'
 require 'set'
 
 module Ronin
@@ -30,12 +29,12 @@ module Ronin
       #
       # Represents an output directory.
       #
-      class Dir < OutputFormat
+      class Dir < Core::OutputFormats::OutputDir
 
-        # The set of previously seen values.
+        # The opened filenames and files within the output directory.
         #
-        # @return [Set<Value>]
-        attr_reader :values
+        # @return [Hash{Class<Values::Value> => File}]
+        attr_reader :files
 
         # Mapping of value classes to file names.
         VALUE_FILE_NAMES = {
@@ -61,7 +60,6 @@ module Ronin
         def initialize(path)
           super(path)
 
-          FileUtils.mkdir_p(@path)
           @files = VALUE_FILE_NAMES.transform_values do |file_name|
             File.open(File.join(@path,file_name),'w')
           end
@@ -73,7 +71,7 @@ module Ronin
         # @param [Values::Value] value
         #   The value to write.
         #
-        def write_value(value)
+        def <<(value)
           file = @files.fetch(value.class) do
             raise(NotImplementedError,"unsupported value class: #{value.inspect}")
           end
