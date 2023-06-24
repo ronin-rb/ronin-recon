@@ -55,7 +55,7 @@ module Ronin
 
         values.each do |value|
           case value
-          when Values::Wildcard, Values::Domain, Values::IPRange
+          when Values::Wildcard, Values::Domain
             @host_values << value
           when Values::IP, Values::IPRange
             @ip_values << value
