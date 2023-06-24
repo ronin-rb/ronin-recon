@@ -28,6 +28,13 @@ module Ronin
       #
       class Cert < Value
 
+        # The certificate object.
+        #
+        # @return [OpenSSL::X509::Certificate]
+        #
+        # @api private
+        attr_reader :cert
+
         #
         # Initializes the certificate value.
         #
