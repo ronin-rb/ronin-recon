@@ -116,13 +116,6 @@ module Ronin
         end
 
         #
-        # @return [(String, Integer)]
-        #
-        def to_a
-          [@address, @number]
-        end
-
-        #
         # Converts the open port into a String.
         #
         # @return [String]
