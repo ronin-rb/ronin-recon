@@ -50,6 +50,11 @@ module Ronin
         # @return [String, nil] service
         attr_reader :service
 
+        # Indiciates whether the open port uses SSL.
+        #
+        # @return [Boolean]
+        attr_reader :ssl
+
         #
         # Initializes the open port.
         #
