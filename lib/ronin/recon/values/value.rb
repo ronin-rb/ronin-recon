@@ -75,9 +75,6 @@ module Ronin
         #
         # Converts the value into JSON.
         #
-        # @param [Hash, nil] options
-        #   Additional options for `JSON.generate`.
-        #
         # @param [Array] args
         #   Additional arguments for `Hash#to_json`.
         #

@@ -176,7 +176,8 @@ module Ronin
       #
       # Sends a message to the output queue.
       #
-      # @param [Message::JobStarted, Message::JobCompleted, Message::JobFailed, Message::Value]
+      # @param [Message::JobStarted, Message::JobCompleted, Message::JobFailed, Message::Value] mesg
+      #   The message object to enqueue.
       #
       def enqueue(mesg)
         @output_queue.enqueue(mesg)
