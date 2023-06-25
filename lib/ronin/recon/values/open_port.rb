@@ -97,7 +97,8 @@ module Ronin
             @address  == other.address &&
             @number   == other.number &&
             @protocol == other.protocol &&
-            @service  == other.service
+            @service  == other.service &&
+            @ssl      == other.ssl
         end
 
         #
@@ -106,7 +107,7 @@ module Ronin
         # @return [Integer]
         #
         def hash
-          [self.class, @address, @number, @protocol, @service].hash
+          [self.class, @address, @number, @protocol, @service, @ssl].hash
         end
 
         #
@@ -153,6 +154,7 @@ module Ronin
           }
 
           hash[:service] = @service if @service
+          hash[:ssl]     = @ssl     if @ssl
 
           return hash
         end
