@@ -27,6 +27,10 @@ require 'ronin/recon/output_formats/dot'
 
 module Ronin
   module Recon
+    #
+    # Contains the supported output formats for saving {Ronin::Recon::Values}
+    # object to output files.
+    #
     module OutputFormats
       include Core::OutputFormats
 
