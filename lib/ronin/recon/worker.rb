@@ -328,7 +328,7 @@ module Ronin
       # @abstract
       #
       def process(value,&block)
-        raise(NotImplementedError,"#{self} did not define a #process method")
+        raise(NotImplementedError,"#{self.class} did not define a #process method")
       end
 
     end
