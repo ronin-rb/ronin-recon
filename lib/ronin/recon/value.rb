@@ -48,6 +48,19 @@ module Ronin
       end
 
       #
+      # Compares the value to another value.
+      #
+      # @param [Object] other
+      #   The other value.
+      #
+      # @return [Boolean]
+      #   Indicates that the value matches the other value.
+      #
+      def ==(other)
+        eql?(other)
+      end
+
+      #
       # Coerces the value into JSON.
       #
       # @return [Hash{Symbol => Object}]

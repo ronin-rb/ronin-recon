@@ -34,26 +34,45 @@ describe Ronin::Recon::Value do
 
   module TestValue
     class TestValue < Ronin::Recon::Value
-      def self.value_type
-        :test
+      attr_reader :a, :b
+
+      def initialize
+        @a = 1
+        @b = 2
+      end
+
+      def eql?(other)
+        self.class == other.class &&
+          @a == other.a &&
+          @b == other.b
       end
 
       def as_json
         {
           type: :test,
-          a:    1,
-          b:    2
+          a:    @a,
+          b:    @b
         }
       end
 
       def to_s
         "test"
       end
+
+      def self.value_type
+        :test
+      end
     end
   end
 
   let(:value_class) { TestValue::TestValue }
   subject { value_class.new }
+
+  describe "#==" do
+    it "must call #eql?" do
+      expect(subject == value_class.new).to be(true)
+    end
+  end
 
   describe "#to_json" do
     it "must call #as_json and convert it to JSON" do
