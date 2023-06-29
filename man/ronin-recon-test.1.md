@@ -2,7 +2,7 @@
 
 ## SYNOPSIS
 
-`ronin-recon test` [*options*] {`--file` *FILE* \| *NAME*} {`--domain` *DOMAIN* \| `--host` *HOST* \| `--ip` *IP* \| `--ip-range` *CIDR*}
+`ronin-recon test` [*options*] {`--file` *FILE* \| *NAME*} {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*}
 
 ## DESCRIPTION
 
@@ -13,6 +13,24 @@ Loads an individual worker and tests it with an input value..
 *NAME*
   The name of the recon worker to load.
 
+*IP*
+  An IP address to recon (ex: `192.168.1.1`).
+
+*IP-range*
+  A CIDR IP range to recon (ex: `192.168.1.0/24`).
+
+*DOMAIN*
+  A top-level domain name to recon (ex: `example.com`).
+
+*HOST*
+  A sub-domain to recon (ex: `www.example.com`).
+
+*WILDCARD*
+  A wildcard host name (ex: `*.example.com`).
+
+*WEBSITE*
+  A website base URL to recon (ex: `https://example.com`).
+
 ## OPTIONS
 
 `-f`, `--file` *FILE*
@@ -20,18 +38,6 @@ Loads an individual worker and tests it with an input value..
 
 `-D`, `--debug`
   Enables debugging output.
-
-`-d`, `--domain` *DOMAIN*
-  The domain to test the recon worker with.
-
-`-H`, `--host` *HOST*
-  The host name to test the recon worker with.
-
-`-I`, `--ip` *IP*
-  The IP address to test the recon worker with.
-
-`-R`, `--ip-range` *CIDR*
-  The IP range to test the recon worker with.
 
 `-h`, `--help`
   Print help information
