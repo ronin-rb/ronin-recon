@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/recon/values/value'
+require 'ronin/recon/value'
 
-describe Ronin::Recon::Values::Value do
+describe Ronin::Recon::Value do
   describe ".value_type" do
     subject { described_class }
 
@@ -33,7 +33,7 @@ describe Ronin::Recon::Values::Value do
   end
 
   module TestValue
-    class TestValue < Ronin::Recon::Values::Value
+    class TestValue < Ronin::Recon::Value
       def self.value_type
         :test
       end
