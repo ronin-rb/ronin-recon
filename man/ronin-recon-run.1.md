@@ -2,11 +2,31 @@
 
 ## SYNOPSIS
 
-`ronin-recon run` [*options*] {`--domain` *DOMAIN* \| `--host` *HOST* \| `--ip` *IP* \| `--ip-range` *CIDR*}
+`ronin-recon run` [*options*] {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*} ... 
 
 ## DESCRIPTION
 
 Runs the recon engine with one or more initial values.
+
+## ARGUMENTS
+
+*IP*
+  An IP address to recon (ex: `192.168.1.1`).
+
+*IP-range*
+  A CIDR IP range to recon (ex: `192.168.1.0/24`).
+
+*DOMAIN*
+  A top-level domain name to recon (ex: `example.com`).
+
+*HOST*
+  A sub-domain to recon (ex: `www.example.com`).
+
+*WILDCARD*
+  A wildcard host name (ex: `*.example.com`).
+
+*WEBSITE*
+  A website base URL to recon (ex: `https://example.com`).
 
 ## OPTIONS
 
@@ -16,18 +36,6 @@ Runs the recon engine with one or more initial values.
 `--max-depth` *NUM*
   The maximum recon depth. Defaults to depth of `3` if the option is not
   specified.
-
-`-d`, `--domain` *DOMAIN*
-  The domain to start reconning.
-
-`-H`, `--host` *HOST*
-  The host name to start reconning.
-
-`-I`, `--ip` *IP*
-  The IP address to start reconning.
-
-`-R`, `--ip-range` *CIDR*
-  The IP range to start reconning.
 
 `-o`, `--output` *FILE*
   The output file to write results to.

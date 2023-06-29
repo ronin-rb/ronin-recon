@@ -21,6 +21,7 @@
 require 'ronin/recon/cli/command'
 require 'ronin/recon/cli/debug_option'
 require 'ronin/recon/cli/printing'
+require 'ronin/recon/value/parser'
 require 'ronin/recon/registry'
 require 'ronin/recon/engine'
 require 'ronin/recon/output_formats'
@@ -37,7 +38,7 @@ module Ronin
         #
         # ## Usage
         #
-        #     ronin-recon run [options] {--domain DOMAIN | --host HOST | --ip IP | --ip-range CIDR} ...
+        #     ronin-recon run [options] {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE} ...
         #
         # ## Options
         #
@@ -53,6 +54,10 @@ module Ronin
         #         --import                     Imports each newly discovered value into the Ronin database
         #     -h, --help                       Print help information
         #
+        # ## Arguments
+        #
+        #     IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE  An initial recon value.
+        #
         class Run < Command
 
           include DebugOption
@@ -60,7 +65,7 @@ module Ronin
           include Core::CLI::Logging
           include DB::CLI::DatabaseOptions
 
-          usage '[options] {--domain DOMAIN | --host HOST | --ip IP | --ip-range CIDR} ...'
+          usage '[options] {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE} ...'
 
           option :max_depth, value: {
                                type:    Integer,
@@ -68,42 +73,6 @@ module Ronin
                                default: 3
                              },
                              desc: 'The maximum recon depth'
-
-          option :domain, short: '-d',
-                          value: {
-                            type:  String,
-                            usage: 'DOMAIN'
-                          },
-                          desc: 'The domain to start reconning' do |domain|
-                            @values << Values::Domain.new(domain)
-                          end
-
-          option :host, short: '-H',
-                        value: {
-                          type:  String,
-                          usage: 'HOST'
-                        },
-                        desc: 'The host name to start reconning' do |host|
-                          @values << Values::Host.new(host)
-                        end
-
-          option :ip, short: '-I',
-                      value: {
-                        type:  String,
-                        usage: 'IP'
-                      },
-                      desc: 'The IP address to start reconning' do |ip|
-                        @values << Values::IP.new(ip)
-                      end
-
-          option :ip_range, short: '-R',
-                            value: {
-                              type:  String,
-                              usage: 'CIDR'
-                            },
-                            desc: 'The IP range to start reconning' do |cidr|
-                              @values << Values::IPRange.new(cidr)
-                            end
 
           option :output, short: '-o',
                           value: {
@@ -120,35 +89,26 @@ module Ronin
 
           option :import, desc: 'Imports each newly discovered value into the Ronin database'
 
+          argument :value, required: true,
+                           repeats:  true,
+                           usage:    'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE',
+                           desc:     'An initial recon value'
+
           description 'Runs the recon engine with one or more initial values'
 
           man_page 'ronin-recon-run.1'
 
-          # The initial values to start reconning.
-          #
-          # @return [Array<Value>]
-          attr_reader :values
-
-          #
-          # Initializes the command.
-          #
-          # @param [Hash{Symbol => Object}] kwargs
-          #   Additional keyword arguments for the command.
-          #
-          def initialize(**kwargs)
-            super(**kwargs)
-
-            @values = []
-          end
-
           #
           # Runs the `ronin-recon run` command.
           #
-          def run
-            if @values.empty?
-              print_error("must specify --domain, --host, --ip, or --ip-range")
-              exit(-1)
-            end
+          def run(*values)
+            values = begin
+                       values.map(&Value.method(:parse))
+                     rescue UnknownValue => error
+                       print_error(error.message)
+                       print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
+                       exit(-1)
+                     end
 
             output_file = if options[:output]
                             output_format_class.open(options[:output])
@@ -161,7 +121,7 @@ module Ronin
             end
 
             begin
-              engine = Engine.run(@values, max_depth: options[:max_depth]) do |engine|
+              engine = Engine.run(values, max_depth: options[:max_depth]) do |engine|
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
 
