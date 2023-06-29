@@ -54,6 +54,67 @@ describe Ronin::Recon::Values::Website do
     end
   end
 
+  describe ".parse" do
+    subject { described_class }
+
+    let(:host)   { 'example.com' }
+    let(:string) { "#{scheme}://#{host}" }
+
+    context "and the string starts with 'http://'" do
+      let(:scheme) { :http }
+
+      it "must return a Values::Website object with a :http scheme, host, and port of 443" do
+        value = subject.parse(string)
+
+        expect(value).to be_kind_of(Ronin::Recon::Values::Website)
+        expect(value.scheme).to be(scheme)
+        expect(value.host).to eq(host)
+        expect(value.port).to eq(80)
+      end
+
+      context "and the base URL contains a custom port" do
+        let(:port)   { 8080 }
+        let(:string) { "#{scheme}://#{host}:#{port}" }
+
+        it "must set the port" do
+          value = subject.parse(string)
+
+          expect(value).to be_kind_of(Ronin::Recon::Values::Website)
+          expect(value.scheme).to be(scheme)
+          expect(value.host).to eq(host)
+          expect(value.port).to eq(port)
+        end
+      end
+    end
+
+    context "and the string starts with 'https://'" do
+      let(:scheme) { :https }
+
+      it "must return a Values::Website object with a :https scheme, host, and port of 443" do
+        value = subject.parse(string)
+
+        expect(value).to be_kind_of(Ronin::Recon::Values::Website)
+        expect(value.scheme).to be(scheme)
+        expect(value.host).to eq(host)
+        expect(value.port).to eq(443)
+      end
+
+      context "and the base URL contains a custom port" do
+        let(:port)   { 8080 }
+        let(:string) { "#{scheme}://#{host}:#{port}" }
+
+        it "must set the port" do
+          value = subject.parse(string)
+
+          expect(value).to be_kind_of(Ronin::Recon::Values::Website)
+          expect(value.scheme).to be(scheme)
+          expect(value.host).to eq(host)
+          expect(value.port).to eq(port)
+        end
+      end
+    end
+  end
+
   describe "#eql?" do
     context "when given an Website object" do
       context "and the other Website object has the same #scheme, #host, and #port" do

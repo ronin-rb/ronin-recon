@@ -98,6 +98,21 @@ module Ronin
         end
 
         #
+        # Parses a URL.
+        #
+        # @param [String] url
+        #   The URL string to parse.
+        #
+        # @return [Website]
+        #   The parsed website object.
+        #
+        def self.parse(url)
+          uri = URI.parse(url)
+
+          Values::Website.new(uri.scheme.to_sym,uri.host,uri.port)
+        end
+
+        #
         # Compares the value to another value.
         #
         # @param [Values::Value] other
