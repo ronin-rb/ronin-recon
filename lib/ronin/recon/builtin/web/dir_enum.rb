@@ -94,7 +94,8 @@ module Ronin
                     if RESOURCE_STATUS_CODES.include?(response.status)
                       yield URL.new(url)
                     end
-                  rescue Errno::ECONNREFUSED
+                  rescue Errno::ECONNREFUSED,
+                         SocketError
                     task.stop
                   rescue StandardError
                     if retries > 3
