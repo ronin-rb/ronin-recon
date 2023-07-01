@@ -62,7 +62,7 @@ module Ronin
                                       ports:        params[:ports])
 
           address = ip.address
-          host    = ip.host || xml.host.hostname || address
+          host    = ip.host || xml.host.to_s
 
           xml.host.open_ports.each do |open_port|
             number   = open_port.number
