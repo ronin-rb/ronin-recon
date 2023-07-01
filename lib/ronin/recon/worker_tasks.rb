@@ -130,7 +130,7 @@ module Ronin
             end
 
             enqueue(Message::JobCompleted.new(@worker,value))
-          rescue => error
+          rescue StandardError => error
             enqueue(Message::JobFailed.new(@worker,value,error))
           end
         end
