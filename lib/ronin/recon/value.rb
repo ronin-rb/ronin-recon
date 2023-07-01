@@ -26,8 +26,6 @@ module Ronin
     #
     # Base class for all {Values} classes.
     #
-    # @abstract
-    #
     class Value
 
       #
