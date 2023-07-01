@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/worker'
+require 'ronin/recon/value/parser'
 
 require 'async/io'
 
@@ -60,7 +61,12 @@ module Ronin
           subject_entries.each do |entry|
             # find the CommonName (CN)
             if entry[0] == 'CN'
-              yield Host.new(entry[1])
+              case entry[1]
+              when Value::Parser::DOMAIN_REGEX
+                yield Domain.new(entry[1])
+              when Value::Parser::HOSTNAME_REGEX
+                yield Host.new(entry[1])
+              end
             end
           end
 
@@ -76,10 +82,13 @@ module Ronin
 
               case name
               when 'DNS'
-                if value.include?('*')
-                  yield Wildcard.new(value)
-                else
+                case value
+                when Value::Parser::DOMAIN_REGEX
+                  yield Domain.new(value)
+                when Value::Parser::HOSTNAME_REGEX
                   yield Host.new(value)
+                when Value::Parser::WILDCARD_REGEX
+                  yield Wildcard.new(value)
                 end
               when 'IP'
                 yield IP.new(value)
