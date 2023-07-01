@@ -84,13 +84,26 @@ module Ronin
                 http = Async::HTTP::Internet.instance
 
                 while (dir = queue.dequeue)
-                  path = "/#{URI.encode_uri_component(dir)}"
-                  url  = "#{base_url}#{path}"
+                  path    = "/#{URI.encode_uri_component(dir)}"
+                  url     = "#{base_url}#{path}"
+                  retries = 0
 
-                  response = http.head(url)
+                  begin
+                    response = http.head(url)
 
-                  if RESOURCE_STATUS_CODES.include?(response.status)
-                    yield URL.new(url)
+                    if RESOURCE_STATUS_CODES.include?(response.status)
+                      yield URL.new(url)
+                    end
+                  rescue Errno::ECONNREFUSED
+                    task.stop
+                  rescue StandardError
+                    if retries > 3
+                      next
+                    else
+                      retries += 1
+                      sleep 1
+                      retry
+                    end
                   end
                 end
               end
