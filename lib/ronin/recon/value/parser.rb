@@ -35,28 +35,58 @@ require 'uri'
 module Ronin
   module Recon
     #
-    # Module that parses strings into {Values::IP}, {Values::IPRange},
-    # {Values::Domain}, {Values::Host}, or {Values::Website}.
+    # Base class for all {Values} classes.
     #
     class Value
 
-      # Regular expression to match IPv4 and IPv6 addresses.
-      IP_REGEX = /\A#{Support::Text::Patterns::IP}\z/
+      #
+      # Module that parses strings into {Values::IP}, {Values::IPRange},
+      # {Values::Domain}, {Values::Host}, or {Values::Website}.
+      #
+      module Parser
+        # Regular expression to match IPv4 and IPv6 addresses.
+        IP_REGEX = /\A#{Support::Text::Patterns::IP}\z/
 
-      # Regular expression to match IPv4 and IPv6 CIDR ranges.
-      IP_RANGE_REGEX = %r{\A(?:#{Support::Text::Patterns::IPV4_ADDR}/\d{1,2}|#{Support::Text::Patterns::IPV6_ADDR}/\d{1,3})\z}
+        # Regular expression to match IPv4 and IPv6 CIDR ranges.
+        IP_RANGE_REGEX = %r{\A(?:#{Support::Text::Patterns::IPV4_ADDR}/\d{1,2}|#{Support::Text::Patterns::IPV6_ADDR}/\d{1,3})\z}
 
-      # Regular expression to match sub-domain host-names.
-      HOSTNAME_REGEX = /\A(?:[a-zA-Z0-9_-]{1,63}\.)+#{Support::Text::Patterns::DOMAIN}\z/
+        # Regular expression to match sub-domain host-names.
+        HOSTNAME_REGEX = /\A(?:[a-zA-Z0-9_-]{1,63}\.)+#{Support::Text::Patterns::DOMAIN}\z/
 
-      # Regular expression to match domain host-names.
-      DOMAIN_REGEX = /\A#{Support::Text::Patterns::DOMAIN}\z/
+        # Regular expression to match domain host-names.
+        DOMAIN_REGEX = /\A#{Support::Text::Patterns::DOMAIN}\z/
 
-      # Regular expression to match wildcard host-names.
-      WILDCARD_REGEX = /\A\*(?:\.[a-z0-9_-]+)+\z/
+        # Regular expression to match wildcard host-names.
+        WILDCARD_REGEX = /\A\*(?:\.[a-z0-9_-]+)+\z/
 
-      # Regular expression to match https:// and http:// website base URLs.
-      WEBSITE_REGEX = %r{\Ahttp(?:s)?://[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*(?::\d+)?/?\z}
+        # Regular expression to match https:// and http:// website base URLs.
+        WEBSITE_REGEX = %r{\Ahttp(?:s)?://[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)*(?::\d+)?/?\z}
+
+        #
+        # Parses a value string.
+        #
+        # @param [String] string
+        #   The string to parse.
+        #
+        # @return [Values::IP, Values::IPRange, Values::Host, Values::Domain, Values::Wildcard, Values::Website]
+        #   The parsed value.
+        #
+        # @raise [UnknownValue]
+        #   Could not identify what value the string represents.
+        #
+        def self.parse(string)
+          case string
+          when IP_RANGE_REGEX then Values::IPRange.new(string)
+          when IP_REGEX       then Values::IP.new(string)
+          when WEBSITE_REGEX  then Values::Website.parse(string)
+          when WILDCARD_REGEX then Values::Wildcard.new(string)
+          when HOSTNAME_REGEX then Values::Host.new(string)
+          when DOMAIN_REGEX   then Values::Domain.new(string)
+          else
+            raise(UnknownValue,"unrecognized recon value: #{string.inspect}")
+          end
+        end
+      end
 
       #
       # Parses a value string.
@@ -70,17 +100,10 @@ module Ronin
       # @raise [UnknownValue]
       #   Could not identify what value the string represents.
       #
+      # @see Parser.parse
+      #
       def self.parse(string)
-        case string
-        when IP_RANGE_REGEX then Values::IPRange.new(string)
-        when IP_REGEX       then Values::IP.new(string)
-        when WEBSITE_REGEX  then Values::Website.parse(string)
-        when WILDCARD_REGEX then Values::Wildcard.new(string)
-        when HOSTNAME_REGEX then Values::Host.new(string)
-        when DOMAIN_REGEX   then Values::Domain.new(string)
-        else
-          raise(UnknownValue,"unrecognized recon value: #{string.inspect}")
-        end
+        Parser.parse(string)
       end
 
     end
