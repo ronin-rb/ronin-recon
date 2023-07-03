@@ -55,7 +55,7 @@ and uses asynchronous I/O to maximize efficiency.
 
 ## Synopsis
 
-```shell
+```
 $ ronin-recon
 Usage: ronin-recon [options]
 
