@@ -18,10 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats/txt'
-require 'ronin/core/output_formats/csv'
-require 'ronin/core/output_formats/json'
-require 'ronin/core/output_formats/ndjson'
+require 'ronin/core/output_formats'
 require 'ronin/recon/output_formats/dir'
 require 'ronin/recon/output_formats/dot'
 
@@ -34,25 +31,12 @@ module Ronin
     module OutputFormats
       include Core::OutputFormats
 
-      # Mapping of output format names to output format classes.
-      FORMATS = {
-        txt:    TXT,
-        csv:    CSV,
-        json:   JSON,
-        ndjson: NDJSON,
-        dir:    Dir,
-        dot:    Dot
-      }
-
-      # Mapping of file extensions to output format classes.
-      FILE_EXTS = {
-        '.txt'    => TXT,
-        '.csv'    => CSV,
-        '.json'   => JSON,
-        '.ndjson' => NDJSON,
-        ''        => Dir,
-        '.dot'    => Dot
-      }
+      register :txt,    '.txt',    TXT
+      register :csv,    '.csv',    CSV
+      register :json,   '.json',   JSON
+      register :ndjson, '.ndjson', NDJSON
+      register :dir,    '',        Dir
+      register :dot,    '.dot',    Dot
     end
   end
 end

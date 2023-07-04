@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'ronin/recon/output_formats'
 
 describe Ronin::Recon::OutputFormats do
-  describe "FORMATS" do
-    subject { described_class::FORMATS }
+  describe "formats" do
+    subject { described_class.formats }
 
     describe ":txt" do
       it "must equal Ronin::Core::OutputFormats::TXT" do
@@ -42,8 +42,8 @@ describe Ronin::Recon::OutputFormats do
     end
   end
 
-  describe "FILE_EXTS" do
-    subject { described_class::FILE_EXTS }
+  describe "file_exts" do
+    subject { described_class.file_exts }
 
     describe "'.txt'" do
       it "must equal Ronin::Core::OutputFormats::TXT" do

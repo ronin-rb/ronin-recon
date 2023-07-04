@@ -79,11 +79,14 @@ module Ronin
                             type:  String,
                             usage: 'FILE'
                           },
-                          desc: 'The output file to write results to'
+                          desc: 'The output file to write results to' do |path|
+                            options[:output]          = path
+                            options[:output_format] ||= OutputFormats.infer_from(path)
+                          end
 
           option :output_format, short: '-F',
                                  value: {
-                                   type: OutputFormats::FORMATS.keys
+                                   type: OutputFormats.formats
                                  },
                                  desc: 'The output format'
 
@@ -110,8 +113,8 @@ module Ronin
                        exit(-1)
                      end
 
-            output_file = if options[:output]
-                            output_format_class.open(options[:output])
+            output_file = if options[:output] && options[:output_format]
+                            options[:output_format].open(options[:output])
                           end
 
             if options[:import]
@@ -151,19 +154,6 @@ module Ronin
 
           def import_value(value)
             Importer.import_value(value)
-          end
-
-          def output_format_class
-            if options[:output_format]
-              OutputFormats::FORMATS.fetch(options[:output_format]) do
-                raise(ArgumentError,"unsupported output format: #{options[:output_format].inspect}")
-              end
-            elsif options[:output]
-              OutputFormats::FILE_EXTS.fetch(File.extname(options[:output])) do
-                print_error "cannot infer output format from output file: #{options[:output]}"
-                exit(-1)
-              end
-            end
           end
 
         end
