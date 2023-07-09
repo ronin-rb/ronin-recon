@@ -63,7 +63,7 @@ module Ronin
         when Values::Host     then import_host_name(value.name)
         when Values::IP       then import_ip_address(value.address)
         when Values::OpenPort then import_open_port(value)
-        when Values::URL      then import_url(value.string)
+        when Values::URL      then import_url(value.uri)
         end
       end
 
@@ -100,7 +100,7 @@ module Ronin
       #
       # Imports a URL.
       #
-      # @param [String] url
+      # @param [URI::HTTP, String] url
       #   The URL string to import.
       #
       # @return [Ronin::DB::URL]
