@@ -38,17 +38,18 @@ module Ronin
 
         # Mapping of value classes to file names.
         VALUE_FILE_NAMES = {
-          Values::Domain     => 'domains.txt',
-          Values::Mailserver => 'mailservers.txt',
-          Values::Nameserver => 'nameservers.txt',
-          Values::Host       => 'hosts.txt',
-          Values::Wildcard   => 'wildcards.txt',
-          Values::IP         => 'ips.txt',
-          Values::IPRange    => 'ip_ranges.txt',
-          Values::OpenPort   => 'open_ports.txt',
-          Values::Cert       => 'certs.txt',
-          Values::Website    => 'websites.txt',
-          Values::URL        => 'urls.txt'
+          Values::Domain       => 'domains.txt',
+          Values::Mailserver   => 'mailservers.txt',
+          Values::Nameserver   => 'nameservers.txt',
+          Values::Host         => 'hosts.txt',
+          Values::Wildcard     => 'wildcards.txt',
+          Values::IP           => 'ips.txt',
+          Values::IPRange      => 'ip_ranges.txt',
+          Values::OpenPort     => 'open_ports.txt',
+          Values::Cert         => 'certs.txt',
+          Values::EmailAddress => 'email_addresses.txt',
+          Values::URL          => 'urls.txt',
+          Values::Website      => 'websites.txt'
         }
 
         #

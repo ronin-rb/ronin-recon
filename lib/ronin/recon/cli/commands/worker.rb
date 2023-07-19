@@ -98,16 +98,17 @@ module Ronin
           end
 
           VALUE_CLASS_NAMES = {
-            Values::Domain     => 'domains',
-            Values::Host       => 'hosts',
-            Values::IP         => 'IP addresses',
-            Values::IPRange    => 'IP ranges',
-            Values::Mailserver => 'mailservers',
-            Values::Nameserver => 'nameservers',
-            Values::OpenPort   => 'open ports',
-            Values::URL        => 'URLs',
-            Values::Website    => 'websites',
-            Values::Wildcard   => 'wildcard host names'
+            Values::Domain       => 'domains',
+            Values::Host         => 'hosts',
+            Values::IP           => 'IP addresses',
+            Values::IPRange      => 'IP ranges',
+            Values::Mailserver   => 'mailservers',
+            Values::Nameserver   => 'nameservers',
+            Values::OpenPort     => 'open ports',
+            Values::EmailAddress => 'email addresses',
+            Values::URL          => 'URLs',
+            Values::Website      => 'websites',
+            Values::Wildcard     => 'wildcard host names'
           }
 
           #

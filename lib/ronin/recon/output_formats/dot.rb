@@ -59,17 +59,18 @@ module Ronin
         #
         def value_type(value)
           case value
-          when Values::Domain     then "Domain"
-          when Values::Mailserver then "Mailserver"
-          when Values::Nameserver then "Nameserver"
-          when Values::Host       then "Host"
-          when Values::IP         then "IP address"
-          when Values::IPRange    then "IP range"
-          when Values::OpenPort   then "Open #{value.protocol.upcase} Port"
-          when Values::Cert       then "SSL/TLS Cert"
-          when Values::URL        then "URL"
-          when Values::Website    then "Website"
-          when Values::Wildcard   then "Wildcard"
+          when Values::Domain       then "Domain"
+          when Values::Mailserver   then "Mailserver"
+          when Values::Nameserver   then "Nameserver"
+          when Values::Host         then "Host"
+          when Values::IP           then "IP address"
+          when Values::IPRange      then "IP range"
+          when Values::OpenPort     then "Open #{value.protocol.upcase} Port"
+          when Values::EmailAddress then "Email Address"
+          when Values::Cert         then "SSL/TLS Cert"
+          when Values::URL          then "URL"
+          when Values::Website      then "Website"
+          when Values::Wildcard     then "Wildcard"
           else
             raise(NotImplementedError,"value class #{value.class} not supported")
           end
