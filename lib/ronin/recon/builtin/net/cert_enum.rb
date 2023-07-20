@@ -49,12 +49,13 @@ module Ronin
         # @param [Values::Cert] cert
         #   The SSL/TLS certificate.
         #
-        # @yield [host]
-        #   All host names, wildcard host names, or IP addresses, from the
-        #   SSL/TLS certificate will be yielded.
+        # @yield [name]
+        #   All host names, wildcard host names, IP addresses, or email
+        #   addresses, from the SSL/TLS certificate will be yielded.
         #
-        # @yieldparam [Values::Host, Values::Wildcard, Values::IP] host
-        #   A host name, wildcard host name, or IP address from the certificate.
+        # @yieldparam [Values::Host, Values::Wildcard, Values::IP, Values::EmailAddress] name
+        #   A host name, wildcard host name, IP address, or email address from
+        #   the certificate.
         #
         def process(cert)
           subject_entries = cert.subject.to_a
@@ -92,6 +93,8 @@ module Ronin
                 end
               when 'IP'
                 yield IP.new(value)
+              when 'email'
+                yield EmailAddress.new(value)
               end
             end
           end
