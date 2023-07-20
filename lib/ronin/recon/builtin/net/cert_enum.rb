@@ -60,14 +60,16 @@ module Ronin
         def process(cert)
           subject_entries = cert.subject.to_a
           subject_entries.each do |entry|
-            # find the CommonName (CN)
-            if entry[0] == 'CN'
+            case entry[0]
+            when 'CN' # Common Name
               case entry[1]
               when Value::Parser::DOMAIN_REGEX
                 yield Domain.new(entry[1])
               when Value::Parser::HOSTNAME_REGEX
                 yield Host.new(entry[1])
               end
+            when 'emailAddress'
+              yield EmailAddress.new(entry[1])
             end
           end
 
