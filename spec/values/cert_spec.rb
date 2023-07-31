@@ -102,12 +102,12 @@ describe Ronin::Recon::Values::Cert do
   describe "#as_json" do
     let(:cert_hash) {
       {
-        subject: cert.subject.to_h,
-        issuer: cert.issuer.to_h,
+        subject:    cert.subject.to_h,
+        issuer:     cert.issuer.to_h,
         extensions: cert.extensions_hash,
-        serial: cert.serial,
+        serial:     cert.serial,
         not_before: cert.not_before,
-        not_after: cert.not_after
+        not_after:  cert.not_after
       }
     }
 
