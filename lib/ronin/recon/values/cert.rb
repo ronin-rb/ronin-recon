@@ -136,13 +136,14 @@ module Ronin
         #
         def as_json
           {
-            serial:     @cert.serial,
-            not_before: @cert.not_before,
-            not_after:  @cert.not_after,
-            subject:    @cert.subject.to_h,
-            issuer:     @cert.issuer.to_h,
-            extensions: @cert.extensions_hash,
-            pem:        @cert.to_pem
+            serial:            @cert.serial,
+            not_before:        @cert.not_before,
+            not_after:         @cert.not_after,
+            subject:           @cert.subject.to_h,
+            issuer:            @cert.issuer.to_h,
+            extensions:        @cert.extensions_hash,
+            subject_alt_names: @cert.subject_alt_names,
+            pem:               @cert.to_pem
           }
         end
 
