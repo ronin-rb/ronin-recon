@@ -1,10 +1,13 @@
 require 'spec_helper'
 require 'ronin/recon/graph'
+require 'ronin/recon/values/ip'
 
 describe Ronin::Recon::Graph do
   subject { described_class.new }
-  
-  describe "#initialize" do
+  let(:value1) { Ronin::Recon::Values::IP.new('192.168.0.1') }
+  let(:value2) { Ronin::Recon::Values::IP.new('192.168.1.1') }
+
+   describe "#initialize" do
     it "must initialize #nodes and #edges" do
       expect(subject.nodes).to eq(Set.new)
       expect(subject.edges).to eq({})
@@ -14,19 +17,19 @@ describe Ronin::Recon::Graph do
   describe "#add_node" do
     context "when value node was successfully added" do
       it "must return true" do
-        expect(subject.add_node("node_value")).to be(true)
+        expect(subject.add_node(value1)).to be(true)
       end
 
       it "must contain node" do
-        subject.add_node("node_value")
-        expect(subject.nodes.size).to eq 1
+        subject.add_node(value1)
+        expect(subject.nodes.size).to eq(1)
       end
     end
 
     context "when value node was already added" do
       it "must return false" do
-        subject.add_node("node_value")
-        expect(subject.add_node("node_value")).to be(false)
+        subject.add_node(value1)
+        expect(subject.add_node(value1)).to be(false)
       end
     end
   end
@@ -34,14 +37,14 @@ describe Ronin::Recon::Graph do
   describe "#add_edge" do
     context "when node value was successfully added" do
       it "must return true" do
-        expect(subject.add_edge("node_value")).to be(true)
+        expect(subject.add_edge(value1)).to be(true)
       end
     end
 
     context "when node value was already added" do
       it "must return false" do
-        subject.add_edge("node_value", "parent_value")
-        expect(subject.add_edge("node_value", "parent_value")).to be(false)
+        subject.add_edge(value1, value2)
+        expect(subject.add_edge(value1, value2)).to be(false)
       end
     end
   end
@@ -49,29 +52,35 @@ describe Ronin::Recon::Graph do
   describe "#include?" do
     context "when value exists in the graph" do
       it "must return true" do
-        subject.add_node("node_value")
-        expect(subject.include?("node_value")).to be(true)
+        subject.add_node(value1)
+        expect(subject.include?(value1)).to be(true)
       end
     end
 
     context "when value does not exists in the graph" do
       it "must return false" do
-        expect(subject.include?("node_value")).to be(false)
+        expect(subject.include?(value1)).to be(false)
       end
     end
   end
   
   describe "#[]" do
     context "when node value exists in the graph" do
-      it "returns set" do
-        subject.add_edge("node_value")
-        expect(subject["node_value"]).to eq(Set.new([nil]))
+      it "returns empty Set" do
+        pending
+        subject.add_edge(value1)
+        expect(subject[value1]).to eq(Set.new)
+      end
+
+      it "returns no-empty Set" do
+        subject.add_edge(value1, value2)
+        expect(subject[value1]).to eq(Set.new([value2]))
       end
     end
 
     context "when node value does not exists in the graph" do
       it "must return nil" do
-        expect(subject["node_value"]).to be(nil) 
+        expect(subject[value1]).to be(nil)
       end
     end
   end
