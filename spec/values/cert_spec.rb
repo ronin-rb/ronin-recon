@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ronin/recon/values/cert'
+require 'ronin/support/crypto'
 
 require 'openssl'
 
@@ -7,7 +8,7 @@ describe Ronin::Recon::Values::Cert do
   let(:fixtures_dir) { File.join(__dir__,'fixtures') }
   let(:cert_path)    { File.join(fixtures_dir,'example.crt') }
   let(:cert) do
-    OpenSSL::X509::Certificate.new(File.read(cert_path))
+    Ronin::Support::Crypto::Cert(OpenSSL::X509::Certificate.new(File.read(cert_path)))
   end
 
   subject { described_class.new(cert) }
@@ -98,7 +99,22 @@ describe Ronin::Recon::Values::Cert do
     end
   end
 
-  describe "#as_json"
+  describe "#as_json" do
+    let(:cert_hash) {
+      {
+        subject:    cert.subject.to_h,
+        issuer:     cert.issuer.to_h,
+        extensions: cert.extensions_hash,
+        serial:     cert.serial,
+        not_before: cert.not_before,
+        not_after:  cert.not_after
+      }
+    }
+
+    it "must return the Hash version of #cert" do
+      expect(subject.as_json).to eq(cert_hash)
+    end
+  end
 
   describe ".value_type" do
     subject { described_class }

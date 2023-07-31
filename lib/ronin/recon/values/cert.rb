@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/value'
+require 'ronin/support/crypto'
 
 module Ronin
   module Recon
@@ -42,7 +43,7 @@ module Ronin
         #   The decoded X509 certificate.
         #
         def initialize(cert)
-          @cert = cert
+          @cert = Support::Crypto::Cert(cert)
         end
 
         #
@@ -126,6 +127,22 @@ module Ronin
         #
         def to_s
           @cert.to_s
+        end
+
+        #
+        # Converts the certificate to a hash of attributes
+        #
+        # @return [Hash]
+        #
+        def as_json
+          {
+            subject:    @cert.subject.to_h,
+            issuer:     @cert.issuer.to_h,
+            extensions: @cert.extensions_hash,
+            serial:     @cert.serial,
+            not_before: @cert.not_before,
+            not_after:  @cert.not_after
+          }
         end
 
         #
