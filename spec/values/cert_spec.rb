@@ -100,19 +100,17 @@ describe Ronin::Recon::Values::Cert do
   end
 
   describe "#as_json" do
-    let(:cert_hash) {
-      {
-        subject:    cert.subject.to_h,
-        issuer:     cert.issuer.to_h,
-        extensions: cert.extensions_hash,
-        serial:     cert.serial,
-        not_before: cert.not_before,
-        not_after:  cert.not_after
-      }
-    }
-
     it "must return the Hash version of #cert" do
-      expect(subject.as_json).to eq(cert_hash)
+      expect(subject.as_json).to eq(
+        {
+          subject:    cert.subject.to_h,
+          issuer:     cert.issuer.to_h,
+          extensions: cert.extensions_hash,
+          serial:     cert.serial,
+          not_before: cert.not_before,
+          not_after:  cert.not_after
+        }
+      )
     end
   end
 
