@@ -132,7 +132,7 @@ module Ronin
         #
         # Converts the certificate to a hash of attributes
         #
-        # @return [Hash]
+        # @return [Hash{Symbol => Object}]
         #
         def as_json
           {
