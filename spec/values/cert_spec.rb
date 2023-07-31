@@ -108,7 +108,8 @@ describe Ronin::Recon::Values::Cert do
           extensions: cert.extensions_hash,
           serial:     cert.serial,
           not_before: cert.not_before,
-          not_after:  cert.not_after
+          not_after:  cert.not_after,
+          pem:        cert.to_pem
         }
       )
     end
