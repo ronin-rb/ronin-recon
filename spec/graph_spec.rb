@@ -7,13 +7,13 @@ describe Ronin::Recon::Graph do
   let(:value1) { Ronin::Recon::Values::IP.new('192.168.0.1') }
   let(:value2) { Ronin::Recon::Values::IP.new('192.168.1.1') }
 
-   describe "#initialize" do
+  describe "#initialize" do
     it "must initialize #nodes and #edges" do
       expect(subject.nodes).to eq(Set.new)
       expect(subject.edges).to eq({})
     end
   end
-  
+
   describe "#add_node" do
     context "when value node was successfully added" do
       it "must return true" do
@@ -33,7 +33,7 @@ describe Ronin::Recon::Graph do
       end
     end
   end
-  
+
   describe "#add_edge" do
     context "when node value was successfully added" do
       it "must return true" do
@@ -48,7 +48,7 @@ describe Ronin::Recon::Graph do
       end
     end
   end
-  
+
   describe "#include?" do
     context "when value exists in the graph" do
       it "must return true" do
@@ -63,18 +63,22 @@ describe Ronin::Recon::Graph do
       end
     end
   end
-  
+
   describe "#[]" do
     context "when node value exists in the graph" do
-      it "returns empty Set" do
-        pending
-        subject.add_edge(value1)
-        expect(subject[value1]).to eq(Set.new)
+      context "and has no edges" do
+        it "returns empty Set" do
+          pending
+          subject.add_edge(value1)
+          expect(subject[value1]).to eq(Set.new)
+        end
       end
 
-      it "returns no-empty Set" do
-        subject.add_edge(value1, value2)
-        expect(subject[value1]).to eq(Set.new([value2]))
+      context "and has edges to other nodes" do
+        it "returns no-empty Set" do
+          subject.add_edge(value1, value2)
+          expect(subject[value1]).to eq(Set.new([value2]))
+        end
       end
     end
 
