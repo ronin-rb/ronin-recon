@@ -80,7 +80,7 @@ module Ronin
       #
       def add_edge(new_value,parent_value=nil)
         node_parents = (@edges[new_value] ||= Set.new)
-        return node_parents.add?(parent_value)
+        return !node_parents.add?(parent_value).nil?
       end
 
       #
