@@ -37,13 +37,41 @@ module Ronin
         # @return [URI::HTTP, URI::HTTPS]
         attr_reader :uri
 
+        # The HTTP status of the URI.
+        #
+        # @return [Integer, nil]
+        attr_reader :status
+
+        # The HTTP response headers for the URI.
+        #
+        # @return [Hash{String => String}, nil]
+        attr_reader :headers
+
+        # The HTTP response body for the URI.
+        #
+        # @return [String, nil]
+        attr_reader :body
+
         #
         # Initializes the URL object.
         #
         # @param [URI::HTTP, URI::HTTPS, String] url
         #
-        def initialize(url)
+        # @param [Integer, nil] status
+        #   The optional HTTP status of the URI.
+        #
+        # @param [Hash{String => String}, nil] headers
+        #   The optional HTTP response headers for the URI.
+        #
+        # @param [String, nil] body
+        #   The optional HTTP response body for the URI.
+        #
+        def initialize(url, status: nil, headers: nil, body: nil)
           @uri = URI(url)
+
+          @status  = status
+          @headers = headers
+          @body    = body
         end
 
         #
@@ -88,7 +116,13 @@ module Ronin
         #   The Ruby Hash that will be converted into JSON.
         #
         def as_json
-          {type: :url, url: @uri.to_s}
+          hash = {type: :url, url: @uri.to_s}
+
+          hash[:status]  = @status  if @status
+          hash[:headers] = @headers if @headers
+          hash[:body]    = @body    if @body
+
+          return hash
         end
 
         #

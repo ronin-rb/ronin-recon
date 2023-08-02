@@ -5,6 +5,24 @@ describe Ronin::Recon::Values::URL do
   let(:url) { 'https://www.example.com/index.html' }
   let(:uri) { URI.parse(url) }
 
+  let(:status) { 200 }
+  let(:headers) do
+    {
+      'Content-Type' => 'text/html; charset=UTF-8',
+      'Date'         => 'Wed, 02 Aug 2023 03:52:57 GMT',
+      'Server'       => 'ECS (sec/9795)'
+    }
+  end
+  let(:body) do
+    <<~HTML
+      <html>
+        <body>
+          <p>Test</p>
+        </body>
+      </html>
+    HTML
+  end
+
   subject { described_class.new(url) }
 
   describe "#initialize" do
@@ -21,6 +39,44 @@ describe Ronin::Recon::Values::URL do
 
       it "must set #uri to the parsed version of the given URL" do
         expect(subject.uri).to eq(uri)
+      end
+    end
+
+    context "when the status: keyword argument is given" do
+      subject { described_class.new(url, status: status) }
+
+      it "must set #status" do
+        expect(subject.status).to eq(status)
+      end
+    end
+
+    context "when the headers: keyword argument is given" do
+      subject { described_class.new(url, headers: headers) }
+
+      it "must set #headers" do
+        expect(subject.headers).to eq(headers)
+      end
+    end
+
+    context "when the body: keyword argument is given" do
+      subject { described_class.new(url, body: body) }
+
+      it "must set #body" do
+        expect(subject.body).to eq(body)
+      end
+    end
+
+    context "when given no additional keyword arguments" do
+      it "must default #status to nil" do
+        expect(subject.status).to be(nil)
+      end
+
+      it "must default #headers to nil" do
+        expect(subject.headers).to be(nil)
+      end
+
+      it "must default #body to nil" do
+        expect(subject.body).to be(nil)
       end
     end
   end
@@ -69,6 +125,48 @@ describe Ronin::Recon::Values::URL do
   describe "#as_json" do
     it "must return a Hash containing the type: and url: attributes" do
       expect(subject.as_json).to eq({type: :url, url: url})
+    end
+
+    context "when #status is set" do
+      subject { described_class.new(url, status: status) }
+
+      it "must include the status: attribute in the Hash" do
+        expect(subject.as_json).to eq(
+          {
+            type:   :url,
+            url:    url,
+            status: status
+          }
+        )
+      end
+    end
+
+    context "when #headers is set" do
+      subject { described_class.new(url, headers: headers) }
+
+      it "must include the headers: attribute in the Hash" do
+        expect(subject.as_json).to eq(
+          {
+            type:    :url,
+            url:     url,
+            headers: headers
+          }
+        )
+      end
+    end
+
+    context "when #body is set" do
+      subject { described_class.new(url, body: body) }
+
+      it "must include the body: attribute in the Hash" do
+        expect(subject.as_json).to eq(
+          {
+            type: :url,
+            url:  url,
+            body: body
+          }
+        )
+      end
     end
   end
 
