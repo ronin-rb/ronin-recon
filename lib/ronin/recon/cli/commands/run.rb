@@ -124,7 +124,7 @@ module Ronin
             end
 
             begin
-              engine = Engine.run(values, max_depth: options[:max_depth]) do |engine|
+              Engine.run(values, max_depth: options[:max_depth]) do |engine|
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
 
