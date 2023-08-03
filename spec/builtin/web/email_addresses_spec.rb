@@ -1,10 +1,8 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/web/email'
+require 'ronin/recon/builtin/web/email_addresses'
 require 'ronin/recon/values/url'
 
-describe Ronin::Recon::Web::Email do
-  subject { described_class.new }
-
+describe Ronin::Recon::Web::EmailAddresses do
   describe "#process" do
     let(:emails) { [] }
 

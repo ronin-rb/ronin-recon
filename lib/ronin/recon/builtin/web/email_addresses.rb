@@ -19,7 +19,6 @@
 #
 
 require 'ronin/recon/web_worker'
-
 require 'ronin/recon/builtin/web/spider'
 require 'ronin/support/text/patterns'
 
@@ -27,11 +26,11 @@ module Ronin
   module Recon
     module Web
       #
-      # A recon worker that spiders a website.
+      # A recon worker that returns email addresses found on website.
       #
-      class Email < WebWorker
+      class EmailAddresses < WebWorker
 
-        register 'web/email'
+        register 'web/email_addresses'
 
         accepts URL
 
@@ -42,23 +41,22 @@ module Ronin
         DESC
 
         #
-        # Spiders a website and yields every spidered Email.
+        # Extract email addresses found in the pages body.
         #
         # @param [Values::URL]
-        #   The website value to start spidering.
+        #  The URL of the page to extract email addresses from.
         #
-        # @yield [Value::EmailAddress]
-        #   Every spidered URL will be yielded.
+        # @yield [url]
         #
-        # @yieldparam [Values::URL] url
-        #   A URL visited by the spider.
+        # @yieldparam [Values::EmailAddress] email
+        #   Email address found on the page.
         #
         def process(url)
           return nil unless url.body
 
           email_pattern = Ronin::Support::Text::Patterns::EMAIL_ADDRESS
 
-          url.body.force_encoding(Encoding::UTF_8).scan(email_pattern).each do |email|
+          url.body.force_encoding(Encoding::UTF_8).scan(email_pattern) do |email|
             yield EmailAddress.new(email)
           end
         end
