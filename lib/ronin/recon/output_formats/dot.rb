@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats/output_format'
+require 'ronin/core/output_formats/output_file'
 require 'ronin/recon/output_formats/graph_format'
 
 require 'set'
@@ -29,7 +29,7 @@ module Ronin
       #
       # Represents a GraphViz DOT (`.dot`) output format.
       #
-      class Dot < Core::OutputFormats::OutputFormat
+      class Dot < Core::OutputFormats::OutputFile
 
         include GraphFormat
 
