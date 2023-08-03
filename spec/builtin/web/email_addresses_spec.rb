@@ -63,7 +63,9 @@ describe Ronin::Recon::Web::EmailAddresses do
       let(:url) { Ronin::Recon::Values::URL.new("example.com") }
 
       it "must return nil" do
-        expect(subject.process(url)).to be(nil)
+        expect { |b|
+          subject.process(url,&b)
+        }.to_not yield_control
       end
     end
   end
