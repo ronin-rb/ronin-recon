@@ -4,8 +4,6 @@ require 'ronin/recon/values/url'
 
 describe Ronin::Recon::Web::EmailAddresses do
   describe "#process" do
-    let(:emails) { [] }
-
     context "when URL #body exists" do
       context "and email is present" do
         let(:body) do
@@ -19,7 +17,7 @@ describe Ronin::Recon::Web::EmailAddresses do
           HTML
         end
         let(:url) { Ronin::Recon::Values::URL.new("example.com", body: body) }
-        let(:valid_emails) do
+        let(:expected_emails) do
           [
             Ronin::Recon::Values::EmailAddress.new("example@example.com"),
             Ronin::Recon::Values::EmailAddress.new("example1@example.com")
@@ -27,9 +25,13 @@ describe Ronin::Recon::Web::EmailAddresses do
         end
 
         it "must return array of EmailAddresses" do
-          subject.process(url) { |e| emails << e }
+          yielded_values = []
 
-          expect(emails).to eq(valid_emails)
+          subject.process(url) do |value|
+            yielded_values << value
+          end
+
+          expect(yielded_values).to eq(expected_emails)
         end
       end
 
@@ -46,9 +48,13 @@ describe Ronin::Recon::Web::EmailAddresses do
         let(:url) { Ronin::Recon::Values::URL.new("example.com", body: body) }
 
         it "must return empty array" do
-          subject.process(url) { |e| emails << e }
+          yielded_values = []
 
-          expect(emails).to eq([])
+          subject.process(url) do |value|
+            yielded_values << value
+          end
+
+          expect(yielded_values).to be_empty
         end
       end
     end
