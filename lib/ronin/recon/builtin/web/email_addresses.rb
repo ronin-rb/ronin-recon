@@ -47,7 +47,7 @@ module Ronin
         #   The URL of the page to extract email addresses from.
         #
         # @yield [email]
-        #   Eeach email addres found on the page will be yielded
+        #   Each email address found on the page will be yielded.
         #
         # @yieldparam [Values::EmailAddress] email
         #   Email address found on the page.
