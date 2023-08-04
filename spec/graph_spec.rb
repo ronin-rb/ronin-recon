@@ -22,6 +22,7 @@ describe Ronin::Recon::Graph do
 
       it "must contain node" do
         subject.add_node(value1)
+
         expect(subject.nodes.size).to eq(1)
       end
     end
@@ -29,6 +30,7 @@ describe Ronin::Recon::Graph do
     context "when value node was already added" do
       it "must return false" do
         subject.add_node(value1)
+
         expect(subject.add_node(value1)).to be(false)
       end
     end
@@ -43,8 +45,9 @@ describe Ronin::Recon::Graph do
 
     context "when node value was already added" do
       it "must return false" do
-        subject.add_edge(value1, value2)
-        expect(subject.add_edge(value1, value2)).to be(false)
+        subject.add_edge(value1,value2)
+
+        expect(subject.add_edge(value1,value2)).to be(false)
       end
     end
   end
@@ -53,6 +56,7 @@ describe Ronin::Recon::Graph do
     context "when value exists in the graph" do
       it "must return true" do
         subject.add_node(value1)
+
         expect(subject.include?(value1)).to be(true)
       end
     end
@@ -70,13 +74,15 @@ describe Ronin::Recon::Graph do
         it "returns empty Set" do
           pending
           subject.add_edge(value1)
+
           expect(subject[value1]).to eq(Set.new)
         end
       end
 
       context "and has edges to other nodes" do
         it "returns no-empty Set" do
-          subject.add_edge(value1, value2)
+          subject.add_edge(value1,value2)
+
           expect(subject[value1]).to eq(Set.new([value2]))
         end
       end
