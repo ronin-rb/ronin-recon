@@ -50,4 +50,7 @@ file 'data/combined_directories.txt.gz' => 'data/combined_directories.txt' do
 end
 
 desc 'Generate built-in wordlists'
-task :wordlists => %w[data/subdomains-1000.txt.gz data/combined_directories.txt.gz]
+task :wordlists => %w[
+  data/subdomains-1000.txt.gz
+  data/combined_directories.txt.gz
+]
