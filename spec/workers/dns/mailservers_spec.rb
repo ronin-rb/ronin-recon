@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/dns/lookup'
+require 'ronin/recon/builtin/dns/mailservers'
 
-describe Ronin::Recon::DNS::Lookup do
+describe Ronin::Recon::DNS::Mailservers do
   describe "#process" do
     context "when there are mailservers for the domain" do
       let(:host)         { Ronin::Recon::Values::Domain.new('example.com') }
