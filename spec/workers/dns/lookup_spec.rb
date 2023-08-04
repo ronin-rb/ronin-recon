@@ -21,7 +21,7 @@ describe Ronin::Recon::DNS::Lookup do
     end
 
     context "when there is no IP address for the host" do
-      let(:host) { Ronin::Recon::Values::Host.new('www.example.com') }
+      let(:host) { Ronin::Recon::Values::Host.new('www.e.com') }
 
       it "must not yield anything" do
         expect { |b|
