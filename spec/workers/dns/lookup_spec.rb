@@ -5,7 +5,7 @@ describe Ronin::Recon::DNS::Lookup do
   describe "#process" do
     context "when there are IP addresses for the host" do
       let(:host) { Ronin::Recon::Values::Host.new('www.example.com') }
-      let(:ip)   { Ronin::Recon::Values::IP.new('93.184.216.34', 'www.example.com') }
+      let(:ip)   { Ronin::Recon::Values::IP.new('93.184.216.34', host: 'www.example.com') }
 
       it "must yield them" do
         yielded_values = []
