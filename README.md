@@ -170,6 +170,7 @@ end
 ## Requirements
 
 * [Ruby] >= 3.0.0
+* [nmap] >= 5.00
 * [thread-local] ~> 1.0
 * [async-io] ~> 1.0
 * [async-dns] ~> 1.0
@@ -244,6 +245,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 
 [Ruby]: https://www.ruby-lang.org
+[nmap]: http://www.insecure.org/
 [thread-local]: https://github.com/socketry/thread-local#readme
 [async-io]: https://github.com/socketry/async-io#readme
 [async-dns]: https://github.com/socketry/async-dns#readme
