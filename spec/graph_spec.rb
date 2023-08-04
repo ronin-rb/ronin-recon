@@ -37,7 +37,7 @@ describe Ronin::Recon::Graph do
   describe "#add_edge" do
     context "when node value was successfully added" do
       it "must return true" do
-        expect(subject.add_edge(value1)).to be(true)
+        expect(subject.add_edge(value1,value2)).to be(true)
       end
     end
 
