@@ -218,10 +218,11 @@ sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip $(which masscan)
 2. Clone It!
 3. `cd ronin-recon/`
 4. `bundle install`
-5. `git checkout -b my_feature`
-6. Code It!
-7. `bundle exec rake spec`
-8. `git push origin my_feature`
+5. `rake wordlists` (generates the built-in wordlists)
+6. `git checkout -b my_feature`
+7. Code It!
+8. `bundle exec rake spec`
+9. `git push origin my_feature`
 
 ## License
 
