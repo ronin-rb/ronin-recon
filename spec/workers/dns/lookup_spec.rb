@@ -5,7 +5,8 @@ describe Ronin::Recon::DNS::Lookup do
   describe "#process" do
     context "when there are IP addresses for the host" do
       let(:host) { Ronin::Recon::Values::Host.new('www.example.com') }
-      
+      let(:ip)   { Ronin::Recon::Values::IP.new('93.184.216.34', 'www.example.com') }
+
       it "must yield them" do
         yielded_values = []
 
@@ -15,13 +16,13 @@ describe Ronin::Recon::DNS::Lookup do
           end
         end
 
-        expect(yielded_values).to eq("replace with ip")
+        expect(yielded_values).to eq([ip])
       end
     end
 
     context "when there is no IP address for the host" do
       let(:host) { Ronin::Recon::Values::Host.new('www.example.com') }
-      
+
       it "must not yield anything" do
         expect { |b|
           Async do
