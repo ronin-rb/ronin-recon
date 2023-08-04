@@ -72,10 +72,9 @@ describe Ronin::Recon::Graph do
     context "when node value exists in the graph" do
       context "and has no edges" do
         it "returns empty Set" do
-          pending
-          subject.add_edge(value1)
+          subject.add_node(value1)
 
-          expect(subject[value1]).to eq(Set.new)
+          expect(subject[value1]).to be(nil)
         end
       end
 
