@@ -8,7 +8,7 @@ describe Ronin::Recon::DNS::Nameservers do
       let(:nameserver)    { Ronin::Recon::Values::Nameserver.new('a.iana-servers.net') }
       let(:nameserver2)   { Ronin::Recon::Values::Nameserver.new('b.iana-servers.net') }
 
-      it "must yield them" do
+      it "must yield Nameserver values" do
         yielded_values = []
 
         Async do
@@ -22,7 +22,7 @@ describe Ronin::Recon::DNS::Nameservers do
     end
 
     context "when there is no nameserver for the domain" do
-      let(:domain) { Ronin::Recon::Values::Domain.new('e.com') }
+      let(:domain) { Ronin::Recon::Values::Domain.new('localhost') }
 
       it "must not yield anything" do
         expect { |b|
