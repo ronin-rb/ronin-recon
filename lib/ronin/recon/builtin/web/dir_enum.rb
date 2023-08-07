@@ -84,7 +84,7 @@ module Ronin
                 http = Async::HTTP::Internet.instance
 
                 while (dir = queue.dequeue)
-                  path    = "/#{URI.encode_uri_component(dir)}"
+                  path    = "/#{URI.encode_www_form_component(dir)}"
                   url     = "#{base_url}#{path}"
                   retries = 0
 
