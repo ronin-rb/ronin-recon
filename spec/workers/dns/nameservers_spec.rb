@@ -5,8 +5,12 @@ describe Ronin::Recon::DNS::Nameservers do
   describe "#process" do
     context "when there are nameservers for the domain" do
       let(:domain)        { Ronin::Recon::Values::Domain.new('example.com') }
-      let(:nameserver)    { Ronin::Recon::Values::Nameserver.new('a.iana-servers.net') }
-      let(:nameserver2)   { Ronin::Recon::Values::Nameserver.new('b.iana-servers.net') }
+      let(:nameservers) do
+        %w[
+          a.iana-servers.net
+          b.iana-servers.net
+        ]
+      end
 
       it "must yield Nameserver values" do
         yielded_values = []
@@ -17,7 +21,9 @@ describe Ronin::Recon::DNS::Nameservers do
           end
         end
 
-        expect(yielded_values).to eq([nameserver, nameserver2])
+        expect(yielded_values).to_not be_empty
+        expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Nameserver))
+        expect(yielded_values.map(&:name).map(&:to_s)).to match_array(nameservers)
       end
     end
 
