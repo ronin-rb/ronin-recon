@@ -4,10 +4,18 @@ require 'ronin/recon/builtin/dns/mailservers'
 describe Ronin::Recon::DNS::Mailservers do
   describe "#process" do
     context "when there are mailservers for the domain" do
-      let(:domain)       { Ronin::Recon::Values::Domain.new('example.com') }
-      let(:mailserver)   { Ronin::Recon::Values::Mailserver.new('example.com') }
+      let(:domain)       { Ronin::Recon::Values::Domain.new('gmail.com') }
+      let(:mailservers) do
+        %w[
+          alt1.gmail-smtp-in.l.google.com
+          alt2.gmail-smtp-in.l.google.com
+          alt3.gmail-smtp-in.l.google.com
+          gmail-smtp-in.l.google.com
+          alt4.gmail-smtp-in.l.google.com
+        ]
+      end
 
-      it "must yield them" do
+      it "must yield Mailsever values" do
         yielded_values = []
 
         Async do
@@ -16,7 +24,9 @@ describe Ronin::Recon::DNS::Mailservers do
           end
         end
 
-        expect(yielded_values).to eq([mailserver])
+        expect(yielded_values).to_not be_empty
+        expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Mailserver))
+        expect(yielded_values.map(&:exchange).map(&:to_s)).to match_array(mailservers)
       end
     end
 
