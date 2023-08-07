@@ -31,7 +31,7 @@ describe Ronin::Recon::DNS::Mailservers do
     end
 
     context "when there is no mailserver for the domain" do
-      let(:domain) { Ronin::Recon::Values::Domain.new('e.com') }
+      let(:domain) { Ronin::Recon::Values::Domain.new('localhost') }
 
       it "must not yield anything" do
         expect { |b|
