@@ -4,7 +4,7 @@ require 'ronin/recon/builtin/dns/nameservers'
 describe Ronin::Recon::DNS::Nameservers do
   describe "#process" do
     context "when there are nameservers for the domain" do
-      let(:domain)        { Ronin::Recon::Values::Domain.new('example.com') }
+      let(:domain) { Ronin::Recon::Values::Domain.new('example.com') }
       let(:nameservers) do
         %w[
           a.iana-servers.net
