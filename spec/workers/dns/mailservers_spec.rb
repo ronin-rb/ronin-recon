@@ -26,7 +26,7 @@ describe Ronin::Recon::DNS::Mailservers do
 
         expect(yielded_values).to_not be_empty
         expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Mailserver))
-        expect(yielded_values.map(&:exchange).map(&:to_s)).to match_array(mailservers)
+        expect(yielded_values.map(&:name).map(&:to_s)).to match_array(mailservers)
       end
     end
 
