@@ -6,7 +6,7 @@ describe Ronin::Recon::DNS::SubdomainEnum do
     context "when there is a host for the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new('example.com') }
       let(:hosts)  { ["www.example.com"] }
-      
+
       it "must yield Host" do
         yielded_values = []
 
@@ -19,7 +19,7 @@ describe Ronin::Recon::DNS::SubdomainEnum do
         expect(yielded_values.map(&:name).map(&:to_s)).to eq(hosts)
       end
     end
-      
+
     context "when there is no host for the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new('localhost') }
 
