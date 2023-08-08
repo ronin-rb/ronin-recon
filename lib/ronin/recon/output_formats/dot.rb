@@ -76,6 +76,15 @@ module Ronin
           end
         end
 
+        def value_text(value)
+          case value
+          when Values::URL
+            "#{value.status} #{value.to_s}"
+          else
+            value.to_s
+          end
+        end
+
         #
         # Writes a value to the GraphViz DOT output stream as a node
         # declaration.
@@ -85,7 +94,7 @@ module Ronin
         #
         def <<(value)
           name  = value.to_s
-          label = "#{value_type(value)}\n#{name}"
+          label = "#{value_type(value)}\n#{value_text(value)}"
 
           @io.puts "\t#{name.inspect} [label=#{label.inspect}]"
           @io.flush
