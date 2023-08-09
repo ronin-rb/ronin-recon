@@ -81,7 +81,8 @@ module Ronin
       # @return [Ronin::DB::HostName,
       #          Ronin::DB::IPAddress,
       #          Ronin::DB::OpenPort,
-      #          Ronin::DB::URL]
+      #          Ronin::DB::URL,
+      #          Ronin::DB::Cert]
       #   The imported record.
       #
       def self.import_value(value)
@@ -90,6 +91,7 @@ module Ronin
         when Values::IP       then import_ip_address(value.address)
         when Values::OpenPort then import_open_port(value)
         when Values::URL      then import_url(value.uri)
+        when Values::Cert     then import_cert(value.cert)
         end
       end
 
@@ -193,6 +195,21 @@ module Ronin
                               end
 
         return imported_open_port
+      end
+
+      #
+      # Imports a SSL/TLS certificate.
+      #
+      # @param [Ronin::Support::Crypto::Cert, OpenSSL::X509::Certificate] cert
+      #   The SSL/TLS certificate to import.
+      #
+      # @return [Ronin::DB::Cert]
+      #   The imported certificate.
+      #
+      def self.import_cert(cert)
+        DB::Cert.transaction do
+          DB::Cert.find_or_import(cert)
+        end
       end
     end
   end
