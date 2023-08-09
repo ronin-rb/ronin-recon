@@ -79,7 +79,7 @@ module Ronin
         def value_text(value)
           case value
           when Values::URL
-            "#{value.status} #{value.to_s}"
+            "#{value.status} #{value}"
           else
             value.to_s
           end
