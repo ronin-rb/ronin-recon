@@ -24,5 +24,6 @@ module Ronin
     #
     # @api private
     ROOT = File.expand_path(File.join(__dir__,'..','..','..'))
+    WORDLISTS_DIR = File.join(ROOT, "data/wordlists")
   end
 end

@@ -33,7 +33,7 @@ module Ronin
       #
       class SubdomainEnum < DNSWorker
 
-        DEFAULT_WORDLIST = File.join(ROOT,'data','subdomains-1000.txt.gz')
+        DEFAULT_WORDLIST = File.join(WORDLISTS_DIR, 'subdomains-1000.txt.gz')
 
         register 'dns/subdomain_enum'
 
