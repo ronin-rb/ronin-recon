@@ -21,7 +21,7 @@ describe Ronin::Recon::Web::Spider do
     end
 
     context "when there are no URL in the website" do
-      let(:website) { Ronin::Recon::Values::Website.new(:https, "www.localhost.com", 443) }
+      let(:website) { Ronin::Recon::Values::Website.new(:https, "www.foo.invalid", 443) }
 
       it "must not yield anything" do
         expect { |b|
