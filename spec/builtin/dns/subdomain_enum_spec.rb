@@ -26,7 +26,7 @@ describe Ronin::Recon::DNS::SubdomainEnum do
     end
 
     context "when there is no host for the domain" do
-      let(:domain) { Ronin::Recon::Values::Domain.new('localhost') }
+      let(:domain) { Ronin::Recon::Values::Domain.new('foo.invalid') }
 
       it "must not yield anything" do
         expect { |b|
