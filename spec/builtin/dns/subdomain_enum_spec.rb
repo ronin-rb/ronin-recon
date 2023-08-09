@@ -2,6 +2,11 @@ require 'spec_helper'
 require 'ronin/recon/builtin/dns/subdomain_enum'
 
 describe Ronin::Recon::DNS::SubdomainEnum do
+  subject { described_class.new(params: { wordlist: wordlist_path }) }
+
+  let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','fixtures')) }
+  let(:wordlist_path) { File.join(fixtures_dir, 'wordlist.txt') }
+
   context "#process" do
     context "when there is a host for the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new('example.com') }
