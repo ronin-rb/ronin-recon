@@ -597,7 +597,7 @@ module Ronin
         #
         def dns_get_txt_string(name)
           if (record = dns_get_txt_record(name))
-            # TODO
+            record.strings.join
           end
         end
 
@@ -626,8 +626,8 @@ module Ronin
         #   All `TXT` string values belonging of the host name.
         #
         def dns_get_txt_strings(name)
-          dns_get_text_records(name).map do |record|
-            # TODO
+          dns_get_txt_records(name).map do |record|
+            record.strings.join
           end
         end
       end
