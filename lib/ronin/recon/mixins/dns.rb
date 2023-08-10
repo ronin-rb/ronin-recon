@@ -19,6 +19,7 @@
 #
 
 require 'ronin/support/network/dns/idn'
+require 'ronin/support/network/dns'
 
 require 'async/io'
 require 'async/dns/resolver'
