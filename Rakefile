@@ -33,7 +33,9 @@ task :docs => :yard
 require 'kramdown/man/task'
 Kramdown::Man::Task.new
 
-file 'data/wordlists/subdomains-1000.txt' do
+directory 'data/wordlists'
+
+file 'data/wordlists/subdomains-1000.txt' => 'data/wordlists' do
   sh 'wget -O data/wordlists/subdomains-1000.txt https://raw.githubusercontent.com/rbsec/dnscan/master/subdomains-1000.txt'
 end
 
@@ -41,7 +43,7 @@ file 'data/wordlists/subdomains-1000.txt.gz' => 'data/wordlists/subdomains-1000.
   sh 'gzip -f data/wordlists/subdomains-1000.txt'
 end
 
-file 'data/wordlists/combined_directories.txt' do
+file 'data/wordlists/combined_directories.txt' => 'data/wordlists' do
   sh 'wget -O data/wordlists/combined_directories.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/combined_directories.txt'
 end
 
