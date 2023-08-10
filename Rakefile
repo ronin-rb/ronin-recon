@@ -33,24 +33,26 @@ task :docs => :yard
 require 'kramdown/man/task'
 Kramdown::Man::Task.new
 
-file 'data/subdomains-1000.txt' do
-  sh 'wget -O data/subdomains-1000.txt https://raw.githubusercontent.com/rbsec/dnscan/master/subdomains-1000.txt'
+directory 'data/wordlists'
+
+file 'data/wordlists/subdomains-1000.txt' => 'data/wordlists' do
+  sh 'wget -O data/wordlists/subdomains-1000.txt https://raw.githubusercontent.com/rbsec/dnscan/master/subdomains-1000.txt'
 end
 
-file 'data/subdomains-1000.txt.gz' => 'data/subdomains-1000.txt' do
-  sh 'gzip -f data/subdomains-1000.txt'
+file 'data/wordlists/subdomains-1000.txt.gz' => 'data/wordlists/subdomains-1000.txt' do
+  sh 'gzip -f data/wordlists/subdomains-1000.txt'
 end
 
-file 'data/combined_directories.txt' do
-  sh 'wget -O data/combined_directories.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/combined_directories.txt'
+file 'data/wordlists/combined_directories.txt' => 'data/wordlists' do
+  sh 'wget -O data/wordlists/combined_directories.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/combined_directories.txt'
 end
 
-file 'data/combined_directories.txt.gz' => 'data/combined_directories.txt' do
-  sh 'gzip -f data/combined_directories.txt'
+file 'data/wordlists/combined_directories.txt.gz' => 'data/wordlists/combined_directories.txt' do
+  sh 'gzip -f data/wordlists/combined_directories.txt'
 end
 
 desc 'Generate built-in wordlists'
 task :wordlists => %w[
-  data/subdomains-1000.txt.gz
-  data/combined_directories.txt.gz
+  data/wordlists/subdomains-1000.txt.gz
+  data/wordlists/combined_directories.txt.gz
 ]
