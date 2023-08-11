@@ -76,7 +76,6 @@ module Ronin
           end
         end
 
-        
         #
         # Returns the body text for the value object.
         #
