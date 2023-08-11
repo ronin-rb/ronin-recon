@@ -47,6 +47,32 @@ module Ronin
     #
     module Importer
       #
+      # Imports the connection between two values.
+      #
+      # @param [Values::Value] value
+      #   A discovered recon value to import.
+      #
+      # @param [Values::Value] parent
+      #   The parent value of the discovered recon value.
+      #
+      # @return [(Ronin::DB::Model, Ronin::DB::Model)]
+      #   The imported value and the imported parent value.
+      #
+      def self.import_connection(value,parent)
+        imported_value  = import_value(value)
+        imported_parent = import_value(parent)
+
+        if imported_value.kind_of?(DB::IPAddress) &&
+           imported_parent.kind_of?(DB::HostName)
+          imported_value.host_name_ip_addresses.find_or_create_by(
+            host_name: imported_parent
+          )
+        end
+
+        return imported_value, imported_parent
+      end
+
+      #
       # Imports a value into the database.
       #
       # @param [Values::Value] value

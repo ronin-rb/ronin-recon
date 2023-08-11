@@ -129,12 +129,17 @@ module Ronin
                   print_value(value,parent)
 
                   output_file << value if options[:output]
-                  import_value(value)  if options[:import]
                 end
 
                 if output_file.kind_of?(OutputFormats::GraphFormat)
                   engine.on(:connection) do |value,parent|
                     output_file[value] = parent
+                  end
+                end
+
+                if options[:import]
+                  engine.on(:connection) do |value,parent|
+                    import_connection(value,parent)
                   end
                 end
 
@@ -154,6 +159,10 @@ module Ronin
 
           def import_value(value)
             Importer.import_value(value)
+          end
+
+          def import_connection(value,parent)
+            Importer.import_connection(value,parent)
           end
 
         end
