@@ -15,7 +15,7 @@ describe Ronin::Recon::DNS::Mailservers do
         ]
       end
 
-      it "must yield Mailsever values" do
+      it "must yield Mailserver values" do
         yielded_values = []
 
         Async do
