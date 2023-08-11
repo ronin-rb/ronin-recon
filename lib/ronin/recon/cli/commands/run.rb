@@ -127,13 +127,17 @@ module Ronin
               Engine.run(values, max_depth: options[:max_depth]) do |engine|
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
-
-                  output_file << value if options[:output]
                 end
 
-                if output_file.kind_of?(OutputFormats::GraphFormat)
-                  engine.on(:connection) do |value,parent|
-                    output_file[value] = parent
+                if output_file
+                  engine.on(:value) do |value|
+                    output_file << value
+                  end
+
+                  if output_file.kind_of?(OutputFormats::GraphFormat)
+                    engine.on(:connection) do |value,parent|
+                      output_file[value] = parent
+                    end
                   end
                 end
 
