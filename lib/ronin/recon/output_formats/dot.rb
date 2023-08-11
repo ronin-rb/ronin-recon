@@ -76,6 +76,15 @@ module Ronin
           end
         end
 
+        #
+        # Returns the body text for the value object.
+        #
+        # @param [Values::Value] value
+        #   The value object.
+        #
+        # @return [String]
+        #   The body text for the value object.
+        #
         def value_text(value)
           case value
           when Values::URL
