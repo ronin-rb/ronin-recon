@@ -67,6 +67,9 @@ module Ronin
           imported_value.host_name_ip_addresses.find_or_create_by(
             host_name: imported_parent
           )
+        elsif imported_value.kind_of?(DB::Cert) &&
+              imported_parent.kind_of?(DB::OpenPort)
+          imported_parent.update(cert: imported_value)
         end
 
         return imported_value, imported_parent
