@@ -19,10 +19,10 @@ describe Ronin::Recon::Net::CertGrab do
         expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Cert))
       end
     end
-    
+
     context "when there is no certificate in the open port" do
       let(:port) { Ronin::Recon::Values::OpenPort.new("192.168.0.1", 80) }
-      
+
       it "must not yield anything" do
         expect { |b|
           Async do
