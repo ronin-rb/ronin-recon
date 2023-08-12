@@ -6,17 +6,20 @@ describe Ronin::Recon::Net::CertGrab do
     context "when there are certificates in the open port" do
       let(:port)  { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'http', ssl: true) }
 
+      let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','fixtures')) }
+      let(:cert_path)     { File.join(fixtures_dir,'example.crt') }
+      let(:cert)          { Ronin::Support::Crypto::Cert.load_file(cert_path) }
+
       it "must yield Cert" do
-        yielded_values = []
+        yielded_value = nil
 
         Async do
           subject.process(port) do |value|
-            yielded_values << value
+            yielded_value = value
           end
         end
 
-        expect(yielded_values).to_not be_empty
-        expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Cert))
+        expect(yielded_value.cert).to eq(cert)
       end
     end
 
