@@ -160,7 +160,9 @@ module Ronin
                       hostname = record.target.to_s
                       hostname.chomp!('.')
 
-                      yield Host.new(hostname)
+                      unless hostname.empty?
+                        yield Host.new(hostname)
+                      end
                     end
                   end
                 end
