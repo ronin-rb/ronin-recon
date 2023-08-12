@@ -24,7 +24,7 @@ describe Ronin::Recon::DNS::SRVEnum do
 
         expect(yielded_values).to_not be_empty
         expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Host))
-        expect(yielded_values.map(&:name).reject(&:empty?)).to match_array(hosts)
+        expect(yielded_values.map(&:name)).to match_array(hosts)
       end
     end
 
