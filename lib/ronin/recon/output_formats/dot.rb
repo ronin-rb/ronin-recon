@@ -89,6 +89,8 @@ module Ronin
           case value
           when Values::URL
             "#{value.status} #{value}"
+          when Values::Cert
+            value.subject.to_h.map { |k,v| "#{k}: #{v}\n" }.join
           else
             value.to_s
           end
