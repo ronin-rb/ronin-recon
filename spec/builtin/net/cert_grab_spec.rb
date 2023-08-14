@@ -19,6 +19,7 @@ describe Ronin::Recon::Net::CertGrab do
         end
 
         expect(yielded_values.size).to eq(1)
+        expect(yielded_values[0]).to be_kind_of(Ronin::Recon::Values::Cert)
         expect(yielded_values[0].cert).to eq(cert)
       end
     end
