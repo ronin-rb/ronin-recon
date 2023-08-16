@@ -30,7 +30,7 @@ describe Ronin::Recon::Net::CertEnum do
           end
 
           expect(yielded_values).to_not be_empty
-          expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Domain).or be_kind_of(Ronin::Recon::Values::Host))
+          expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Domain).or(be_kind_of(Ronin::Recon::Values::Host)))
           expect(yielded_values.map(&:name)).to match_array(expected)
         end
       end
