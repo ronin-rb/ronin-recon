@@ -22,7 +22,7 @@ describe Ronin::Recon::Net::CertEnum do
           ]
         end
 
-        it "must yield Values found in subject and subject_alt_names" do
+        it "must yield Values::Domain or Values::Host found in subject and subject_alt_names" do
           yielded_values = []
 
           subject.process(cert) do |value|
@@ -30,22 +30,23 @@ describe Ronin::Recon::Net::CertEnum do
           end
 
           expect(yielded_values).to_not be_empty
+          expect(yielded_values).to all(be_kind_of(Ronin::Recon::Values::Domain).or be_kind_of(Ronin::Recon::Values::Host))
           expect(yielded_values.map(&:name)).to match_array(expected)
         end
       end
 
       context "without subject alt names" do
-        let(:key)          { Ronin::Support::Crypto::Key::RSA.random }
-        let(:cert)         { Ronin::Support::Crypto::Cert.generate(key:, subject: x509_subject) }
+        let(:cert)         { Ronin::Support::Crypto::Cert.new }
         let(:x509_subject) { OpenSSL::X509::Name.new }
 
         before do
           x509_subject.add_entry("CN", "example.com")
           x509_subject.add_entry("O", "Example Co.")
           x509_subject.add_entry("C", "US")
+          cert.subject = x509_subject
         end
 
-        it "must yield Values found in subject only" do
+        it "must yield Values::Domain found in subject only" do
           yielded_values = []
 
           subject.process(cert) do |value|
@@ -53,18 +54,9 @@ describe Ronin::Recon::Net::CertEnum do
           end
 
           expect(yielded_values).to_not be_empty
+          expect(yielded_values[0]).to be_kind_of(Ronin::Recon::Values::Domain)
           expect(yielded_values.map(&:name)).to match_array(["example.com"])
         end
-      end
-    end
-
-    context "when there is no Value in cert" do
-      let(:cert) { Ronin::Support::Crypto::Cert.new }
-
-      it "must not yield anything" do
-        expect { |b|
-          subject.process(cert,&b)
-        }.to_not yield_control
       end
     end
   end
