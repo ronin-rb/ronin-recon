@@ -53,9 +53,9 @@ describe Ronin::Recon::Net::CertEnum do
             yielded_values << value
           end
 
-          expect(yielded_values).to_not be_empty
+          expect(yielded_values.length).to eq(1)
           expect(yielded_values[0]).to be_kind_of(Ronin::Recon::Values::Domain)
-          expect(yielded_values.map(&:name)).to match_array(["example.com"])
+          expect(yielded_values[0].name).to eq("example.com")
         end
       end
     end
