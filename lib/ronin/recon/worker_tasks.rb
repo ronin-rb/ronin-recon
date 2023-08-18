@@ -59,6 +59,11 @@ module Ronin
       # @return [Async::Queue]
       attr_reader :input_queue
 
+      # The output queue for the worker(s).
+      #
+      # @return [Async::Queue]
+      attr_reader :output_queue
+
       #
       # Initializes the worker tasks.
       #
