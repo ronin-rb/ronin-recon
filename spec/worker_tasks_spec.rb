@@ -12,11 +12,15 @@ describe Ronin::Recon::WorkerTasks do
         yield Ronin::Recon::Values::Domain.new('example.com')
       end
     end
+
+    class TestWorkerWithConcurrency < Ronin::Recon::Worker
+      def process(value); end
+    end
   end
 
-  let(:worker) { TestWorkerTasks::TestWorker.new }
-
   describe "#initialize" do
+    let(:worker) { TestWorkerTasks::TestWorker.new }
+
     it "must initialize #worker and #concurrency" do
       expect(subject.worker).to be(worker)
       expect(subject.concurrency).to be(worker.class.concurrency)
@@ -26,9 +30,10 @@ describe Ronin::Recon::WorkerTasks do
   describe "#enqueue_mesg" do
     context "for Message::SHUTDOWN" do
       let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
+      let(:worker)     { TestWorkerTasks::TestWorkerWithConcurrency.new }
 
       before do
-        TestWorkerTasks::TestWorker.concurrency(2)
+        TestWorkerTasks::TestWorkerWithConcurrency.concurrency(2)
       end
 
       it "must enqueue Message::Shutdown into #input_queue 2 times" do
@@ -41,6 +46,7 @@ describe Ronin::Recon::WorkerTasks do
 
     context "for other Message's" do
       let(:mesg_value) { Ronin::Recon::Message::Value }
+      let(:worker)     { TestWorkerTasks::TestWorker.new }
 
       it "must enqueue Message into #input_queue" do
         Async { subject.enqueue_mesg(mesg_value) }
@@ -51,6 +57,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#run" do
+    let(:worker)        { TestWorkerTasks::TestWorker.new }
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
@@ -87,11 +94,12 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#start" do
+    let(:worker)        { TestWorkerTasks::TestWorkerWithConcurrency.new }
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
     before do
-      TestWorkerTasks::TestWorker.concurrency(1)
+      TestWorkerTasks::TestWorkerWithConcurrency.concurrency(1)
     end
 
     it "must add tast to #tasks" do
@@ -105,6 +113,8 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#started!" do
+    let(:worker) { TestWorkerTasks::TestWorker.new }
+
     it "must enqueue Message::WorkerStarted instance into #output_queue" do
       Async { subject.started! }
 
@@ -114,6 +124,8 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#stopped!" do
+    let(:worker) { TestWorkerTasks::TestWorker.new }
+
     it "must enqueue Message::WorkerStopped instance into #output_queue" do
       Async { subject.stopped! }
 
@@ -123,7 +135,8 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#enqueue" do
-    let(:mesg) { Ronin::Recon::Message::JobFailed }
+    let(:worker) { TestWorkerTasks::TestWorker.new }
+    let(:mesg)   { Ronin::Recon::Message::JobFailed }
 
     it "must enqueue Message into #output_queue" do
       Async { subject.send(:enqueue, mesg) }
