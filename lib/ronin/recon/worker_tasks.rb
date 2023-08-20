@@ -64,6 +64,11 @@ module Ronin
       # @return [Async::Queue]
       attr_reader :output_queue
 
+      # The logger for debug messages.
+      #
+      # @return [Console::Logger]
+      attr_reader :logger
+
       #
       # Initializes the worker tasks.
       #
