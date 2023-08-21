@@ -24,6 +24,9 @@ describe Ronin::Recon::WorkerTasks do
     it "must initialize #worker and #concurrency" do
       expect(subject.worker).to be(worker)
       expect(subject.concurrency).to be(worker.class.concurrency)
+      expect(subject.input_queue).to be_kind_of(Async::Queue)
+      expect(subject.output_queue).to be_kind_of(Async::Queue)
+      expect(subject.logger).to be(Console.logger)
     end
   end
 
