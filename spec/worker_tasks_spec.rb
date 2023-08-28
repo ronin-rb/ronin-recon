@@ -15,17 +15,30 @@ describe Ronin::Recon::WorkerTasks do
 
     class TestWorkerWithConcurrency < Ronin::Recon::Worker
       def process(value); end
+      def concurrency = 2
     end
   end
 
   describe "#initialize" do
     let(:worker) { TestWorkerTasks::TestWorker.new }
 
-    it "must initialize #worker and #concurrency" do
+    it "must initialize #worker worker object" do
       expect(subject.worker).to be(worker)
+    end
+
+    it "must initialize #concurrency to worker object concurrency" do
       expect(subject.concurrency).to be(worker.class.concurrency)
+    end
+
+    it "must initialize #input_queue to a new Async::Queue" do
       expect(subject.input_queue).to be_kind_of(Async::Queue)
+    end
+
+    it "must initialize #output_queue to a new Async::Queue" do
       expect(subject.output_queue).to be_kind_of(Async::Queue)
+    end
+
+    it "must initialize #logger to a Console.logger" do
       expect(subject.logger).to be(Console.logger)
     end
   end
@@ -42,8 +55,8 @@ describe Ronin::Recon::WorkerTasks do
       it "must enqueue Message::Shutdown into #input_queue 2 times" do
         Async { subject.enqueue_mesg(mesg_value) }
 
-        expect(subject.instance_variable_get(:@input_queue).items).to all(be_kind_of(Ronin::Recon::Message::Shutdown))
-        expect(subject.instance_variable_get(:@input_queue).items.size).to be(2)
+        expect(subject.input_queue.items).to all(be_kind_of(Ronin::Recon::Message::Shutdown))
+        expect(subject.input_queue.items.size).to be(2)
       end
     end
 
@@ -54,7 +67,7 @@ describe Ronin::Recon::WorkerTasks do
       it "must enqueue Message into #input_queue" do
         Async { subject.enqueue_mesg(mesg_value) }
 
-        expect(subject.instance_variable_get(:@input_queue).items).to eq([mesg_value])
+        expect(subject.input_queue.items).to eq([mesg_value])
       end
     end
   end
@@ -64,10 +77,6 @@ describe Ronin::Recon::WorkerTasks do
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
-    before do
-      TestWorkerTasks::TestWorker.concurrency(1)
-    end
-
     context "if Message::SHUTDOWN is next in the queue" do
       it "must breaks the loop and not process other messages" do
         Async do
@@ -76,7 +85,7 @@ describe Ronin::Recon::WorkerTasks do
           subject.run
         end
 
-        expect(subject.instance_variable_get(:@input_queue).items.size).to eq(1)
+        expect(subject.input_queue.items.size).to eq(1)
       end
     end
 
@@ -88,10 +97,10 @@ describe Ronin::Recon::WorkerTasks do
           subject.run
         end
 
-        expect(subject.instance_variable_get(:@output_queue).items.size).to eq(4)
-        expect(subject.instance_variable_get(:@output_queue).items[0]).to be_kind_of(Ronin::Recon::Message::JobStarted)
-        expect(subject.instance_variable_get(:@output_queue).items[1]).to be_kind_of(Ronin::Recon::Message::Value)
-        expect(subject.instance_variable_get(:@output_queue).items[2]).to be_kind_of(Ronin::Recon::Message::JobCompleted)
+        expect(subject.output_queue.items.size).to eq(4)
+        expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::JobStarted)
+        expect(subject.output_queue.items[1]).to be_kind_of(Ronin::Recon::Message::Value)
+        expect(subject.output_queue.items[2]).to be_kind_of(Ronin::Recon::Message::JobCompleted)
       end
     end
   end
@@ -121,8 +130,8 @@ describe Ronin::Recon::WorkerTasks do
     it "must enqueue Message::WorkerStarted instance into #output_queue" do
       Async { subject.started! }
 
-      expect(subject.instance_variable_get(:@output_queue).items.size).to eq(1)
-      expect(subject.instance_variable_get(:@output_queue).items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStarted)
+      expect(subject.output_queue.items.size).to eq(1)
+      expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStarted)
     end
   end
 
@@ -132,8 +141,8 @@ describe Ronin::Recon::WorkerTasks do
     it "must enqueue Message::WorkerStopped instance into #output_queue" do
       Async { subject.stopped! }
 
-      expect(subject.instance_variable_get(:@output_queue).items.size).to eq(1)
-      expect(subject.instance_variable_get(:@output_queue).items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStopped)
+      expect(subject.output_queue.items.size).to eq(1)
+      expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStopped)
     end
   end
 
@@ -144,8 +153,8 @@ describe Ronin::Recon::WorkerTasks do
     it "must enqueue Message into #output_queue" do
       Async { subject.send(:enqueue, mesg) }
 
-      expect(subject.instance_variable_get(:@output_queue).items.size).to eq(1)
-      expect(subject.instance_variable_get(:@output_queue).items[0]).to be(Ronin::Recon::Message::JobFailed)
+      expect(subject.output_queue.items.size).to eq(1)
+      expect(subject.output_queue.items[0]).to be(Ronin::Recon::Message::JobFailed)
     end
   end
 end
