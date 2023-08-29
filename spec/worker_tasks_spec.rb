@@ -14,8 +14,8 @@ describe Ronin::Recon::WorkerTasks do
     end
 
     class TestWorkerWithConcurrency < Ronin::Recon::Worker
+      concurrency 2
       def process(value); end
-      def concurrency = 2
     end
   end
 
@@ -47,10 +47,6 @@ describe Ronin::Recon::WorkerTasks do
     context "for Message::SHUTDOWN" do
       let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
       let(:worker)     { TestWorkerTasks::TestWorkerWithConcurrency.new }
-
-      before do
-        TestWorkerTasks::TestWorkerWithConcurrency.concurrency(2)
-      end
 
       it "must enqueue Message::Shutdown into #input_queue 2 times" do
         Async { subject.enqueue_mesg(mesg_value) }
@@ -110,17 +106,13 @@ describe Ronin::Recon::WorkerTasks do
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
-    before do
-      TestWorkerTasks::TestWorkerWithConcurrency.concurrency(1)
-    end
-
-    it "must add tast to #tasks" do
+    it "must add tasks to #tasks" do
       Async do
         subject.enqueue_mesg(shutdown_mesg)
         subject.start
       end
 
-      expect(subject.instance_variable_get(:@tasks).size).to eq(1)
+      expect(subject.instance_variable_get(:@tasks).size).to eq(2)
     end
   end
 
