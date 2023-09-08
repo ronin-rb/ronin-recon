@@ -37,7 +37,7 @@ and uses asynchronous I/O to maximize efficiency.
   * Web spidering.
   * HTTP directory enumeration.
 * Supports loading additional recon modules from Ruby files or from installed
-  3rd-party git repositories.
+  [3rd-party git repositories][ronin-repos].
 * Builds a network graph of all discovered assets.
 * Provides a simple CLI for listing workers or performing recon.
 * Supports many different output file formats:
