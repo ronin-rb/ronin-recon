@@ -43,6 +43,7 @@ dependencies:
   # Ronin dependencies:
   ronin-support: ~> 1.0
   ronin-core: ~> 0.1
+  ronin-db: ~> 0.2
   ronin-repos: ~> 0.1
   ronin-masscan: ~> 0.1
   ronin-nmap: ~> 0.1

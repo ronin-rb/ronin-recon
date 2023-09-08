@@ -46,6 +46,7 @@ and uses asynchronous I/O to maximize efficiency.
   * JSON
   * [NDJSON](http://ndjson.org/)
   * [GraphViz DOT](https://graphviz.org/doc/info/lang.html)
+* Supports automatically saving recon results into [ronin-db].
 
 ## Anti-Features
 
@@ -177,6 +178,7 @@ end
 * [wordlist] ~> 1.0, >= 1.0.3
 * [ronin-support] ~> 1.0
 * [ronin-core] ~> 0.1
+* [ronin-db] ~> 0.2
 * [ronin-repos] ~> 0.1
 * [ronin-masscan] ~> 0.1
 * [ronin-nmap] ~> 0.1
@@ -252,6 +254,7 @@ along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 [wordlist]: https://github.com/postmodern/wordlist.rb#readme
 [ronin-support]: https://github.com/ronin-rb/ronin-support#readme
 [ronin-core]: https://github.com/ronin-rb/ronin-core#readme
+[ronin-db]: https://github.com/ronin-rb/ronin-db#readme
 [ronin-repos]: https://github.com/ronin-rb/ronin-repos#readme
 [ronin-masscan]: https://github.com/ronin-rb/ronin-masscan#readme
 [ronin-nmap]: https://github.com/ronin-rb/ronin-nmap#readme
