@@ -158,6 +158,70 @@ describe Ronin::Recon::Worker do
     end
   end
 
+  describe ".intensity" do
+    context "when the intensity is not set in the Worker class" do
+      module TestWorkers
+        class WorkerWithoutIntensity < Ronin::Recon::Worker
+        end
+      end
+
+      subject { TestWorkers::WorkerWithoutIntensity }
+
+      it "must default to :active" do
+        expect(subject.intensity).to be(:active)
+      end
+
+      context "but is set in the superclass of the Worker class" do
+        module TestWorkers
+          class WorkerBaseClassWithIntensity < Ronin::Recon::Worker
+            intensity :passive
+          end
+
+          class WorkerWithInheritedIntensity < WorkerBaseClassWithIntensity
+          end
+        end
+
+        subject { TestWorkers::WorkerWithInheritedIntensity }
+
+        it "must default to the intensity defined in the superclass" do
+          expect(subject.intensity).to eq(subject.superclass.intensity)
+        end
+      end
+    end
+
+    context "when the intensity is set in the Worker class" do
+      module TestWorkers
+        class WorkerWithIntensity < Ronin::Recon::Worker
+          intensity :passive
+        end
+      end
+
+      subject { TestWorkers::WorkerWithIntensity }
+
+      it "must return the set intensity" do
+        expect(subject.intensity).to be(:passive)
+      end
+
+      context "but is differnet from the intensity defined in the superclass" do
+        module TestWorkers
+          class WorkerWithOverridenIntensity < WorkerWithIntensity
+            intensity :active
+          end
+        end
+
+        subject { TestWorkers::WorkerWithOverridenIntensity }
+
+        it "must return the intensity set in the subclass" do
+          expect(subject.intensity).to be(:active)
+        end
+
+        it "must not change the intensity in the superclass" do
+          expect(subject.superclass.intensity).to be(:passive)
+        end
+      end
+    end
+  end
+
   describe ".run" do
     module TestWorkers
       class TestWorker < Ronin::Recon::Worker
