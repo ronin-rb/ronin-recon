@@ -126,6 +126,24 @@ describe Ronin::Recon::Worker do
           )
         end
       end
+
+      context "but is differnet from the accepts defined in the superclass" do
+        module TestWorkers
+          class WorkerWithOverridenAccepts < WorkerWithAccepts
+            accepts Host
+          end
+        end
+
+        subject { TestWorkers::WorkerWithOverridenAccepts }
+
+        it "must return the accepts set in the subclass" do
+          expect(subject.accepts).to eq([Ronin::Recon::Values::Host])
+        end
+
+        it "must not change the accepts in the superclass" do
+          expect(subject.superclass.accepts).to eq([Ronin::Recon::Values::IP])
+        end
+      end
     end
   end
 
