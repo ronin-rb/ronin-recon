@@ -34,6 +34,8 @@ module Ronin
 
       include Mixins::DNS
 
+      intensity :passive
+
     end
   end
 end
