@@ -47,6 +47,8 @@ module Ronin
           requests using a wordlist of common web directory names.
         DESC
 
+        intensity :intensive
+
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'
 
