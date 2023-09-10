@@ -141,6 +141,23 @@ describe Ronin::Recon::Worker do
       it "must default to 1" do
         expect(subject.concurrency).to eq(1)
       end
+
+      context "but is set in the superclass of the Worker class" do
+        module TestWorkers
+          class WorkerBaseClassWithConcurrency < Ronin::Recon::Worker
+            concurrency 2
+          end
+
+          class WorkerWithInheritedConcurrency < WorkerBaseClassWithConcurrency
+          end
+        end
+
+        subject { TestWorkers::WorkerWithInheritedConcurrency }
+
+        it "must default to the concurrency defined in the superclass" do
+          expect(subject.concurrency).to eq(subject.superclass.concurrency)
+        end
+      end
     end
 
     context "when the concurrency is set in the Worker class" do
@@ -154,6 +171,24 @@ describe Ronin::Recon::Worker do
 
       it "must return the set concurrency" do
         expect(subject.concurrency).to eq(4)
+      end
+
+      context "but is differnet from the concurrency defined in the superclass" do
+        module TestWorkers
+          class WorkerWithOverridenConcurrency < WorkerWithConcurrency
+            concurrency 3
+          end
+        end
+
+        subject { TestWorkers::WorkerWithOverridenConcurrency }
+
+        it "must return the concurrency set in the subclass" do
+          expect(subject.concurrency).to be(3)
+        end
+
+        it "must not change the concurrency in the superclass" do
+          expect(subject.superclass.concurrency).to be(4)
+        end
       end
     end
   end
