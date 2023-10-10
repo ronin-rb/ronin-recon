@@ -31,7 +31,7 @@ module Ronin
 
         # The certificate object.
         #
-        # @return [OpenSSL::X509::Certificate]
+        # @return [Ronin::Support::Crypto::Cert]
         #
         # @api private
         attr_reader :cert
