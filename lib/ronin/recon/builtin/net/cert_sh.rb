@@ -34,10 +34,10 @@ module Ronin
 
         accepts Domain
 
-        summary 'Returns host from each domains certificate.'
+        summary 'Queries cert.sh and returns host from each domains certificate.'
 
         description <<~DESC
-          Returns host from each domains certificate.
+          Queries cert.sh and returns host from each domains certificate.
         DESC
 
         #
@@ -63,7 +63,7 @@ module Ronin
 
             certs.each do |cert|
               if cert[:common_name]
-                yield Host.new(name: cert[:common_name])
+                yield Host.new(cert[:common_name])
               end
             end
           end
