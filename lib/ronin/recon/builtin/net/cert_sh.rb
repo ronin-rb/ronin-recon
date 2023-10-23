@@ -26,8 +26,7 @@ module Ronin
   module Recon
     module Net
       #
-      # A recon worker that grabs the SSL/TLS certificate from open ports that
-      # use SSL/TLS.
+      # A recon worker that returns host from each domains certificate
       #
       class CertSh < Worker
 
@@ -57,10 +56,10 @@ module Ronin
         def process(host)
           Async do
             internet = Async::HTTP::Internet.instance
-            path = "https://crt.sh/?dNSName=#{host}&exclude=expired&output=json"
+            path     = "https://crt.sh/?dNSName=#{host}&exclude=expired&output=json"
 
             response = internet.get(path)
-            certs = JSON.parse(response.read, symbolize_names: true)
+            certs    = JSON.parse(response.read, symbolize_names: true)
 
             certs.each do |cert|
               if cert[:common_name]
