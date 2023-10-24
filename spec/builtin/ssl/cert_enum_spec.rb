@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/net/cert_enum'
+require 'ronin/recon/builtin/ssl/cert_enum'
 
-describe Ronin::Recon::Net::CertEnum do
+describe Ronin::Recon::SSL::CertEnum do
   describe "#process" do
     context "when there are values in cert" do
       context "with subject alt names" do

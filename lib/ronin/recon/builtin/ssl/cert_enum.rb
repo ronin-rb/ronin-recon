@@ -25,14 +25,14 @@ require 'async/io'
 
 module Ronin
   module Recon
-    module Net
+    module SSL
       #
       # A recon worker that enumerates over the host names within the SSL/TLS
       # certificate.
       #
       class CertEnum < Worker
 
-        register 'net/cert_enum'
+        register 'ssl/cert_enum'
 
         accepts Cert
 
