@@ -53,10 +53,10 @@ module Ronin
         # @yieldparam [Values::Host] host
         #   The host from certificate.
         #
-        def process(host)
+        def process(domain)
           Async do
             internet = Async::HTTP::Internet.instance
-            path     = "https://crt.sh/?dNSName=#{host}&exclude=expired&output=json"
+            path     = "https://crt.sh/?dNSName=#{domain}&exclude=expired&output=json"
 
             response = internet.get(path)
             certs    = JSON.parse(response.read, symbolize_names: true)
