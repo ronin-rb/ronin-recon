@@ -62,8 +62,8 @@ module Ronin
             certs    = JSON.parse(response.read, symbolize_names: true)
 
             certs.each do |cert|
-              if cert[:common_name]
-                yield Host.new(cert[:common_name])
+              if (common_name = cert[:common_name])
+                yield Host.new(common_name)
               end
             end
           end
