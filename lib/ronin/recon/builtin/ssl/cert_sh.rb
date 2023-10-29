@@ -21,6 +21,7 @@
 require 'ronin/recon/worker'
 
 require 'async/http/internet/instance'
+require 'ronin/recon/mixins/retry'
 
 module Ronin
   module Recon
@@ -29,6 +30,7 @@ module Ronin
       # A recon worker that returns host from each domains certificate
       #
       class CertSh < Worker
+        include Mixins::Retry
 
         register 'net/cert_sh'
 
@@ -58,12 +60,14 @@ module Ronin
             internet = Async::HTTP::Internet.instance
             path     = "https://crt.sh/?dNSName=#{domain}&exclude=expired&output=json"
 
-            response = internet.get(path)
-            certs    = JSON.parse(response.read, symbolize_names: true)
+            retry_on_timeout do
+              response = internet.get(path)
+              certs    = JSON.parse(response.read, symbolize_names: true)
 
-            certs.each do |cert|
-              if (common_name = cert[:common_name])
-                yield Host.new(common_name)
+              certs.each do |cert|
+                if (common_name = cert[:common_name])
+                  yield Host.new(common_name)
+                end
               end
             end
           end
