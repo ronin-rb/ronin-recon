@@ -47,6 +47,9 @@ Runs the recon engine with one or more initial values.
 `--import`
   Imports each newly discovered value into the Ronin database.
 
+`-I`, `--ignore` *VALUE*
+  The value to ignore from the result.
+
 `-h`, `--help`
   Print help information
 
