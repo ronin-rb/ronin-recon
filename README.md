@@ -147,7 +147,7 @@ $ ronin-recon run example1.com example2.com secret.foo.example1.com secret.bar.e
 Run the recon engine and ignore specific hosts, IPs, URLs, etc.:
 
 ```shell
-$ ronin-recon run -I www.example.com example.com
+$ ronin-recon run --ignore staging.example.com example.com
 ```
 
 ## Examples
