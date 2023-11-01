@@ -117,31 +117,31 @@ $ ronin-recon worker dns/lookup
 Run the recon engine on a single domain:
 
 ```shell
-$ ronin-recon run --domain example.com
+$ ronin-recon run example.com
 ```
 
 Run the recon engine on a single host-name:
 
 ```shell
-$ ronin-recon run --host www.example.com
+$ ronin-recon run www.example.com
 ```
 
 Run the recon engine on a single IP address:
 
 ```shell
-$ ronin-recon run --ip 1.1.1.1
+$ ronin-recon run 1.1.1.1
 ```
 
 Run the recon engine on an IP range:
 
 ```shell
-$ ronin-recon run --ip-range 1.1.1.1/24
+$ ronin-recon run 1.1.1.1/24
 ```
 
 Run the recon engine on multiple targets:
 
 ```shell
-$ ronin-recon run --domain example1.com --domain example2.com --host secret.foo.example1.com --host secret.bar.example2.com --ip-range 1.1.1.1/24
+$ ronin-recon run example1.com example2.com secret.foo.example1.com secret.bar.example2.com 1.1.1.1/24
 ```
 
 ## Examples
