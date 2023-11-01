@@ -44,10 +44,6 @@ module Ronin
         #
         #     -D, --debug                      Enable debugging output
         #         --max-depth NUM              The maximum recon depth (Default: 3)
-        #     -d, --domain DOMAIN              The domain to start reconning
-        #     -H, --host HOST                  The host name to start reconning
-        #     -I, --ip IP                      The IP address to start reconning
-        #     -R, --ip-range CIDR              The IP range to start reconning
         #     -o, --output FILE                The output file to write results to
         #     -F txt|list|csv|json|ndjson|dot, The output format
         #         --output-format
