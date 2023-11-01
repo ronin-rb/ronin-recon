@@ -80,12 +80,20 @@ describe Ronin::Recon::Scope do
     end
 
     context "for ignored values" do
-      subject { described_class.new([value], ignore: [value]) }
+      subject { described_class.new(values, ignore: [ignored_value]) }
 
-      let(:value) { Ronin::Recon::Values::IP.new('1.2.3.4') }
+      let(:values) do
+        [
+          Ronin::Recon::Values::IP.new('1.2.3.4'),
+          Ronin::Recon::Values::Host.new('www.example.com')
+        ]
+      end
+
+      let(:ignored_value) { Ronin::Recon::Values::Host.new('www.example.com') }
 
       it "must return false" do
-        expect(subject.include?(value)).to eq(false)
+        expect(subject.include?(values[0])).to eq(true)
+        expect(subject.include?(ignored_value)).to eq(false)
       end
     end
   end

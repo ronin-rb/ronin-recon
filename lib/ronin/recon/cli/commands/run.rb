@@ -94,8 +94,8 @@ module Ronin
                             type: String,
                             usage: 'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE'
                           },
-                          desc: 'The value to ignore in the result' do |i|
-                            @ignore << Value.parse(i)
+                          desc: 'The value to ignore in the result' do |value|
+                            @ignore << Value.parse(value)
                           end
 
           argument :value, required: true,
@@ -107,6 +107,12 @@ module Ronin
 
           man_page 'ronin-recon-run.1'
 
+          #
+          # Initializes the `ronin-recon run` command.
+          #
+          # @param [Hash{Symbol => Object}] kwargs
+          #   Additional keyword arguments.
+          #
           def initialize(**kwargs)
             super(**kwargs)
 

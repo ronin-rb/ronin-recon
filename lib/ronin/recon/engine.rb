@@ -84,7 +84,7 @@ module Ronin
                              max_depth: nil,
                              logger:    Console.logger,
                              ignore:    [])
-        @scope  = Scope.new(values, ignore: ignore)
+        @scope = Scope.new(values, ignore: ignore)
 
         @worker_classes    = {}
         @worker_tasks      = {}

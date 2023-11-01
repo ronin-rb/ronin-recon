@@ -86,7 +86,7 @@ module Ronin
                          @ip_values
                        end
 
-        return false if @ignore.any? { |ignore| ignore == value }
+        return false if @ignore.any? { |ignore| ignore === value }
 
         if (scope_values && !scope_values.empty?)
           scope_values.any? { |scope_value| scope_value === value }

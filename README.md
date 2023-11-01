@@ -144,7 +144,7 @@ Run the recon engine on multiple targets:
 $ ronin-recon run example1.com example2.com secret.foo.example1.com secret.bar.example2.com 1.1.1.1/24
 ```
 
-Run the recon engine and ignore values from result:
+Run the recon engine and ignore specific hosts, IPs, URLs, etc.:
 
 ```shell
 $ ronin-recon run -I www.example.com example.com
