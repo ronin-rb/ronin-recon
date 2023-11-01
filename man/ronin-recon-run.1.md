@@ -53,6 +53,33 @@ Runs the recon engine with one or more initial values.
 `-h`, `--help`
   Print help information
 
+## EXAMPLES
+
+Run the recon engine on a single domain:
+
+        $ ronin-recon run example.com
+
+Run the recon engine on a single host-name:
+
+        $ ronin-recon run www.example.com
+
+Run the recon engine on a single IP address:
+
+        $ ronin-recon run 1.1.1.1
+
+Run the recon engine on an IP range:
+
+        $ ronin-recon run 1.1.1.1/24
+
+Run the recon engine on multiple targets:
+
+        $ ronin-recon run example1.com example2.com secret.foo.example1.com \
+                          secret.bar.example2.com 1.1.1.1/24
+
+Run the recon engine and ignore specific hosts, IPs, URLs, etc.:
+
+        $ ronin-recon run --ignore staging.example.com example.com
+
 ## AUTHOR
 
 Postmodern <postmodern.mod3@gmail.com>
