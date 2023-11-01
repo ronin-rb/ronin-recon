@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'ronin/recon/builtin/net/cert_grab'
 
 describe Ronin::Recon::Net::CertGrab do
-  describe "#process" do
+  describe "#process", :network do
     context "when there are certificates in the open port" do
       let(:port)          { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'http', ssl: true) }
       let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','values','fixtures')) }

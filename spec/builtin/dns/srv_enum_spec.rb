@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'ronin/recon/builtin/dns/srv_enum'
 
 describe Ronin::Recon::DNS::SRVEnum do
-  describe "#process" do
+  describe "#process", :network do
     context "when there are hosts in the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new("gmail.com") }
       let(:hosts) do

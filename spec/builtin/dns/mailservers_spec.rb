@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'ronin/recon/builtin/dns/mailservers'
 
 describe Ronin::Recon::DNS::Mailservers do
-  describe "#process" do
+  describe "#process", :network do
     context "when there are mailservers for the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new('gmail.com') }
       let(:mailservers) do

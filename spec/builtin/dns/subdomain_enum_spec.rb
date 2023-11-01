@@ -7,7 +7,7 @@ describe Ronin::Recon::DNS::SubdomainEnum do
   let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','fixtures')) }
   let(:wordlist_path) { File.join(fixtures_dir, 'wordlist.txt') }
 
-  context "#process" do
+  context "#process", :network do
     context "when there is a host for the domain" do
       let(:domain) { Ronin::Recon::Values::Domain.new('example.com') }
       let(:hosts)  { ["www.example.com"] }
