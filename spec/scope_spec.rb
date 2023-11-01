@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'ronin/recon/scope'
+require 'ronin/recon/values/url'
+require 'ronin/recon/values/website'
 
 describe Ronin::Recon::Scope do
   subject { described_class.new(values) }
@@ -74,6 +76,24 @@ describe Ronin::Recon::Scope do
 
       it "must return true" do
         expect(subject.include?(unknown)).to eq(true)
+      end
+    end
+
+    context "for ignored values" do
+      subject { described_class.new(values, ignore: [ignored_value]) }
+
+      let(:values) do
+        [
+          Ronin::Recon::Values::IP.new('1.2.3.4'),
+          Ronin::Recon::Values::Host.new('www.example.com')
+        ]
+      end
+
+      let(:ignored_value) { Ronin::Recon::Values::Host.new('www.example.com') }
+
+      it "must return false" do
+        expect(subject.include?(values[0])).to eq(true)
+        expect(subject.include?(ignored_value)).to eq(false)
       end
     end
   end

@@ -47,8 +47,9 @@ module Ronin
       # @raise [NotImplementedError]
       #   An unsupported value object was given.
       #
-      def initialize(values)
+      def initialize(values, ignore: [])
         @values = values
+        @ignore = ignore
 
         @host_values = []
         @ip_values   = []
@@ -84,6 +85,8 @@ module Ronin
                        when Values::IP, Values::IPRange
                          @ip_values
                        end
+
+        return false if @ignore.any? { |ignore| ignore === value }
 
         if (scope_values && !scope_values.empty?)
           scope_values.any? { |scope_value| scope_value === value }

@@ -45,6 +45,7 @@ module Ronin
         #     -D, --debug                      Enable debugging output
         #         --max-depth NUM              The maximum recon depth (Default: 3)
         #     -o, --output FILE                The output file to write results to
+        #     -I, --ignore VALUE               The values to ignore in result
         #     -F txt|list|csv|json|ndjson|dot, The output format
         #         --output-format
         #         --import                     Imports each newly discovered value into the Ronin database
@@ -88,6 +89,15 @@ module Ronin
 
           option :import, desc: 'Imports each newly discovered value into the Ronin database'
 
+          option :ignore, short: '-I',
+                          value: {
+                            type: String,
+                            usage: 'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE'
+                          },
+                          desc: 'The value to ignore in the result' do |value|
+                            @ignore << Value.parse(value)
+                          end
+
           argument :value, required: true,
                            repeats:  true,
                            usage:    'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE',
@@ -96,6 +106,18 @@ module Ronin
           description 'Runs the recon engine with one or more initial values'
 
           man_page 'ronin-recon-run.1'
+
+          #
+          # Initializes the `ronin-recon run` command.
+          #
+          # @param [Hash{Symbol => Object}] kwargs
+          #   Additional keyword arguments.
+          #
+          def initialize(**kwargs)
+            super(**kwargs)
+
+            @ignore = []
+          end
 
           #
           # Runs the `ronin-recon run` command.
@@ -120,7 +142,7 @@ module Ronin
             end
 
             begin
-              Engine.run(values, max_depth: options[:max_depth]) do |engine|
+              Engine.run(values, max_depth: options[:max_depth], ignore: @ignore) do |engine|
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
                 end

@@ -82,8 +82,9 @@ module Ronin
       #
       def initialize(values, workers:   Recon.registry.values,
                              max_depth: nil,
-                             logger:    Console.logger)
-        @scope = Scope.new(values)
+                             logger:    Console.logger,
+                             ignore:    [])
+        @scope = Scope.new(values, ignore: ignore)
 
         @worker_classes    = {}
         @worker_tasks      = {}
@@ -332,20 +333,20 @@ module Ronin
 
           @logger.debug("Output value dequeued: #{mesg.worker.class} #{mesg.value.inspect}")
 
-          # check if the value hasn't been seen yet?
-          if @graph.add_node(value)
-            @logger.debug("Added value #{value.inspect} to graph")
+          # check if the new value is "in scope"
+          if @scope.include?(value)
+            # check if the value hasn't been seen yet?
+            if @graph.add_node(value)
+              @logger.debug("Added value #{value.inspect} to graph")
 
-            @value_callbacks.each do |callback|
-              case callback.arity
-              when 1 then callback.call(value)
-              when 2 then callback.call(value,parent)
-              else        callback.call(mesg.worker.class,value,parent)
+              @value_callbacks.each do |callback|
+                case callback.arity
+                when 1 then callback.call(value)
+                when 2 then callback.call(value,parent)
+                else        callback.call(mesg.worker.class,value,parent)
+                end
               end
-            end
 
-            # check if the new value is "in scope"
-            if @scope.include?(value)
               # check if the message has exceeded the max depth
               if @max_depth.nil? || mesg.depth < @max_depth
                 @logger.debug("Re-enqueueing value: #{value.inspect} ...")
@@ -354,15 +355,15 @@ module Ronin
                 enqueue_mesg(mesg)
               end
             end
-          end
 
-          if @graph.add_edge(value,parent)
-            @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
+            if @graph.add_edge(value,parent)
+              @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
 
-            @connection_callbacks.each do |callback|
-              case callback.arity
-              when 2 then callback.call(value,parent)
-              else        callback.call(mesg.worker.class,value,parent)
+              @connection_callbacks.each do |callback|
+                case callback.arity
+                when 2 then callback.call(value,parent)
+                else        callback.call(mesg.worker.class,value,parent)
+                end
               end
             end
           end
