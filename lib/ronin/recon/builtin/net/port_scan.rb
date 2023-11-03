@@ -52,9 +52,8 @@ module Ronin
         # @yield [new_value]
         #   The discovered open ports will be yielded.
         #
-        # @yieldparam [Values::OpenPort, Values::Nameserver, Values::Website] new_value
-        #   A discovered open port on the IP address, discovered nameserver, or
-        #   website.
+        # @yieldparam [Values::OpenPort] new_value
+        #   A discovered open port.
         #
         def process(ip)
           xml = Nmap.scan(ip.address, verbose:      true,
