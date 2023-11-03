@@ -26,25 +26,25 @@ module Ronin
   module Recon
     module Net
       #
-      # A recon worker that performs an nmap service scan.
+      # A recon worker that performs a nmap port scan.
       #
-      class ServiceScan < Worker
+      class PortScan < Worker
 
-        register 'net/service_scan'
+        register 'net/port_scan'
 
         accepts IP
 
-        summary 'Scans an IP for services'
+        summary 'Scans an IP for open ports'
 
         description <<~DESC
-          Performs an nmap service scan of the given IP and retruns the open
-          ports and discovered services.
+          Performs a nmap port scan of the given IP and retruns the open
+          ports and their services.
         DESC
 
         param :ports, String, desc: 'Optional port list to scan'
 
         #
-        # Performs an nmap service scan on the given IP value.
+        # Performs an nmap port scan on the given IP value.
         #
         # @param [Values::IP] ip
         #   The given IP to scan.
@@ -70,27 +70,11 @@ module Ronin
             service  = open_port.service
 
             yield OpenPort.new(
-              address,number, protocol: protocol,
+              address,number, host:     host,
+                              protocol: protocol,
                               service:  service && service.name,
                               ssl:      service && service.ssl?
             )
-
-            if service
-              case service.name
-              when 'domain'
-                yield Nameserver.new(host)
-              when 'smtp'
-                yield Mailserver.new(host)
-              when 'http'
-                if service.ssl?
-                  yield Website.https(host,number)
-                else
-                  yield Website.http(host,number)
-                end
-              when 'https'
-                yield Website.https(host,number)
-              end
-            end
           end
         end
 
