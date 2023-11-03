@@ -191,7 +191,7 @@ end
 * [async-dns] ~> 1.0
 * [async-http] ~> 0.60
 * [wordlist] ~> 1.0, >= 1.0.3
-* [ronin-support] ~> 1.0
+* [ronin-support] ~> 1.1
 * [ronin-core] ~> 0.1
 * [ronin-db] ~> 0.2
 * [ronin-repos] ~> 0.1
