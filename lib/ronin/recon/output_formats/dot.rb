@@ -20,6 +20,18 @@
 
 require 'ronin/core/output_formats/output_file'
 require 'ronin/recon/output_formats/graph_format'
+require 'ronin/recon/values/domain'
+require 'ronin/recon/values/mailserver'
+require 'ronin/recon/values/nameserver'
+require 'ronin/recon/values/host'
+require 'ronin/recon/values/ip'
+require 'ronin/recon/values/ip_range'
+require 'ronin/recon/values/open_port'
+require 'ronin/recon/values/email_address'
+require 'ronin/recon/values/cert'
+require 'ronin/recon/values/url'
+require 'ronin/recon/values/website'
+require 'ronin/recon/values/wildcard'
 
 require 'set'
 
