@@ -48,6 +48,7 @@ and uses asynchronous I/O to maximize efficiency.
   * [GraphViz](https://graphviz.org/)
     * DOT
     * SVG
+    * PNG
     * PDF
 * Supports automatically saving recon results into [ronin-db].
 
