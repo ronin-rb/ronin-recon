@@ -45,8 +45,9 @@ and uses asynchronous I/O to maximize efficiency.
   * CSV
   * JSON
   * [NDJSON](http://ndjson.org/)
-  * [GraphViz DOT](https://graphviz.org/doc/info/lang.html)
-  * GraphViz PDF
+  * [GraphViz](https://graphviz.org/)
+    * DOT
+    * PDF
 * Supports automatically saving recon results into [ronin-db].
 
 ## Anti-Features
