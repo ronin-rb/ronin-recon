@@ -41,6 +41,12 @@ describe Ronin::Recon::OutputFormats do
       end
     end
 
+    describe ":svg" do
+      it "must equal Ronin::Recon::OutputFormats::SVG" do
+        expect(subject[:svg]).to be(Ronin::Recon::OutputFormats::SVG)
+      end
+    end
+
     describe ":pdf" do
       it "must equal Ronin::Recon::OutputFormats::PDF" do
         expect(subject[:pdf]).to be(Ronin::Recon::OutputFormats::PDF)
@@ -78,6 +84,12 @@ describe Ronin::Recon::OutputFormats do
     describe "''" do
       it "must equal Ronin::Recon::OutputFormats::Dir" do
         expect(subject['']).to be(Ronin::Recon::OutputFormats::Dir)
+      end
+    end
+
+    describe "'.svg'" do
+      it "must equal Ronin::Recon::OutputFormats::SVG" do
+        expect(subject['.svg']).to be(Ronin::Recon::OutputFormats::SVG)
       end
     end
 

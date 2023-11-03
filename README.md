@@ -47,6 +47,7 @@ and uses asynchronous I/O to maximize efficiency.
   * [NDJSON](http://ndjson.org/)
   * [GraphViz](https://graphviz.org/)
     * DOT
+    * SVG
     * PDF
 * Supports automatically saving recon results into [ronin-db].
 

@@ -18,29 +18,26 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats'
-require 'ronin/recon/output_formats/dir'
-require 'ronin/recon/output_formats/dot'
-require 'ronin/recon/output_formats/svg'
-require 'ronin/recon/output_formats/pdf'
+require 'ronin/recon/output_formats/graphviz_format'
 
 module Ronin
   module Recon
-    #
-    # Contains the supported output formats for saving {Ronin::Recon::Values}
-    # object to output files.
-    #
     module OutputFormats
-      include Core::OutputFormats
+      #
+      # Represents a GraphViz SVG (`.svg`) output format.
+      #
+      class SVG < GraphvizFormat
 
-      register :txt,    '.txt',    TXT
-      register :csv,    '.csv',    CSV
-      register :json,   '.json',   JSON
-      register :ndjson, '.ndjson', NDJSON
-      register :dir,    '',        Dir
-      register :dot,    '.dot',    Dot
-      register :svg,    '.svg',    SVG
-      register :pdf,    '.pdf',    PDF
+        #
+        # The desired GraphViz output format.
+        #
+        # @return [:svg]
+        #
+        def format
+          :svg
+        end
+
+      end
     end
   end
 end
