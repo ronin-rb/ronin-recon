@@ -46,8 +46,8 @@ module Ronin
         #         --max-depth NUM              The maximum recon depth (Default: 3)
         #     -o, --output FILE                The output file to write results to
         #     -I, --ignore VALUE               The values to ignore in result
-        #     -F txt|list|csv|json|ndjson|dot, The output format
-        #         --output-format
+        #     -F txt|list|csv|json|ndjson|dot|pdf,
+        #         --output-format              The output format
         #         --import                     Imports each newly discovered value into the Ronin database
         #     -h, --help                       Print help information
         #

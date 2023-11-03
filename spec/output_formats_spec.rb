@@ -40,6 +40,12 @@ describe Ronin::Recon::OutputFormats do
         expect(subject[:dot]).to be(Ronin::Recon::OutputFormats::Dot)
       end
     end
+
+    describe ":pdf" do
+      it "must equal Ronin::Recon::OutputFormats::PDF" do
+        expect(subject[:pdf]).to be(Ronin::Recon::OutputFormats::PDF)
+      end
+    end
   end
 
   describe "file_exts" do
@@ -75,9 +81,9 @@ describe Ronin::Recon::OutputFormats do
       end
     end
 
-    describe "'.dot'" do
-      it "must equal Ronin::Recon::OutputFormats::Dot" do
-        expect(subject['.dot']).to be(Ronin::Recon::OutputFormats::Dot)
+    describe "'.pdf'" do
+      it "must equal Ronin::Recon::OutputFormats::PDF" do
+        expect(subject['.pdf']).to be(Ronin::Recon::OutputFormats::PDF)
       end
     end
   end
