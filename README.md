@@ -86,14 +86,18 @@ $ ronin-recon workers
   dns/lookup
   dns/mailservers
   dns/nameservers
+  dns/reverse_lookup
   dns/srv_enum
   dns/subdomain_enum
   dns/suffix_enum
   net/cert_enum
   net/cert_grab
+  net/cert_sh
   net/ip_range_enum
-  net/service_scan
+  net/port_scan
+  net/service_id
   web/dir_enum
+  web/email_addresses
   web/spider
 ```
 
