@@ -22,10 +22,10 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      # - name: Install dependencies
-      #   run: |
-      #     sudo apt update -y && \
-      #     sudo apt install -y --no-install-recommends --no-install-suggests FIXME
+      - name: Install dependencies
+        run: |
+          sudo apt update -y && \
+          sudo apt install -y --no-install-recommends --no-install-suggests graphviz
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3
       - name: Run tests
