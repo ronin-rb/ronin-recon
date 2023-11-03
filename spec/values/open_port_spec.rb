@@ -4,6 +4,7 @@ require 'ronin/recon/values/open_port'
 describe Ronin::Recon::Values::OpenPort do
   let(:address)  { '93.184.216.34' }
   let(:number)   { 80 }
+  let(:host)     { 'example.com' }
   let(:protocol) { :tcp }
   let(:service)  { 'http' }
   let(:ssl)      { false }
@@ -25,6 +26,10 @@ describe Ronin::Recon::Values::OpenPort do
       expect(subject.number).to eq(number)
     end
 
+    it "must default #host to nil" do
+      expect(subject.host).to be(nil)
+    end
+
     it "must default #protocol to :tcp" do
       expect(subject.protocol).to be(:tcp)
     end
@@ -35,6 +40,14 @@ describe Ronin::Recon::Values::OpenPort do
 
     it "must default #ssl to false" do
       expect(subject.ssl).to be(false)
+    end
+
+    context "when the host: keyword argument is given" do
+      subject { described_class.new(address,number, host: host) }
+
+      it "must set #host" do
+        expect(subject.host).to eq(host)
+      end
     end
 
     context "when the protocol: keyword argument is given" do

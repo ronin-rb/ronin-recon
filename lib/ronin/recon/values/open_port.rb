@@ -40,6 +40,11 @@ module Ronin
         # @return [Integer]
         attr_reader :number
 
+        # The optional hostname associated with the address.
+        #
+        # @return [String, nil]
+        attr_reader :host
+
         # The protocol of the port.
         #
         # @return [:tcp, :udp] protocol
@@ -64,6 +69,9 @@ module Ronin
         # @param [Integer] number
         #   The port number.
         #
+        # @param [String, nil] host
+        #   The optional hostname associated with the address.
+        #
         # @param [:tcp, :udp] protocol
         #   The protocol of the port.
         #
@@ -73,9 +81,13 @@ module Ronin
         # @param [Boolean] ssl
         #   Indicates that the open port uses SSL/TLS.
         #
-        def initialize(address,number, protocol: :tcp, service: nil, ssl: false)
+        def initialize(address,number, host:     nil,
+                                       protocol: :tcp,
+                                       service:  nil,
+                                       ssl:      false)
           @address  = address
           @number   = number
+          @host     = host
           @protocol = protocol
           @service  = service
           @ssl      = ssl
