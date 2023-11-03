@@ -40,7 +40,7 @@ Runs the recon engine with one or more initial values.
 `-o`, `--output` *FILE*
   The output file to write results to.
 
-`-F`, `--output-format` `txt`\|`list`\|`csv`\|`json`\|`ndjson`\|`dot`\|`pdf`
+`-F`, `--output-format` `txt`\|`list`\|`csv`\|`json`\|`ndjson`\|`dot`\|`svg`\|`png`\|`pdf`
   The output format. If not specified, the output format will be inferred from
   the `--output` *FILE* extension.
 
