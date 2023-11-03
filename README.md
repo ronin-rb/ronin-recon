@@ -45,7 +45,7 @@ and uses asynchronous I/O to maximize efficiency.
   * CSV
   * JSON
   * [NDJSON](http://ndjson.org/)
-  * [GraphViz](https://graphviz.org/)
+  * [GraphViz][graphviz]
     * DOT
     * SVG
     * PNG
@@ -185,6 +185,7 @@ end
 
 * [Ruby] >= 3.0.0
 * [nmap] >= 5.00
+* [GraphViz][graphviz] (for SVG, PNG, or PDF output)
 * [thread-local] ~> 1.0
 * [async-io] ~> 1.0
 * [async-dns] ~> 1.0
@@ -260,6 +261,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 
 [Ruby]: https://www.ruby-lang.org
+[graphviz]: https://graphviz.org/
 [nmap]: http://www.insecure.org/
 [thread-local]: https://github.com/socketry/thread-local#readme
 [async-io]: https://github.com/socketry/async-io#readme
