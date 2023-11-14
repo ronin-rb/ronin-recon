@@ -36,6 +36,7 @@ module Ronin
         DESC
 
         accepts Domain
+        outputs Nameserver
 
         #
         # Looks up the nameservers of a given domain.

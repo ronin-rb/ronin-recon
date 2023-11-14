@@ -34,6 +34,7 @@ module Ronin
         register 'net/cert_grab'
 
         accepts OpenPort
+        outputs Cert
 
         summary 'Fetches the SSL/TLS certificate from an open port'
 

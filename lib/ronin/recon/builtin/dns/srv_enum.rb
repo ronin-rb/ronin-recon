@@ -114,6 +114,7 @@ module Ronin
         DESC
 
         accepts Domain
+        outputs Host
 
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'

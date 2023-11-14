@@ -36,6 +36,7 @@ module Ronin
         DESC
 
         accepts Domain
+        outputs Mailserver
 
         #
         # Finds the mailservers for the given domain.

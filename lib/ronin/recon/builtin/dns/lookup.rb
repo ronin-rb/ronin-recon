@@ -38,6 +38,7 @@ module Ronin
         DESC
 
         accepts Domain, Host, Nameserver, Mailserver
+        outputs IP
 
         #
         # Resolves the IP address for the given host.

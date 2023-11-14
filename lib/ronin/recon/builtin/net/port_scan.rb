@@ -33,6 +33,7 @@ module Ronin
         register 'net/port_scan'
 
         accepts IP
+        outputs OpenPort
 
         summary 'Scans an IP for open ports'
 

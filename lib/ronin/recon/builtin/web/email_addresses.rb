@@ -33,6 +33,7 @@ module Ronin
         register 'web/email_addresses'
 
         accepts URL
+        outputs EmailAddress
 
         summary 'Extracts emails from a website'
 

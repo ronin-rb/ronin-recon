@@ -33,6 +33,7 @@ module Ronin
         register 'web/spider'
 
         accepts Website
+        outputs URL
 
         summary 'Spiders a website'
 

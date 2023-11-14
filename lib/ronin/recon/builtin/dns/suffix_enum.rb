@@ -47,6 +47,7 @@ module Ronin
         ]
 
         accepts Domain
+        outputs Domain
 
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'

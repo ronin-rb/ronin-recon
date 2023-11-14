@@ -35,6 +35,7 @@ module Ronin
         register 'net/cert_enum'
 
         accepts Cert
+        outputs Domain, Host, Wildcard, EmailAddress
 
         summary 'Enumerates over the host names within a SSL/TLS certificate'
 

@@ -32,6 +32,7 @@ module Ronin
         register 'net/ip_range_enum'
 
         accepts IPRange
+        outputs IP
 
         summary 'Enumerates the IP addresses in an IP range'
 

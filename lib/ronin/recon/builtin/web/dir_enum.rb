@@ -39,6 +39,7 @@ module Ronin
         register 'web/dir_enum'
 
         accepts Website
+        outputs URL
 
         summary 'Discovers HTTP directories for a website'
 
