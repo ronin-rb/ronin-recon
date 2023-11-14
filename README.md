@@ -160,6 +160,45 @@ $ ronin-recon run --ignore staging.example.com example.com
 
 ## Examples
 
+Defining a custom recon worker:
+
+```ruby
+require 'ronin/recon/worker'
+
+module Ronin
+  module Recon
+    module DNS
+      class FooBar
+
+        register 'dns/foo_bar'
+
+        summary 'My DNS recon technique'
+        description <<~DESC
+          This recon worker uses the foo-bar technique.
+          Bla bla bla bla.
+        DESC
+        author 'John Smith', email: '...'
+
+        accepts Domain
+        outputs Host
+        intensity :passive
+
+        param :wordlist, String, desc: 'Optional wordlist to use'
+
+        def process(value)
+          # ...
+          yield Host.new(discovered_host_name)
+          # ...
+        end
+
+      end
+    end
+  end
+end
+```
+
+Manually running the recon engine:
+
 ```ruby
 require 'ronin/recon/engine'
 
