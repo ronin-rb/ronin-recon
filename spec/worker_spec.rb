@@ -81,11 +81,11 @@ describe Ronin::Recon::Worker do
               accepts Domain
             end
 
-            class WorkerThatInheritsOtherWorker < WorkerSuperclassWithAccepts
+            class WorkerWithInheritedAccepts < WorkerSuperclassWithAccepts
             end
           end
 
-          subject { TestWorkers::WorkerThatInheritsOtherWorker }
+          subject { TestWorkers::WorkerWithInheritedAccepts }
 
           it "must inherit the superclass'es accepts Value classes" do
             expect(subject.accepts).to eq(subject.superclass.accepts)
