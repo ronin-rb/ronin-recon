@@ -61,16 +61,16 @@ module Ronin
     #
     #             register 'dns/foo_bar'
     #
-    #             accepts Domain
-    #             outputs Host
-    #             intensity :passive
-    #
     #             summary 'My DNS recon technique'
     #             description <<~DESC
     #               This recon worker uses the foo-bar technique.
     #               Bla bla bla bla.
     #             DESC
     #             author 'John Smith', email: '...'
+    #
+    #             accepts Domain
+    #             outputs Host
+    #             intensity :passive
     #
     #             param :wordlist, String, desc: 'Optional wordlist to use'
     #
