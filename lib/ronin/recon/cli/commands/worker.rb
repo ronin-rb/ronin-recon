@@ -93,6 +93,13 @@ module Ronin
               end
               puts
 
+              puts 'Outputs:'
+              puts
+              indent do
+                print_list(worker.outputs.map(&method(:value_class_name)))
+              end
+              puts
+
               print_params(worker)
             end
           end
