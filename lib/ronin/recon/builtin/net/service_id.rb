@@ -30,14 +30,14 @@ module Ronin
 
         register 'net/service_id'
 
-        accepts OpenPort
-        outputs Nameserver, Mailserver, Website
-
         summary 'Identifies services running on open ports'
 
         description <<~DESC
           Identifies various services that are running on open ports.
         DESC
+
+        accepts OpenPort
+        outputs Nameserver, Mailserver, Website
 
         #
         # Identifies the service running on an open port.

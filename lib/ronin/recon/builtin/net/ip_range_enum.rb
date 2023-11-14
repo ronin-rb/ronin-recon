@@ -31,14 +31,14 @@ module Ronin
 
         register 'net/ip_range_enum'
 
-        accepts IPRange
-        outputs IP
-
         summary 'Enumerates the IP addresses in an IP range'
 
         description <<~DESC
           Enumerates over every IP address in a CIDR IP range.
         DESC
+
+        accepts IPRange
+        outputs IP
 
         #
         # Enumerates an IP range.

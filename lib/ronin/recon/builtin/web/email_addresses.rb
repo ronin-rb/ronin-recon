@@ -32,14 +32,14 @@ module Ronin
 
         register 'web/email_addresses'
 
-        accepts URL
-        outputs EmailAddress
-
         summary 'Extracts emails from a website'
 
         description <<~DESC
           Extracts all emails from a website.
         DESC
+
+        accepts URL
+        outputs EmailAddress
 
         #
         # Extract email addresses found in the pages body.

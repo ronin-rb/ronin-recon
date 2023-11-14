@@ -32,14 +32,14 @@ module Ronin
 
         register 'web/spider'
 
-        accepts Website
-        outputs URL
-
         summary 'Spiders a website'
 
         description <<~DESC
           Spiders a website and returns every URL.
         DESC
+
+        accepts Website
+        outputs URL
 
         #
         # Spiders a website and yields every spidered URL.

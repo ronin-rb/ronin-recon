@@ -32,14 +32,14 @@ module Ronin
 
         register 'net/cert_sh'
 
-        accepts Domain
-        outputs Host
-
         summary 'Queries cert.sh and returns host from each domains certificate.'
 
         description <<~DESC
           Queries cert.sh and returns host from each domains certificate.
         DESC
+
+        accepts Domain
+        outputs Host
 
         #
         # Returns host from each domains certificate.

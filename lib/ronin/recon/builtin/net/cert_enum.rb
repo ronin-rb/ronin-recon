@@ -34,15 +34,15 @@ module Ronin
 
         register 'net/cert_enum'
 
-        accepts Cert
-        outputs Domain, Host, Wildcard, EmailAddress
-
         summary 'Enumerates over the host names within a SSL/TLS certificate'
 
         description <<~DESC
           Enumerates over the subject CommonName and subjectAltNames of a
           SSL/TLS certificate.
         DESC
+
+        accepts Cert
+        outputs Domain, Host, Wildcard, EmailAddress
 
         #
         # Grabs the TLS certificate from the open port, if it supports SSL/TLS.

@@ -38,9 +38,6 @@ module Ronin
 
         register 'web/dir_enum'
 
-        accepts Website
-        outputs URL
-
         summary 'Discovers HTTP directories for a website'
 
         description <<~DESC
@@ -48,6 +45,8 @@ module Ronin
           requests using a wordlist of common web directory names.
         DESC
 
+        accepts Website
+        outputs URL
         intensity :intensive
 
         param :concurrency, Integer, default: 10,

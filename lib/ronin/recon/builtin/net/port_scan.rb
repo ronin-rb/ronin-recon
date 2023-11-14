@@ -32,15 +32,15 @@ module Ronin
 
         register 'net/port_scan'
 
-        accepts IP
-        outputs OpenPort
-
         summary 'Scans an IP for open ports'
 
         description <<~DESC
           Performs a nmap port scan of the given IP and retruns the open
           ports and their services.
         DESC
+
+        accepts IP
+        outputs OpenPort
 
         param :ports, String, desc: 'Optional port list to scan'
 
