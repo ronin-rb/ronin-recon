@@ -147,6 +147,94 @@ describe Ronin::Recon::Worker do
     end
   end
 
+  describe ".outputs" do
+    context "when the outputs is not set in the Worker class" do
+      module TestWorkers
+        class WorkerWithoutOutputs < Ronin::Recon::Worker
+        end
+      end
+
+      subject { TestWorkers::WorkerWithoutOutputs }
+
+      it "must raise a NotImplementedError excpetion when called" do
+        expect {
+          subject.outputs
+        }.to raise_error(NotImplementedError,"#{subject} did not set outputs")
+      end
+
+      context "but the Worker class inherits from another worker class" do
+        context "and the Worker's superclass defines outputs Value classes" do
+          module TestWorkers
+            class WorkerSuperclassWithOutputs < Ronin::Recon::Worker
+              outputs Domain
+            end
+
+            class WorkerWithInheritedOutputs < WorkerSuperclassWithOutputs
+            end
+          end
+
+          subject { TestWorkers::WorkerWithInheritedOutputs }
+
+          it "must inherit the superclass'es outputs Value classes" do
+            expect(subject.outputs).to eq(subject.superclass.outputs)
+          end
+        end
+      end
+    end
+
+    context "when the outputs is set in the Worker class" do
+      module TestWorkers
+        class WorkerWithOutputs < Ronin::Recon::Worker
+          outputs IP
+        end
+      end
+
+      subject { TestWorkers::WorkerWithOutputs }
+
+      it "must return the set outputs Ronin::Recon::Values:: classes" do
+        expect(subject.outputs).to eq([Ronin::Recon::Values::IP])
+      end
+
+      context "and the Worker class defines multiple outputs Value classes" do
+        module TestWorkers
+          class WorkerWithMultipleOutputsValues < Ronin::Recon::Worker
+            outputs IP, Host, Domain
+          end
+        end
+
+        subject { TestWorkers::WorkerWithMultipleOutputsValues }
+
+        it "must return the Array of the multiple Ronin::Recon::Values:: classes" do
+          expect(subject.outputs).to eq(
+            [
+              Ronin::Recon::Values::IP,
+              Ronin::Recon::Values::Host,
+              Ronin::Recon::Values::Domain
+            ]
+          )
+        end
+      end
+
+      context "but is differnet from the outputs defined in the superclass" do
+        module TestWorkers
+          class WorkerWithOverridenOutputs < WorkerWithOutputs
+            outputs Host
+          end
+        end
+
+        subject { TestWorkers::WorkerWithOverridenOutputs }
+
+        it "must return the outputs set in the subclass" do
+          expect(subject.outputs).to eq([Ronin::Recon::Values::Host])
+        end
+
+        it "must not change the outputs in the superclass" do
+          expect(subject.superclass.outputs).to eq([Ronin::Recon::Values::IP])
+        end
+      end
+    end
+  end
+
   describe ".concurrency" do
     context "when the concurrency is not set in the Worker class" do
       module TestWorkers

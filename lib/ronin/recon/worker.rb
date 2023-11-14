@@ -62,6 +62,7 @@ module Ronin
     #             register 'dns/foo_bar'
     #
     #             accepts Domain
+    #             outputs Host
     #             intensity :passive
     #
     #             summary 'My DNS recon technique'
@@ -118,6 +119,18 @@ module Ronin
     # types:
     #
     #     accepts Domain, Host, IP
+    #
+    # ### outputs
+    #
+    # Similar to `accepts`, but defines the possible output value types of the
+    # worker.
+    #
+    #     outputs Host
+    #
+    # **Note:** the recon worker may specify that it can output multiple
+    # different value types:
+    #
+    #     outputs Host, IP
     #
     # ### intensity
     #
@@ -282,6 +295,33 @@ module Ronin
                         superclass.accepts
                       else
                         raise(NotImplementedError,"#{self} did not set accepts")
+                      end
+        end
+      end
+
+      #
+      # Gets or sets the value class which the recon worker outputs.
+      #
+      # @param [Array<Class<Value>>] value_classes
+      #   The optional new value class(es) to outputs.
+      #
+      # @return [Array<Class<Value>>]
+      #   the value class which the recon worker outputs.
+      #
+      # @raise [NotImplementedError]
+      #   No value class was defined for the recon worker.
+      #
+      # @example define that the recon worker outputs Host values:
+      #   outputs Host
+      #
+      def self.outputs(*value_classes)
+        unless value_classes.empty?
+          @outputs = value_classes
+        else
+          @outputs || if superclass < Worker
+                        superclass.outputs
+                      else
+                        raise(NotImplementedError,"#{self} did not set outputs")
                       end
         end
       end
