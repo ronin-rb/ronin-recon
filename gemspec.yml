@@ -25,6 +25,7 @@ metadata:
 
 generated_files:
  - man/ronin-recon.1
+ - man/ronin-recon-new.1
  - man/ronin-recon-workers.1
  - man/ronin-recon-worker.1
  - man/ronin-recon-test.1

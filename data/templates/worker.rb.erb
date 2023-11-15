@@ -1,0 +1,63 @@
+#!/usr/bin/env -S ronin-recon test -f
+
+require 'ronin/recon/<%= @worker_type[:file] -%>'
+
+module Ronin
+  module Recon
+    class <%= @class_name -%> < <%= @worker_type[:class]  %>
+
+      register '<%= @file_name -%>'
+
+      <%- if @author_email -%>
+      author <%= @author_name.inspect %>, email: <%= @author_email.inspect %>
+      <%- else -%>
+      author <%= @author_name.inspect %>
+      <%- end -%>
+      <%- if @summary -%>
+      summary <%= @summary.inspect %>
+      <%- else -%>
+      summary "FIX ME"
+      <%- end -%>
+      <%- if @description -%>
+      description <<~DESC
+        <%= @description %>
+      DESC
+      <%- else -%>
+      description <<~DESC
+        FIX ME
+      DESC
+      <%- end -%>
+      <%- unless @references.empty? -%>
+      references [
+        <%- @references.each_with_index do |url,index| -%>
+        <%=   url.inspect -%><% if index < @references.length-1 %>,<% end %>
+        <%- end -%>
+      ]
+      <%- else -%>
+      # references [
+      #   "https://...",
+      #   "https://..."
+      # ]
+      <%- end -%>
+
+      <%- unless @accepts.empty? -%>
+      accepts <%= @accepts.join(', ') %>
+      <%- else -%>
+      accepts FIXME
+      <%- end -%>
+      <%- unless @outputs.empty? -%>
+      outputs <%= @outputs.join(', ') %>
+      <%- else -%>
+      outputs FIXME
+      <%- end -%>
+      <%- if @intensity -%>
+      intensity <%= @intensity.inspect %>
+      <%- end -%>
+
+      def process(value)
+        # ...
+      end
+
+    end
+  end
+end

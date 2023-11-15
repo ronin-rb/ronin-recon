@@ -73,6 +73,7 @@ Arguments:
 
 Commands:
     help
+    new
     run
     test
     worker
@@ -156,6 +157,31 @@ Run the recon engine and ignore specific hosts, IPs, URLs, etc.:
 
 ```shell
 $ ronin-recon run --ignore staging.example.com example.com
+```
+
+Generate a boilerplate recon worker file, with some custom information:
+
+```shell
+$ ronin-recon new example_worker.rb \
+                  --name Example \
+                  --authors Postmodern \
+                  --description "This is an example."
+```
+
+Generate a ronin repository of your own payloads (or exploits):
+
+```shell
+$ ronin-repos new my-repo
+$ cd my-repo/
+$ mkdir recon
+$ ronin-recon new recon/my_recon.rb \
+                  --name MyRecon \
+                  --authors You \
+                  --description "This is my payload."
+$ vim recon/my_recon.rb
+$ git add recon/my_recon.rb
+$ git commit
+$ git push
 ```
 
 ## Examples
