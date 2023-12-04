@@ -11,12 +11,12 @@ Lists available recon workers.
 ## ARGUMENTS
 
 *DIR*
-  The optional directory to list workers from.
+: The optional directory to list workers from.
 
 ## OPTIONS
 
 `-h`, `--help`
-  Print help information
+: Print help information
 
 ## AUTHOR
 
@@ -24,4 +24,4 @@ Postmodern <postmodern.mod3@gmail.com>
 
 ## SEE ALSO
 
-ronin-recon-worker(1) ronin-recon-run(1)
+[ronin-recon-worker](ronin-recon-worker.1.md) [ronin-recon-run](ronin-recon-run.1.md)
