@@ -1,5 +1,9 @@
 # ronin-recon-worker 1 "2023-05-01" Ronin "User Manuals"
 
+## NAME
+
+ronin-recon-worker - Prints information about a recon worker
+
 ## SYNOPSIS
 
 `ronin-recon worker` [*options*] {`--file` *FILE* \| *NAME*}

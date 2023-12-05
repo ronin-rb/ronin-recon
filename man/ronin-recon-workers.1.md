@@ -1,5 +1,9 @@
 # ronin-recon-workers 1 "2023-05-01" Ronin "User Manuals"
 
+## NAME
+
+ronin-recon-workers - Lists the available recon workers
+
 ## SYNOPSIS
 
 `ronin-recon workers` [*options*] *DIR*

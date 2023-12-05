@@ -1,5 +1,9 @@
 # ronin-recon-new 1 "May 2022" Ronin "User Manuals"
 
+## NAME
+
+ronin-recon-new - Creates a new recon worker file
+
 ## SYNOPSIS
 
 `ronin-recon new` [*options*] *PATH*

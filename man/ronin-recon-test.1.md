@@ -1,5 +1,9 @@
 # ronin-recon-test 1 "2023-05-01" Ronin "User Manuals"
 
+## NAME
+
+ronin-recon-test - Loads an individual worker and tests it
+
 ## SYNOPSIS
 
 `ronin-recon test` [*options*] {`--file` *FILE* \| *NAME*} {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*}

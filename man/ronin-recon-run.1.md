@@ -1,5 +1,9 @@
 # ronin-recon-test 1 "2023-05-01" Ronin "User Manuals"
 
+## NAME
+
+ronin-recon-run - Runs the recon engine with one or more initial values
+
 ## SYNOPSIS
 
 `ronin-recon run` [*options*] {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*} ... 
