@@ -299,12 +299,13 @@ sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip $(which masscan)
 1. [Fork It!](https://github.com/ronin-rb/ronin-recon/fork)
 2. Clone It!
 3. `cd ronin-recon/`
-4. `bundle install`
-5. `rake wordlists` (generates the built-in wordlists)
-6. `git checkout -b my_feature`
-7. Code It!
-8. `bundle exec rake spec`
-9. `git push origin my_feature`
+4. Ubuntu/Debian: `sudo apt install libyaml-dev`
+5. `bundle install`
+6. `rake wordlists` (generates the built-in wordlists)
+7. `git checkout -b my_feature`
+8. Code It!
+9. `bundle exec rake spec`
+10. `git push origin my_feature`
 
 ## License
 
