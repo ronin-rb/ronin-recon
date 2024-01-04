@@ -26,6 +26,7 @@ metadata:
 generated_files:
  - data/completions/ronin-recon
  - man/ronin-recon.1
+ - man/ronin-recon-completion.1
  - man/ronin-recon-new.1
  - man/ronin-recon-workers.1
  - man/ronin-recon-worker.1
