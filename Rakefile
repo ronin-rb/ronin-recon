@@ -63,3 +63,10 @@ task :wordlists => %w[
   data/wordlists/subdomains-1000.txt.gz
   data/wordlists/combined_directories.txt.gz
 ]
+
+require 'command_kit/completion/task'
+CommandKit::Completion::Task.new(
+  class_file:  'ronin/recon/cli',
+  class_name:  'Ronin::Recon::CLI',
+  output_file: 'data/completions/ronin-recon'
+)

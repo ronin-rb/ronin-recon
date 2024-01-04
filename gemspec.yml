@@ -24,6 +24,7 @@ metadata:
   rubygems_mfa_required: 'true'
 
 generated_files:
+ - data/completions/ronin-recon
  - man/ronin-recon.1
  - man/ronin-recon-new.1
  - man/ronin-recon-workers.1
