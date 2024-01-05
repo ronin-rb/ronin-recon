@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/net/cert_sh'
+require 'ronin/recon/builtin/ssl/cert_sh'
 
 describe Ronin::Recon::Net::CertSh do
   describe "#process", :network do

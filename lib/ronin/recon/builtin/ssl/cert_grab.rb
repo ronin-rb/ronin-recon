@@ -24,14 +24,14 @@ require 'async/io'
 
 module Ronin
   module Recon
-    module Net
+    module SSL
       #
       # A recon worker that grabs the SSL/TLS certificate from open ports that
       # use SSL/TLS.
       #
       class CertGrab < Worker
 
-        register 'net/cert_grab'
+        register 'ssl/cert_grab'
 
         summary 'Fetches the SSL/TLS certificate from an open port'
 
