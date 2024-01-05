@@ -1,4 +1,4 @@
-# ronin-recon-irb 1 "2023-02-01" Ronin "User Manuals"
+# ronin-recon-irb 1 "2023-02-01" Ronin Recon "User Manuals"
 
 ## NAME
 
