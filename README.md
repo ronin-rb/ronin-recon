@@ -74,6 +74,7 @@ Arguments:
 Commands:
     completion
     help
+    irb
     new
     run
     test
