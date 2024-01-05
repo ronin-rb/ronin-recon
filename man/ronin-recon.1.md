@@ -33,6 +33,9 @@ Runs a `ronin-recon` *COMMAND*.
 *help*
 : Lists available commands or shows help about a specific command.
 
+*irb*
+: Starts an interactive Ruby shell with ronin-recon loaded.
+
 *new*
 : Creates a new recon worker file.
 
