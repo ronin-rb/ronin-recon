@@ -24,13 +24,13 @@ require 'async/http/internet/instance'
 
 module Ronin
   module Recon
-    module Net
+    module SSL
       #
       # A recon worker that returns host from each domains certificate
       #
       class CertSh < Worker
 
-        register 'net/cert_sh'
+        register 'ssl/cert_sh'
 
         summary 'Queries cert.sh and returns host from each domains certificate.'
 
