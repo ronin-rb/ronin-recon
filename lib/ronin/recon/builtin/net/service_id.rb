@@ -26,7 +26,7 @@ module Ronin
       #
       # A recon worker that identifies services on open ports.
       #
-      class ServiceFingerprint < Worker
+      class ServiceID < Worker
 
         register 'net/service_id'
 
