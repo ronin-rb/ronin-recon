@@ -29,7 +29,7 @@ require 'ronin/recon/message/job_completed'
 require 'ronin/recon/message/job_failed'
 require 'ronin/recon/message/value'
 require 'ronin/recon/message/shutdown'
-require 'ronin/recon/builtin'
+require 'ronin/recon/worker_set'
 
 require 'set'
 require 'console/logger'
@@ -80,7 +80,7 @@ module Ronin
       #
       # @api public
       #
-      def initialize(values, workers:   Recon.registry.values,
+      def initialize(values, workers:   WorkerSet.default,
                              max_depth: nil,
                              logger:    Console.logger,
                              ignore:    [])
