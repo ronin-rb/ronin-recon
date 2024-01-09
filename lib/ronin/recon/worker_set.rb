@@ -201,6 +201,18 @@ module Ronin
       end
 
       #
+      # Loads a worker from a file and adds it to the worker set.
+      #
+      # @param [String] path
+      #   The path to the file.
+      #
+      # @return [self]
+      #
+      def load_file(path)
+        self << Recon.load_class_from_file(path)
+      end
+
+      #
       # Removes a worker class from the worker set.
       #
       # @param [Class<Worker>] worker

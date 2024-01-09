@@ -210,6 +210,18 @@ describe Ronin::Recon::WorkerSet do
     end
   end
 
+  describe "#load_file" do
+    let(:fixtures_dir) { File.join(__dir__,'fixtures') }
+    let(:path)         { File.join(fixtures_dir,'test_worker.rb') }
+
+    before { subject.load_file(path) }
+
+    it "must load the file and add the worker to the worker set" do
+      expect(defined?(Ronin::Recon::TestWorker)).to be_truthy
+      expect(subject.workers).to include(Ronin::Recon::TestWorker)
+    end
+  end
+
   describe "#delete" do
     context "when the worker class does exist in the worker set" do
       let(:worker) { Ronin::Recon::DNS::SubdomainEnum }
