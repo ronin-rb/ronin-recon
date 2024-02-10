@@ -26,6 +26,7 @@ require 'ronin/recon/values/ip_range'
 require 'ronin/recon/values/website'
 require 'ronin/recon/exceptions'
 
+require 'ronin/support/network/ip'
 require 'ronin/support/text/patterns/network'
 require 'ronin/support/network/public_suffix'
 
@@ -45,7 +46,7 @@ module Ronin
       #
       module Parser
         # Regular expression to match IPv4 and IPv6 addresses.
-        IP_REGEX = /\A#{Support::Text::Patterns::IP}\z/
+        IP_REGEX = Support::Network::IP::REGEX
 
         # Regular expression to match IPv4 and IPv6 CIDR ranges.
         IP_RANGE_REGEX = %r{\A(?:#{Support::Text::Patterns::IPV4_ADDR}/\d{1,2}|#{Support::Text::Patterns::IPV6_ADDR}/\d{1,3})\z}
