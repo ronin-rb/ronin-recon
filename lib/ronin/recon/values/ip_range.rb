@@ -21,13 +21,13 @@
 require 'ronin/recon/value'
 require 'ronin/recon/values/ip'
 
-require 'ipaddr'
+require 'ronin/support/network/ip_range'
 
 module Ronin
   module Recon
     module Values
       #
-      # Represents a IP CIDR range.
+      # Represents a IP CIDR or glob range.
       #
       # @api public
       #
@@ -35,22 +35,25 @@ module Ronin
 
         # The IP range.
         #
-        # @return [IPAddr]
+        # @return [Ronin::Support::Network::IPRange]
         attr_reader :range
 
         #
         # Initializes the IP range object.
         #
-        # @param [IPAddr, String] range
+        # @param [Ronin::Support::Network::IPRange, String] range
         #   The IP range string.
         #
         # @raise [ArgumentError]
-        #   The given range was not an `IPAddr` or `String` object.
+        #   The given range was not an `Ronin::Support::Network::IPRange` or
+        #   `String` object.
         #
         def initialize(range)
           @range = case range
-                   when IPAddr then range
-                   when String then IPAddr.new(range)
+                   when Support::Network::IPRange
+                     range
+                   when String
+                     Support::Network::IPRange.new(range)
                    else
                      raise(ArgumentError,"IP range must be either an IPAddr or String: #{range.inspect}")
                    end
@@ -59,7 +62,7 @@ module Ronin
         #
         # Determines if an IP address exists within the IP range.
         #
-        # @param [IPAddr, String] ip
+        # @param [Ronin::Support::Network::IPRange, IPAddr, String] ip
         #   The IP address to test.
         #
         # @return [Boolean]
@@ -82,7 +85,7 @@ module Ronin
         #
         def ===(other)
           case other
-          when IPRange then include?(other.range)
+          when IPRange then @range === other.range
           when IP      then include?(other.address)
           else              false
           end

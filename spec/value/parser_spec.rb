@@ -12,7 +12,20 @@ describe Ronin::Recon::Value do
         value = subject.parse(string)
 
         expect(value).to be_kind_of(Ronin::Recon::Values::IPRange)
-        expect(value.range).to eq(string)
+        expect(value.range).to be_kind_of(Ronin::Support::Network::IPRange)
+        expect(value.range.string).to eq(string)
+      end
+    end
+
+    context "when given an IP glob range string" do
+      let(:string) { '1.2-10.2,3,4.*' }
+
+      it "must return a Values::IPRange object created with the string" do
+        value = subject.parse(string)
+
+        expect(value).to be_kind_of(Ronin::Recon::Values::IPRange)
+        expect(value.range).to be_kind_of(Ronin::Support::Network::IPRange)
+        expect(value.range.string).to eq(string)
       end
     end
 

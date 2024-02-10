@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'ronin/recon/values/ip_range'
 
 describe Ronin::Recon::Values::IPRange do
-  let(:range) { IPAddr.new('93.184.216.0/24') }
+  let(:range) { Ronin::Support::Network::IPRange.new('93.184.216.0/24') }
 
   subject { described_class.new(range) }
 
   describe "#initialize" do
-    context "when the range is an IPAddr" do
+    context "when the range is a Ronin::Support::Network::IPRange" do
       it "must set #range" do
-        expect(subject.range).to eq(range)
+        expect(subject.range).to be(range)
       end
     end
 
@@ -18,8 +18,9 @@ describe Ronin::Recon::Values::IPRange do
 
       subject { described_class.new(range) }
 
-      it "must set #range to an IPAddr" do
-        expect(subject.range).to eq(IPAddr.new(range))
+      it "must set #range to an Ronin::Support::Network::IPRange" do
+        expect(subject.range).to be_kind_of(Ronin::Support::Network::IPRange)
+        expect(subject.range.string).to eq(range)
       end
     end
 
@@ -63,7 +64,7 @@ describe Ronin::Recon::Values::IPRange do
       end
 
       context "and the other's IP range is a subset of the IP range" do
-        let(:other_range) { IPAddr.new('93.184.216.0/30') }
+        let(:other_range) { '93.184.216.0/30' }
         let(:other)       { described_class.new(other_range) }
 
         it "must return true" do
@@ -72,7 +73,7 @@ describe Ronin::Recon::Values::IPRange do
       end
 
       context "but the other's IP range does not intersect with the IP range" do
-        let(:other_range) { IPAddr.new('10.0.0.0/24') }
+        let(:other_range) { '10.0.0.0/24' }
         let(:other)       { described_class.new(other_range) }
 
         it "must return false" do
@@ -84,7 +85,7 @@ describe Ronin::Recon::Values::IPRange do
     context "when given an IP object" do
       context "and when the IP address is within the IP range" do
         let(:other_address) { '93.184.216.34' }
-        let(:other)         { described_class.new(other_address) }
+        let(:other)         { Ronin::Recon::Values::IP.new(other_address) }
 
         it "must return true" do
           expect(subject === other).to be(true)
@@ -93,7 +94,7 @@ describe Ronin::Recon::Values::IPRange do
 
       context "and when the IP address is not within the IP range" do
         let(:other_address) { '8.8.8.8' }
-        let(:other)         { described_class.new(other_address) }
+        let(:other)         { Ronin::Recon::Values::IP.new(other_address) }
 
         it "must return false" do
           expect(subject === other).to be(false)
@@ -101,7 +102,7 @@ describe Ronin::Recon::Values::IPRange do
       end
     end
 
-    context "when given a non-IPRange object" do
+    context "when given a non-IPRange or non-IP object" do
       let(:other) { Object.new }
 
       it "must return false" do
