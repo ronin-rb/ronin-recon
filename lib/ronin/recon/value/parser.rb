@@ -27,6 +27,7 @@ require 'ronin/recon/values/website'
 require 'ronin/recon/exceptions'
 
 require 'ronin/support/network/ip'
+require 'ronin/support/network/ip_range'
 require 'ronin/support/text/patterns/network'
 require 'ronin/support/network/public_suffix'
 
@@ -49,7 +50,7 @@ module Ronin
         IP_REGEX = Support::Network::IP::REGEX
 
         # Regular expression to match IPv4 and IPv6 CIDR ranges.
-        IP_RANGE_REGEX = %r{\A(?:#{Support::Text::Patterns::IPV4_ADDR}/\d{1,2}|#{Support::Text::Patterns::IPV6_ADDR}/\d{1,3})\z}
+        IP_RANGE_REGEX = Support::Network::IPRange::REGEX
 
         # Regular expression to match sub-domain host-names.
         HOSTNAME_REGEX = /\A(?:[a-zA-Z0-9_-]{1,63}\.)+#{Support::Text::Patterns::DOMAIN}\z/
@@ -77,8 +78,8 @@ module Ronin
         #
         def self.parse(string)
           case string
-          when IP_RANGE_REGEX then Values::IPRange.new(string)
           when IP_REGEX       then Values::IP.new(string)
+          when IP_RANGE_REGEX then Values::IPRange.new(string)
           when WEBSITE_REGEX  then Values::Website.parse(string)
           when WILDCARD_REGEX then Values::Wildcard.new(string)
           when HOSTNAME_REGEX then Values::Host.new(string)
