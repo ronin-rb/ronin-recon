@@ -40,4 +40,5 @@ Style/ClassEqualityComparison:
 Style/CaseEquality:
   Exclude:
     - 'lib/ronin/recon/scope.rb'
+    - 'lib/ronin/recon/values/ip_range.rb'
     - 'spec/**/*_spec.rb'
