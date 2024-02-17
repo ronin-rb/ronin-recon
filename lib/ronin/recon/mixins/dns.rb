@@ -23,6 +23,7 @@ require 'ronin/support/network/dns'
 
 require 'async/io'
 require 'async/dns/resolver'
+require 'ipaddr'
 
 module Ronin
   module Recon
@@ -98,7 +99,7 @@ module Ronin
         #   The hostnames of the address.
         #
         def dns_get_names(ip)
-          # TODO
+          dns_get_ptr_names(ip)
         end
 
         #
@@ -535,7 +536,9 @@ module Ronin
         # @see https://rubydoc.info/stdlib/resolv/Resolv/DNS/Resource/PTR
         #
         def dns_get_ptr_records(ip)
-          dns_get_records(ip,:ptr)
+          in_addr = IPAddr.new(ip).reverse
+
+          dns_get_records(in_addr,:ptr)
         end
 
         #
