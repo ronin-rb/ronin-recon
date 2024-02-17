@@ -83,6 +83,7 @@ module Ronin
       # @api private
       DEFAULT_SET = %w[
         dns/lookup
+        dns/reverse_lookup
         dns/mailservers
         dns/nameservers
         dns/subdomain_enum

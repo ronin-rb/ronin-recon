@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/builtin/dns/lookup'
+require 'ronin/recon/builtin/dns/reverse_lookup'
 require 'ronin/recon/builtin/dns/mailservers'
 require 'ronin/recon/builtin/dns/nameservers'
 require 'ronin/recon/builtin/dns/subdomain_enum'
