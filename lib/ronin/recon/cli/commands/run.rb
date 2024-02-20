@@ -122,6 +122,9 @@ module Ronin
           #
           # Runs the `ronin-recon run` command.
           #
+          # @param [Array<String>] values
+          #   The initial recon values.
+          #
           def run(*values)
             values = begin
                        values.map(&Value.method(:parse))
