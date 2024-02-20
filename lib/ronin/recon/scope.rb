@@ -38,11 +38,19 @@ module Ronin
       # @return [Array<Values::Domain, Values::Host, Values::IPRange, Values::IP>]
       attr_reader :values
 
+      # The list of values to ignore and are not considered "in scope".
+      #
+      # @return [Array<Value>]
+      attr_reader :ignore
+
       #
       # Initializes the scope.
       #
       # @param [Array<Values::Wildcard, Values::Domain, Values::Host, Values::IPRange, Values::IP>] values
       #   The list of "in scope" values.
+      #
+      # @param [Array<Value>] ignore
+      #   The recon values to ignore and are not "in scope".
       #
       # @raise [NotImplementedError]
       #   An unsupported value object was given.
