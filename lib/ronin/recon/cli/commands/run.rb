@@ -182,10 +182,25 @@ module Ronin
             end
           end
 
+          #
+          # Imports a discovered value into ronin-db.
+          #
+          # @param [Values::Value] value
+          #   A discovered recon value to import.
+          #
           def import_value(value)
             Importer.import_value(value)
           end
 
+          #
+          # Imports a connection between two values into ronin-db.
+          #
+          # @param [Values::Value] value
+          #   A discovered recon value to import.
+          #
+          # @param [Values::Value] parent
+          #   The parent value of the discovered recon value.
+          #
           def import_connection(value,parent)
             Importer.import_connection(value,parent)
           end
