@@ -74,6 +74,28 @@ describe Ronin::Recon::Values::Wildcard do
       end
     end
 
+    context "when given another URL object" do
+      let(:other) do
+        Ronin::Recon::Values::URL.new("https://#{other_host}/index.html")
+      end
+
+      context "and the URL's host name matches the Wildcard template" do
+        let(:other_host) { 'www.example.com' }
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the URL's host name does not match the Wildcard template" do
+        let(:other_host) { 'www.other.com' }
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
     context "when given another kind of object" do
       let(:other) { Object.new }
 

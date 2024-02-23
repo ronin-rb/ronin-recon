@@ -21,6 +21,7 @@
 require 'ronin/recon/value'
 require 'ronin/recon/values/domain'
 require 'ronin/recon/values/host'
+require 'ronin/recon/values/url'
 
 module Ronin
   module Recon
@@ -75,6 +76,8 @@ module Ronin
             eql?(other)
           when Domain, Host
             other.name.start_with?(@prefix) && other.name.end_with?(@suffix)
+          when URL
+            other.uri.host.start_with?(@prefix) && other.uri.host.end_with?(@suffix)
           else
             false
           end
