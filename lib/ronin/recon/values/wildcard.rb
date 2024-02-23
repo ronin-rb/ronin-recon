@@ -75,9 +75,13 @@ module Ronin
           when Wildcard
             eql?(other)
           when Domain, Host
-            other.name.start_with?(@prefix) && other.name.end_with?(@suffix)
+            name = other.name
+
+            name.start_with?(@prefix) && name.end_with?(@suffix)
           when URL
-            other.uri.host.start_with?(@prefix) && other.uri.host.end_with?(@suffix)
+            host = other.uri.host
+
+            host.start_with?(@prefix) && host.end_with?(@suffix)
           else
             false
           end
