@@ -88,9 +88,13 @@ module Ronin
       #
       def include?(value)
         scope_values = case value
-                       when Values::Wildcard, Values::Domain, Values::Host
+                       when Values::Wildcard,
+                            Values::Domain,
+                            Values::Host,
+                            Values::URL
                          @host_values
-                       when Values::IP, Values::IPRange
+                       when Values::IP,
+                            Values::IPRange
                          @ip_values
                        end
 
