@@ -299,6 +299,8 @@ module Ronin
       # @raise [NotImplementedError]
       #   An unknown message type was given.
       #
+      # @api private
+      #
       def process(mesg)
         case mesg
         when Message::WorkerStarted
