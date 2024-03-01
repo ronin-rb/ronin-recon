@@ -424,6 +424,8 @@ module Ronin
       # @return [Set<Value>]
       #   The set of discovered recon values.
       #
+      # @api public
+      #
       def values
         @graph.nodes
       end
