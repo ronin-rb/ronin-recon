@@ -207,6 +207,9 @@ module Ronin
       #
       # @yieldparam [RuntimeError] exception
       #   An exception that was raised by a worker.
+      #
+      # @api public
+      #
       def on(event,&block)
         case event
         when :value         then @value_callbacks         << block
