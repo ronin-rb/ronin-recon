@@ -161,6 +161,54 @@ Run the recon engine and ignore specific hosts, IPs, URLs, etc.:
 $ ronin-recon run --ignore staging.example.com example.com
 ```
 
+Save the recon results to a plain-text file:
+
+```shell
+$ ronin-recon run -o output.txt example.com
+```
+
+Save the recon results to a directory of multiple plain-text files:
+
+```shell
+$ ronin-recon run -o output_dir example.com
+```
+
+Save the recon results to a CSV file:
+
+```shell
+$ ronin-recon run -o output.csv example.com
+```
+
+Save the recon results to a JSON file:
+
+```shell
+$ ronin-recon run -o output.json example.com
+```
+
+Save the recon results to a NDJSON file:
+
+```shell
+$ ronin-recon run -o output.ndjson example.com
+```
+
+Save the recon results to a PNG image:
+
+```shell
+$ ronin-recon run -o output.png example.com
+```
+
+Save the recon results to a SVG image:
+
+```shell
+$ ronin-recon run -o output.svg example.com
+```
+
+Save the recon results to a PDF image:
+
+```shell
+$ ronin-recon run -o output.pdf example.com
+```
+
 Generate a boilerplate recon worker file, with some custom information:
 
 ```shell
