@@ -34,7 +34,21 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
     end
 
     context 'when http website is running on given port' do
-      context 'with ssl' do
+      let(:port) { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'http') }
+
+      it 'must yield Values::Website with http schema' do
+        yielded_value = nil
+
+        subject.process(port) do |value|
+          yielded_value = value
+        end
+
+        expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
+        expect(yielded_value.scheme).to eq(:http)
+        expect(yielded_value.host).to eq(port.host)
+      end
+
+      context 'but it also has ssl enabled' do
         let(:port) { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 80, service: 'http', ssl: true) }
 
         it 'must yield Values::Website with https schema' do
@@ -46,22 +60,6 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
 
           expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
           expect(yielded_value.scheme).to eq(:https)
-          expect(yielded_value.host).to eq(port.host)
-        end
-      end
-
-      context 'when no ssl' do
-        let(:port) { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'http') }
-
-        it 'must yield Values::Website with http schema' do
-          yielded_value = nil
-
-          subject.process(port) do |value|
-            yielded_value = value
-          end
-
-          expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(yielded_value.scheme).to eq(:http)
           expect(yielded_value.host).to eq(port.host)
         end
       end
