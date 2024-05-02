@@ -53,9 +53,7 @@ module Ronin
         #   An IP value.
         #
         def process(ip_range)
-          ip_range = Support::Network::IPRange.new(ip_range.range)
-
-          ip_range.each do |address|
+          ip_range.range.each do |address|
             yield IP.new(address)
           end
         end
