@@ -4,7 +4,7 @@ require 'ronin/recon/builtin/dns/suffix_enum'
 RSpec.describe Ronin::Recon::DNS::SuffixEnum do
   let(:fixtures_dir) { File.join(__dir__,'fixtures') }
 
-  describe '#process' do
+  describe '#process', :network do
     let(:suffix_list) { Ronin::Support::Network::PublicSuffix::List.load_file(suffix_path) }
 
     before do
