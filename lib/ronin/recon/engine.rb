@@ -18,6 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'ronin/recon/workers'
 require 'ronin/recon/worker_pool'
 require 'ronin/recon/value_status'
 require 'ronin/recon/graph'
@@ -29,7 +30,6 @@ require 'ronin/recon/message/job_completed'
 require 'ronin/recon/message/job_failed'
 require 'ronin/recon/message/value'
 require 'ronin/recon/message/shutdown'
-require 'ronin/recon/worker_set'
 
 require 'set'
 require 'console/logger'
@@ -69,7 +69,7 @@ module Ronin
 
       # The workers that the engine will use.
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       # @api public
       attr_reader :workers
@@ -94,7 +94,7 @@ module Ronin
       #   The maximum depth to limit recon to. If not specified recon will
       #   continue until there are no more new values discovered.
       #
-      # @param [WorkerSet] workers
+      # @param [Workers] workers
       #   The workers to use for recon.
       #
       # @param [Console::Logger] logger
@@ -113,7 +113,7 @@ module Ronin
       #
       def initialize(values, ignore:    [],
                              max_depth: nil,
-                             workers:   WorkerSet.default,
+                             workers:   Workers.default,
                              logger:    Console.logger)
         @scope = Scope.new(values, ignore: ignore)
 

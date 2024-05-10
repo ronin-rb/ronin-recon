@@ -27,8 +27,8 @@ describe Ronin::Recon::Engine do
       expect(subject.scope.ignore).to eq([])
     end
 
-    it "must default #workers to Ronin::Recon::WorkerSet.default" do
-      expect(subject.workers).to eq(Ronin::Recon::WorkerSet.default)
+    it "must default #workers to Ronin::Recon::Workers.default" do
+      expect(subject.workers).to eq(Ronin::Recon::Workers.default)
     end
 
     it "must initialize #value_status to an empty Ronin::Recon::ValueStatus" do
@@ -76,7 +76,7 @@ describe Ronin::Recon::Engine do
 
     context "when given the workers: keyword argument" do
       let(:workers) do
-        Ronin::Recon::WorkerSet.load(
+        Ronin::Recon::Workers.load(
           %w[
             dns/lookup
             dns/mailservers
@@ -239,7 +239,7 @@ describe Ronin::Recon::Engine do
   end
 
   let(:mock_workers) do
-    Ronin::Recon::WorkerSet.new(
+    Ronin::Recon::Workers.new(
       [
         MockWorkers::DNS::Lookup,
         MockWorkers::DNS::Nameservers,

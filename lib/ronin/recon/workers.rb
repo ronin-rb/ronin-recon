@@ -25,27 +25,27 @@ require 'set'
 module Ronin
   module Recon
     #
-    # Represents a set of recon workers.
+    # Represents a set of recon worker classes.
     #
-    # @api semipublic
+    # @api private
     #
-    class WorkerSet
+    class Workers
 
       include Enumerable
 
-      # The workers in the set.
+      # The worker classes in the set.
       #
       # @return [Set<Class<Worker>>]
-      attr_reader :workers
+      attr_reader :classes
 
       #
-      # Initializes the worker set.
+      # Initializes the workers.
       #
-      # @param [Array<Class<Worker>>] workers
-      #   The array of worker classes.
+      # @param [Array<Class<Worker>>, Set<Class<Worker>>] workers
+      #   The set of worker classes.
       #
       def initialize(workers=Set.new)
-        @workers = workers.to_set
+        @classes = workers.to_set
       end
 
       #
@@ -54,16 +54,16 @@ module Ronin
       # @param [Array<String>] worker_ids
       #   The array of worker IDs to load.
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       def self.load(worker_ids)
-        worker_set = new
+        workers = new
 
         worker_ids.each do |worker_id|
-          worker_set.load(worker_id)
+          workers.load(worker_id)
         end
 
-        return worker_set
+        return workers
       end
 
       #
@@ -72,10 +72,19 @@ module Ronin
       # @param [Array<String>] worker_ids
       #   The array of worker IDs to load.
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       def self.[](*worker_ids)
         load(worker_ids)
+      end
+
+      #
+      # Loads all workers.
+      #
+      # @return [Workers]
+      #
+      def self.all
+        load(Recon.list_files)
       end
 
       # The default set of workers to load.
@@ -122,21 +131,12 @@ module Ronin
       end
 
       #
-      # Loads all workers.
-      #
-      # @return [WorkerSet]
-      #
-      def self.all
-        load(Recon.list_files)
-      end
-
-      #
       # Loads all workers under a specific category.
       #
       # @param [String] name
       #   The category name.
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       def self.category(name)
         load(
@@ -160,24 +160,24 @@ module Ronin
       #   If no block is given, an Enumerator object will be returned.
       #
       def each(&block)
-        @workers.each(&block)
+        @classes.each(&block)
       end
 
       #
-      # Adds another set of workers to the worker set.
+      # Adds another set of workers to the workers.
       #
-      # @param [WorkerSet, Array<Class<Worker>>] other
+      # @param [Workers, Array<Class<Worker>>] other
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       def +(other)
         other_workers = other.to_set
 
-        self.class.new((@workers + other_workers).uniq)
+        self.class.new((@classes + other_workers).uniq)
       end
 
       #
-      # Adds the worker class to the worker set.
+      # Adds the worker class to the workers.
       #
       # @param [Class<Worker>] worker
       #   The worker class to add.
@@ -185,12 +185,12 @@ module Ronin
       # @return [self]
       #
       def <<(worker)
-        @workers << worker
+        @classes << worker
         return self
       end
 
       #
-      # Loads a worker and adds it to the worker set.
+      # Loads a worker and adds it to the workers.
       #
       # @param [String] worker_id
       #   The worker ID to load.
@@ -202,7 +202,7 @@ module Ronin
       end
 
       #
-      # Loads a worker from a file and adds it to the worker set.
+      # Loads a worker from a file and adds it to the workers.
       #
       # @param [String] path
       #   The path to the file.
@@ -214,35 +214,35 @@ module Ronin
       end
 
       #
-      # Removes a worker class from the worker set.
+      # Removes a worker class from the workers.
       #
       # @param [Class<Worker>] worker
       #   The worker class to remove.
       #
       # @return [self, nil]
-      #   If the worker class was in the worker set, than `self` is returned.
-      #   If the worker class was not in the worker set, then `nil` will be
+      #   If the worker class was in the workers, than `self` is returned.
+      #   If the worker class was not in the workers, then `nil` will be
       #   returned.
       #
       def delete(worker)
-        if @workers.delete?(worker)
+        if @classes.delete?(worker)
           self
         end
       end
 
       #
-      # Removes a worker with the ID from the worker set.
+      # Removes a worker with the ID from the workers.
       #
       # @param [String] worker_id
       #   The worker ID to remove.
       #
       # @return [self, nil]
-      #   If the worker ID was in the worker set, than `self` is returned.
-      #   If the worker ID was not in the worker set, then `nil` will be
+      #   If the worker ID was in the workers, than `self` is returned.
+      #   If the worker ID was not in the workers, then `nil` will be
       #   returned.
       #
       def remove(worker_id)
-        if @workers.reject! { |worker| worker.id == worker_id }
+        if @classes.reject! { |worker| worker.id == worker_id }
           self
         end
       end
@@ -262,13 +262,13 @@ module Ronin
       # @param [:passive, :active, :aggressive] level
       #   The maximum intensity level to filter by.
       #
-      # @return [WorkerSet]
+      # @return [Workers]
       #
       def intensity(level)
         level_index = INTENSITY_LEVELS.index(level)
 
         self.class.new(
-          @workers.select { |worker|
+          @classes.select { |worker|
             if (intensity_index = INTENSITY_LEVELS.index(worker.intensity))
               intensity_index <= level_index
             end
@@ -277,25 +277,25 @@ module Ronin
       end
 
       #
-      # Determines if the worker set is equal to another worker set.
+      # Determines if the workers is equal to another workers.
       #
       # @param [Object] other
-      #   The other worker set.
+      #   The other workers.
       #
       # @return [Boolean]
       #
       def ==(other)
         self.class == other.class &&
-          @workers == other.workers
+          @classes == other.classes
       end
 
       #
-      # Converts the worker set into a Set.
+      # Converts the workers into a Set.
       #
       # @return [Set<Class<Worker>>]
       #
       def to_set
-        @workers
+        @classes
       end
 
     end

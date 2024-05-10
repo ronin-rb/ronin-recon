@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'ronin/recon/worker_set'
+require 'ronin/recon/workers'
 require 'ronin/recon/builtin'
 
-describe Ronin::Recon::WorkerSet do
+describe Ronin::Recon::Workers do
   let(:worker_ids) do
     %w[
       dns/lookup
@@ -40,10 +40,10 @@ describe Ronin::Recon::WorkerSet do
   subject { described_class.new(workers) }
 
   describe "#initialize" do
-    context "when given an Array of workers" do
+    context "when given an Array of Worker classes" do
       it "must initialize #workers to a Set of the given workers" do
-        expect(subject.workers).to be_kind_of(Set)
-        expect(subject.workers.to_a).to eq(workers)
+        expect(subject.classes).to be_kind_of(Set)
+        expect(subject.classes.to_a).to eq(workers)
       end
     end
 
@@ -51,7 +51,7 @@ describe Ronin::Recon::WorkerSet do
       subject { described_class.new }
 
       it "must initialize #workers to an empty Set" do
-        expect(subject.workers).to eq(Set.new)
+        expect(subject.classes).to eq(Set.new)
       end
     end
   end
@@ -63,7 +63,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject.load(worker_ids)
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.to_a).to eq(workers)
+      expect(worker_set.classes.to_a).to eq(workers)
     end
   end
 
@@ -74,7 +74,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject[*worker_ids]
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.to_a).to eq(workers)
+      expect(worker_set.classes.to_a).to eq(workers)
     end
   end
 
@@ -85,7 +85,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject.all
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.map(&:id)).to eq(
+      expect(worker_set.classes.map(&:id)).to eq(
         Ronin::Recon.list_files
       )
     end
@@ -98,7 +98,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject.default
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.map(&:id)).to eq(described_class::DEFAULT_SET)
+      expect(worker_set.classes.map(&:id)).to eq(described_class::DEFAULT_SET)
     end
   end
 
@@ -111,7 +111,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject.category(category)
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.map(&:id)).to all(start_with(category))
+      expect(worker_set.classes.map(&:id)).to all(start_with(category))
     end
   end
 
@@ -165,11 +165,11 @@ describe Ronin::Recon::WorkerSet do
     let(:other_worker_set) { described_class.new(other_workers) }
 
     context "when given another #{described_class}" do
-      it "must combine the workers in the other worker set with the worker set" do
+      it "must combine the workers in the other workers with the workers" do
         worker_set = subject + other_worker_set
 
         expect(worker_set).to be_kind_of(described_class)
-        expect(worker_set.workers).to eq(
+        expect(worker_set.classes).to eq(
           (workers + other_workers).to_set
         )
       end
@@ -178,11 +178,11 @@ describe Ronin::Recon::WorkerSet do
     context "when given an Array of workers" do
       let(:other_worker_set) { other_workers }
 
-      it "must combine the workers in the other worker set with the worker set" do
+      it "must combine the workers in the other workers with the workers" do
         worker_set = subject + other_worker_set
 
         expect(worker_set).to be_kind_of(described_class)
-        expect(worker_set.workers).to eq(
+        expect(worker_set.classes).to eq(
           (workers + other_workers).to_set
         )
       end
@@ -194,8 +194,8 @@ describe Ronin::Recon::WorkerSet do
 
     before { subject << worker }
 
-    it "must add the worker class to the worker set" do
-      expect(subject.workers).to include(worker)
+    it "must add the worker class to the workers" do
+      expect(subject.classes).to include(worker)
     end
   end
 
@@ -205,8 +205,8 @@ describe Ronin::Recon::WorkerSet do
 
     before { subject.load(worker_id) }
 
-    it "must load and add the worker class to the worker set" do
-      expect(subject.workers).to include(worker)
+    it "must load and add the worker class to the workers" do
+      expect(subject.classes).to include(worker)
     end
   end
 
@@ -216,28 +216,28 @@ describe Ronin::Recon::WorkerSet do
 
     before { subject.load_file(path) }
 
-    it "must load the file and add the worker to the worker set" do
+    it "must load the file and add the worker to the workers" do
       expect(defined?(Ronin::Recon::TestWorker)).to be_truthy
-      expect(subject.workers).to include(Ronin::Recon::TestWorker)
+      expect(subject.classes).to include(Ronin::Recon::TestWorker)
     end
   end
 
   describe "#delete" do
-    context "when the worker class does exist in the worker set" do
+    context "when the worker class does exist in the workers" do
       let(:worker) { Ronin::Recon::DNS::SubdomainEnum }
 
       it "must retruen self" do
         expect(subject.delete(worker)).to be(subject)
       end
 
-      it "must remove the worker class from the worker set" do
+      it "must remove the worker class from the workers" do
         subject.delete(worker)
 
-        expect(subject.workers).to_not include(worker)
+        expect(subject.classes).to_not include(worker)
       end
     end
 
-    context "when the worker class does not exist in the worker set" do
+    context "when the worker class does not exist in the workers" do
       let(:worker) { Ronin::Recon::Web::DirEnum }
 
       it "must return nil" do
@@ -247,7 +247,7 @@ describe Ronin::Recon::WorkerSet do
   end
 
   describe "#remove" do
-    context "when the worker ID exists within the worker set" do
+    context "when the worker ID exists within the workers" do
       let(:worker)    { Ronin::Recon::DNS::SubdomainEnum }
       let(:worker_id) { 'dns/subdomain_enum' }
 
@@ -255,14 +255,14 @@ describe Ronin::Recon::WorkerSet do
         expect(subject.remove(worker_id)).to be(subject)
       end
 
-      it "must remove the worker class from the worker set" do
+      it "must remove the worker class from the workers" do
         subject.remove(worker_id)
 
-        expect(subject.workers).to_not include(worker)
+        expect(subject.classes).to_not include(worker)
       end
     end
 
-    context "when the worker ID does not exist in the worker set" do
+    context "when the worker ID does not exist in the workers" do
       let(:worker)    { Ronin::Recon::Web::DirEnum }
       let(:worker_id) { 'web/dir_enum' }
 
@@ -279,7 +279,7 @@ describe Ronin::Recon::WorkerSet do
       worker_set = subject.intensity(intensity)
 
       expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.workers.map(&:intensity)).to all(eq(:passive).or(eq(:active)))
+      expect(worker_set.classes.map(&:intensity)).to all(eq(:passive).or(eq(:active)))
     end
   end
 
