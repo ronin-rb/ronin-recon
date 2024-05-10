@@ -95,7 +95,7 @@ module Ronin
 
                     if RESOURCE_STATUS_CODES.include?(response.status)
                       yield URL.new(url, status:  response.status,
-                                         headers: response.to_h)
+                                         headers: response.headers)
                     end
                   rescue Errno::ECONNREFUSED,
                          SocketError
