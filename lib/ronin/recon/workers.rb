@@ -51,8 +51,8 @@ module Ronin
       #
       # Loads the worker classes.
       #
-      # @param [Array<String>] worker_ids
-      #   The array of worker IDs to load.
+      # @param [Enumerable<String>] worker_ids
+      #   The list of worker IDs to load.
       #
       # @return [Workers]
       #
@@ -85,49 +85,6 @@ module Ronin
       #
       def self.all
         load(Recon.list_files)
-      end
-
-      # The default set of workers to load.
-      #
-      # @api private
-      DEFAULT_SET = %w[
-        dns/lookup
-        dns/reverse_lookup
-        dns/mailservers
-        dns/nameservers
-        dns/subdomain_enum
-        dns/suffix_enum
-        dns/srv_enum
-        net/ip_range_enum
-        net/port_scan
-        net/service_id
-        ssl/cert_grab
-        ssl/cert_enum
-        web/spider
-        web/dir_enum
-      ]
-
-      #
-      # Loads the default set of workers.
-      #
-      # * {DNS::Lookup dns/lookup}
-      # * {DNS::Mailservers dns/mailservers}
-      # * {DNS::Nameservers dns/nameservers}
-      # * {DNS::SubdomainEnum dns/subdomain_enum}
-      # * {DNS::SuffixEnum dns/suffix_enum}
-      # * {DNS::SRVEnum dns/srv_enum}
-      # * {Net::IPRangeEnum net/ip_range_enum}
-      # * {Net::PortScan net/port_scan}
-      # * {Net::ServiceID net/service_id}
-      # * {SSL::CertGrab ssl/cert_grab}
-      # * {SSL::CertEnum ssl/cert_enum}
-      # * {Web::Spider web/spider}
-      # * {Web::DirEnum web/dir_enum}
-      #
-      # @return [WorkerSet]
-      #
-      def self.default
-        load(DEFAULT_SET)
       end
 
       #

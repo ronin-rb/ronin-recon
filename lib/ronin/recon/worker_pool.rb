@@ -75,7 +75,7 @@ module Ronin
       # @param [Worker] worker
       #   The initialized worker object.
       #
-      # @param [Integer] concurrency
+      # @param [Integer, nil] concurrency
       #   The number of async tasks to spawn.
       #
       # @param [Async::Queue] output_queue
@@ -84,12 +84,12 @@ module Ronin
       # @param [Console::Logger] logger
       #   The console logger object.
       #
-      def initialize(worker, concurrency:  worker.class.concurrency,
+      def initialize(worker, concurrency:  nil,
                              output_queue: ,
                              params: nil,
                              logger: Console.logger)
         @worker      = worker
-        @concurrency = concurrency
+        @concurrency = concurrency || worker.class.concurrency
 
         @input_queue  = Async::Queue.new
         @output_queue = output_queue

@@ -18,6 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'ronin/recon/config'
 require 'ronin/recon/workers'
 require 'ronin/recon/worker_pool'
 require 'ronin/recon/value_status'
@@ -43,6 +44,16 @@ module Ronin
     #
     class Engine
 
+      # The configuration for the engine.
+      #
+      # @return [Config]
+      attr_reader :config
+
+      # The workers to use.
+      #
+      # @return [Workers]
+      attr_reader :workers
+
       # The scope to constrain recon to.
       #
       # @return [Scope]
@@ -67,13 +78,6 @@ module Ronin
       # @api public
       attr_reader :graph
 
-      # The workers that the engine will use.
-      #
-      # @return [Workers]
-      #
-      # @api public
-      attr_reader :workers
-
       # The common logger for the engine.
       #
       # @return [Console::Logger]
@@ -94,8 +98,16 @@ module Ronin
       #   The maximum depth to limit recon to. If not specified recon will
       #   continue until there are no more new values discovered.
       #
-      # @param [Workers] workers
-      #   The workers to use for recon.
+      # @param [String, nil] config_file
+      #   The path to the configuration file.
+      #
+      # @param [Config, nil] config
+      #   The configuration for the engine. If specified, it will override
+      #   `config_file:`.
+      #
+      # @param [Workers, Array<Class<Worker>>, nil] workers
+      #   The worker classes to use. If specified, it will override the workers
+      #   specified in `config.workers`.
       #
       # @param [Console::Logger] logger
       #   The common logger for the recon engine.
@@ -111,21 +123,21 @@ module Ronin
       #
       # @api public
       #
-      def initialize(values, ignore:    [],
-                             max_depth: nil,
-                             workers:   Workers.default,
-                             logger:    Console.logger)
-        @scope = Scope.new(values, ignore: ignore)
+      def initialize(values, ignore:      [],
+                             max_depth:   nil,
+                             config:      nil,
+                             config_file: nil,
+                             workers:     nil,
+                             logger:      Console.logger)
+        @config  = if    config      then config
+                   elsif config_file then Config.load(config_file)
+                   else                   Config.default
+                   end
+        @workers = workers || Workers.load(@config.workers)
+        @logger  = logger
 
-        @workers           = workers
-        @worker_classes    = {}
-        @worker_pools      = {}
-        @worker_pool_count = 0
-
-        @value_status = ValueStatus.new
-        @graph        = Graph.new
-        @max_depth    = max_depth
-        @output_queue = Async::Queue.new
+        @scope     = Scope.new(values, ignore: ignore)
+        @max_depth = max_depth
 
         @on_value_callbacks         = []
         @on_connection_callbacks    = []
@@ -133,13 +145,19 @@ module Ronin
         @on_job_completed_callbacks = []
         @on_job_failed_callbacks    = []
 
-        @logger = logger
+        @value_status = ValueStatus.new
+        @graph        = Graph.new
+
+        yield self if block_given?
+
+        @worker_classes    = {}
+        @worker_pools      = {}
+        @worker_pool_count = 0
+        @output_queue      = Async::Queue.new
 
         @workers.each do |worker_class|
           add_worker(worker_class)
         end
-
-        yield self if block_given?
       end
 
       #
@@ -235,8 +253,10 @@ module Ronin
       #
       # @api private
       #
-      def add_worker(worker_class, concurrency: worker_class.concurrency,
-                                   params: nil)
+      def add_worker(worker_class, params: nil, concurrency: nil)
+        params      ||= @config.params[worker_class.id]
+        concurrency ||= @config.concurrency[worker_class.id]
+
         worker      = worker_class.new(params: params)
         worker_pool = WorkerPool.new(worker, concurrency:  concurrency,
                                              output_queue: @output_queue,

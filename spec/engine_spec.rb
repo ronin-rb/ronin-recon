@@ -27,8 +27,10 @@ describe Ronin::Recon::Engine do
       expect(subject.scope.ignore).to eq([])
     end
 
-    it "must default #workers to Ronin::Recon::Workers.default" do
-      expect(subject.workers).to eq(Ronin::Recon::Workers.default)
+    it "must default #workers to the default set of workers" do
+      expect(subject.workers).to eq(
+        Ronin::Recon::Workers.load(Ronin::Recon::Config::Workers::DEFAULT)
+      )
     end
 
     it "must initialize #value_status to an empty Ronin::Recon::ValueStatus" do
@@ -71,6 +73,68 @@ describe Ronin::Recon::Engine do
 
       it "must set #max_depth" do
         expect(subject.max_depth).to eq(max_depth)
+      end
+    end
+
+    context "when given the config_file: keyword argument" do
+      let(:fixtures_dir) { File.join(__dir__,'fixtures') }
+      let(:config_file)  { File.join(fixtures_dir,'config.yml') }
+      let(:config)       { Ronin::Recon::Config.load(config_file) }
+
+      subject { described_class.new(values, config_file: config_file) }
+
+      it "must load the configuration from the file and set #config" do
+        expect(subject.config).to eq(config)
+      end
+
+      it "must initialize #workers based on the `workers:` defined in the configuration file" do
+        expect(subject.workers).to eq(
+          Ronin::Recon::Workers.load(config.workers)
+        )
+      end
+    end
+
+    context "when given the config: keyword argument" do
+      let(:config) do
+        Ronin::Recon::Config.new(
+          workers: %w[
+            dns/lookup
+            dns/reverse_lookup
+            dns/nameservers
+            dns/mailservers
+          ]
+        )
+      end
+
+      subject { described_class.new(values, config: config) }
+
+      it "must set #config to the value passed in by the config: keyword argument" do
+        expect(subject.config).to be(config)
+      end
+
+      it "must initialize #workers based on the #workers in the config value" do
+        expect(subject.workers).to eq(
+          Ronin::Recon::Workers.load(config.workers)
+        )
+      end
+
+      context "and when the workers: keyword argument is given" do
+        let(:workers) do
+          Ronin::Recon::Workers.load(%w[
+            dns/lookup
+            dns/reverse_lookup
+            dns/subdomain_enum
+          ])
+        end
+
+        subject do
+          described_class.new(values, config: config,
+                                      workers: workers)
+        end
+
+        it "must set #workers to the workers: keyword argument value" do
+          expect(subject.workers).to be(workers)
+        end
       end
     end
 

@@ -91,17 +91,6 @@ describe Ronin::Recon::Workers do
     end
   end
 
-  describe ".default" do
-    subject { described_class }
-
-    it "must load the default set of workers and return a #{described_class}" do
-      worker_set = subject.default
-
-      expect(worker_set).to be_kind_of(described_class)
-      expect(worker_set.classes.map(&:id)).to eq(described_class::DEFAULT_SET)
-    end
-  end
-
   describe ".category" do
     subject { described_class }
 
