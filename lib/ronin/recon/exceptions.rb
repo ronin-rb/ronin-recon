@@ -29,5 +29,17 @@ module Ronin
     #
     class UnknownValue < Exception
     end
+
+    #
+    # Indicates invalid YAML configuration.
+    #
+    class InvalidConfig < Exception
+    end
+
+    #
+    # Indicates an invalid YAML configuration file.
+    #
+    class InvalidConfigFile < InvalidConfig
+    end
   end
 end

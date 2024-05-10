@@ -1,0 +1,8 @@
+---
+:params:
+  test/worker1:
+    :foo: a
+    :bar: b
+  test/worker2:
+    :foo: x
+    :bar: y

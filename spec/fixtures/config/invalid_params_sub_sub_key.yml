@@ -1,0 +1,4 @@
+---
+:params:
+  test/worker:
+    foo: 42

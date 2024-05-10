@@ -1,0 +1,4 @@
+---
+:workers:
+  dns/foo:
+    :concurrency: foo
