@@ -19,9 +19,15 @@
 module Ronin
   module Recon
     #
+    # Base class for all {Ronin::Recon} exceptions.
+    #
+    class Exception < RuntimeError
+    end
+
+    #
     # Indicates that a value string could not be parsed.
     #
-    class UnknownValue < RuntimeError
+    class UnknownValue < Exception
     end
   end
 end
