@@ -50,18 +50,18 @@ file 'data/wordlists/subdomains-1000.txt.gz' => 'data/wordlists/subdomains-1000.
   sh 'gzip -f data/wordlists/subdomains-1000.txt'
 end
 
-file 'data/wordlists/combined_directories.txt' => 'data/wordlists' do
-  sh 'wget -O data/wordlists/combined_directories.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/combined_directories.txt'
+file 'data/wordlists/raft-small-directories.txt' => 'data/wordlists' do
+  sh 'wget -O data/wordlists/raft-small-directories.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/raft-small-directories.txt'
 end
 
-file 'data/wordlists/combined_directories.txt.gz' => 'data/wordlists/combined_directories.txt' do
-  sh 'gzip -f data/wordlists/combined_directories.txt'
+file 'data/wordlists/raft-small-directories.txt.gz' => 'data/wordlists/raft-small-directories.txt' do
+  sh 'gzip -f data/wordlists/raft-small-directories.txt'
 end
 
 desc 'Generate built-in wordlists'
 task :wordlists => %w[
   data/wordlists/subdomains-1000.txt.gz
-  data/wordlists/combined_directories.txt.gz
+  data/wordlists/raft-small-directories.txt.gz
 ]
 
 require 'command_kit/completion/task'

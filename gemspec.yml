@@ -34,7 +34,7 @@ generated_files:
  - man/ronin-recon-test.1
  - man/ronin-recon-run.1
  - data/wordlists/subdomains-1000.txt.gz
- - data/wordlists/combined_directories.txt.gz
+ - data/wordlists/raft-small-directories.txt.gz
 
 required_ruby_version: ">= 3.0.0"
 

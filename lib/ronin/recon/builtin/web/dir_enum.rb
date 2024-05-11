@@ -34,7 +34,7 @@ module Ronin
       #
       class DirEnum < WebWorker
 
-        DEFAULT_WORDLIST = File.join(WORDLISTS_DIR, 'combined_directories.txt.gz')
+        DEFAULT_WORDLIST = File.join(WORDLISTS_DIR, 'raft-small-directories.txt.gz')
 
         register 'web/dir_enum'
 
