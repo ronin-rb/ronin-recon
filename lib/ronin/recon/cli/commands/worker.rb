@@ -100,6 +100,8 @@ module Ronin
               end
               puts
 
+              puts "Intensity: #{worker.intensity}"
+
               print_params(worker)
             end
           end
