@@ -370,7 +370,7 @@ describe Ronin::Recon::Worker do
       it do
         expect {
           subject.intensity(new_intensity)
-        }.to raise_error(ArgumentError,"intensity must be :passive, :active, or :intensive: #{new_intensity.inspect}")
+        }.to raise_error(ArgumentError,"intensity must be :passive, :active, or :aggressive: #{new_intensity.inspect}")
       end
     end
   end

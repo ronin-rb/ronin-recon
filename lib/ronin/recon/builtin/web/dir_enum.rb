@@ -47,7 +47,7 @@ module Ronin
 
         accepts Website
         outputs URL
-        intensity :intensive
+        intensity :aggressive
 
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'

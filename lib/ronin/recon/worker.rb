@@ -143,7 +143,7 @@ module Ronin
     # * `:passive` - does not send any network traffic to the target system.
     # * `:active` - sends a moderate amount of network traffic to the target
     #   system.
-    # * `:intensive` - sends an excessive amount of network traffic to the
+    # * `:aggressive` - sends an excessive amount of network traffic to the
     #   target system and may trigger alerts.
     #
     # **Note:** if the intensity level of the worker class is not defined,
@@ -353,21 +353,21 @@ module Ronin
       #
       # Gets or sets the worker's intensity level.
       #
-      # @param [:passive, :active, :intensive, nil] new_intensity
+      # @param [:passive, :active, :aggressive, nil] new_intensity
       #   The optional new intensity level to set.
       #
       #   * `:passive` - does not send any network traffic to the target system.
       #   * `:active` - sends a moderate amount of network traffic to the target
       #     system.
-      #   * `:intensive` - sends an excessive amount of network traffic to the
+      #   * `:aggressive` - sends an excessive amount of network traffic to the
       #     target system and may trigger alerts.
       #
-      # @return [:passive, :active, :intensive]
+      # @return [:passive, :active, :aggressive]
       #   The worker's intensity level. Defaults to `:active` if not set.
       #
       # @raise [ArgumentError]
       #   The new intensity level was not `:passive`, `:active`, or
-      #   `:intensive`.
+      #   `:aggressive`.
       #
       # @example sets the recon worker's intensity level:
       #   intensity :passive
@@ -375,10 +375,10 @@ module Ronin
       def self.intensity(new_intensity=nil)
         if new_intensity
           case new_intensity
-          when :passive, :active, :intensive
+          when :passive, :active, :aggressive
             @intensity = new_intensity
           else
-            raise(ArgumentError,"intensity must be :passive, :active, or :intensive: #{new_intensity.inspect}")
+            raise(ArgumentError,"intensity must be :passive, :active, or :aggressive: #{new_intensity.inspect}")
           end
         else
           @intensity || if superclass < Worker
