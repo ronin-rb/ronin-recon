@@ -33,6 +33,7 @@ require 'ronin/recon/worker_set'
 
 require 'set'
 require 'console/logger'
+require 'async'
 require 'async/queue'
 
 module Ronin
