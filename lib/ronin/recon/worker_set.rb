@@ -253,13 +253,13 @@ module Ronin
       INTENSITY_LEVELS = [
         :passive,
         :active,
-        :intense
+        :aggressive
       ]
 
       #
       # Filters the workers by their {Worker.intensity intensity} level.
       #
-      # @param [:passive, :active, :intensive] level
+      # @param [:passive, :active, :aggressive] level
       #   The maximum intensity level to filter by.
       #
       # @return [WorkerSet]
