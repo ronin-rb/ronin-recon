@@ -37,6 +37,28 @@ Runs the recon engine with one or more initial values.
 `-D`, `--debug`
 : Enables debugging output.
 
+`-C`, `--config-file` *FILE*
+: Loads the `ronin-recon` configuration file. If not specified, then
+  `~/.config/ronin-recon/config.yml` will be loaded instead.
+
+`-w`, `--worker` *WORKER*
+: Explicitly uses the specified worker instead of the default set of workers.
+
+`-e`, `--enable` *WORKER*
+: Enables the worker in addition to the default set of workers.
+
+`-d`, `--disable` *WORKER*
+: Disables the worker from the default set of workers.
+
+`--worker-file` *FILE*
+: Loads a custom worker from the specified `.rb` file.
+
+`-p`, `--param` *WORKER*`.`*NAME*`=`*VALUE*
+: Sets a param value for the given worker.
+
+`-c`, `--concurrency` *WORKER*`=`*NUM*
+: Overrides the concurrency for the given worker.
+
 `--max-depth` *NUM*
 : The maximum recon depth. Defaults to depth of `3` if the option is not
   specified.
