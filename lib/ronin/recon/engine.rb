@@ -271,7 +271,7 @@ module Ronin
       # @param [Values::Value] value
       #   The value object to enqueue.
       #
-      # @api public
+      # @api private
       #
       def enqueue_value(value)
         @graph.add_node(value)
