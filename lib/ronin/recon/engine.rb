@@ -352,12 +352,16 @@ module Ronin
       # @api private
       #
       def process_job_started(mesg)
-        @logger.debug("Job started: #{mesg.worker.class} #{mesg.value.inspect}")
+        worker = mesg.worker
+        value  = mesg.value
+
+        @logger.debug("Job started: #{worker.class} #{value.inspect}")
+
         @job_started_callbacks.each do |callback|
-          callback.call(mesg.worker.class,mesg.value)
+          callback.call(worker.class,value)
         end
 
-        @value_status.job_started(mesg.worker.class,mesg.value)
+        @value_status.job_started(worker.class,value)
       end
 
       #
@@ -369,13 +373,16 @@ module Ronin
       # @api private
       #
       def process_job_completed(mesg)
-        @logger.debug("Job completed: #{mesg.worker.class} #{mesg.value.inspect}")
+        worker = mesg.worker
+        value  = mesg.value
+
+        @logger.debug("Job completed: #{worker.class} #{value.inspect}")
 
         @job_completed_callbacks.each do |callback|
-          callback.call(mesg.worker.class,mesg.value)
+          callback.call(worker.class,value)
         end
 
-        @value_status.job_completed(mesg.worker.class,mesg.value)
+        @value_status.job_completed(worker.class,value)
       end
 
       #
@@ -387,13 +394,17 @@ module Ronin
       # @api private
       #
       def process_job_failed(mesg)
-        @logger.debug("Job failed: #{mesg.worker.class} #{mesg.value.inspect} #{mesg.exception.inspect}")
+        worker    = mesg.worker
+        value     = mesg.value
+        exception = mesg.exception
+
+        @logger.debug("Job failed: #{worker.class} #{value.inspect} #{exception.inspect}")
 
         @job_failed_callbacks.each do |callback|
-          callback.call(mesg.worker.class,mesg.value,mesg.exception)
+          callback.call(worker.class,value,exception)
         end
 
-        @value_status.job_failed(mesg.worker.class,mesg.value)
+        @value_status.job_failed(worker.class,value)
       end
 
       #
