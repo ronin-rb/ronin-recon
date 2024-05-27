@@ -304,79 +304,149 @@ module Ronin
       #
       def process(mesg)
         case mesg
-        when Message::WorkerStarted
-          @logger.debug("Worker started: #{mesg.worker}")
-          @worker_task_count += 1
-        when Message::WorkerStopped
-          @logger.debug("Worker shutdown: #{mesg.worker}")
-          @worker_task_count -= 1
-        when Message::JobStarted
-          @logger.debug("Job started: #{mesg.worker.class} #{mesg.value.inspect}")
-          @job_started_callbacks.each do |callback|
-            callback.call(mesg.worker.class,mesg.value)
-          end
-
-          @value_status.job_started(mesg.worker.class,mesg.value)
-        when Message::JobCompleted
-          @logger.debug("Job completed: #{mesg.worker.class} #{mesg.value.inspect}")
-
-          @job_completed_callbacks.each do |callback|
-            callback.call(mesg.worker.class,mesg.value)
-          end
-
-          @value_status.job_completed(mesg.worker.class,mesg.value)
-        when Message::JobFailed
-          @logger.debug("Job failed: #{mesg.worker.class} #{mesg.value.inspect} #{mesg.exception.inspect}")
-
-          @job_failed_callbacks.each do |callback|
-            callback.call(mesg.worker.class,mesg.value,mesg.exception)
-          end
-
-          @value_status.job_failed(mesg.worker.class,mesg.value)
-        when Message::Value
-          value  = mesg.value
-          parent = mesg.parent
-
-          @logger.debug("Output value dequeued: #{mesg.worker.class} #{mesg.value.inspect}")
-
-          # check if the new value is "in scope"
-          if @scope.include?(value)
-            # check if the value hasn't been seen yet?
-            if @graph.add_node(value)
-              @logger.debug("Added value #{value.inspect} to graph")
-
-              @value_callbacks.each do |callback|
-                case callback.arity
-                when 1 then callback.call(value)
-                when 2 then callback.call(value,parent)
-                else        callback.call(mesg.worker.class,value,parent)
-                end
-              end
-
-              # check if the message has exceeded the max depth
-              if @max_depth.nil? || mesg.depth < @max_depth
-                @logger.debug("Re-enqueueing value: #{value.inspect} ...")
-
-                # feed the message back into the engine
-                enqueue_mesg(mesg)
-              end
-            end
-
-            if @graph.add_edge(value,parent)
-              @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
-
-              @connection_callbacks.each do |callback|
-                case callback.arity
-                when 2 then callback.call(value,parent)
-                else        callback.call(mesg.worker.class,value,parent)
-                end
-              end
-            end
-          end
+        when Message::WorkerStarted then process_worker_started(mesg)
+        when Message::WorkerStopped then process_worker_stopped(mesg)
+        when Message::JobStarted    then process_job_started(mesg)
+        when Message::JobCompleted  then process_job_completed(mesg)
+        when Message::JobFailed     then process_job_failed(mesg)
+        when Message::Value         then process_value(mesg)
         else
           raise(NotImplementedError,"unable to process message: #{mesg.inspect}")
         end
       end
+
+      private
+
+      #
+      # Handles when a worker has started.
+      #
+      # @param [Message::WorkerStarted] mesg
+      #   The worker started message.
+      #
+      # @api private
+      #
+      def process_worker_started(mesg)
+        @logger.debug("Worker started: #{mesg.worker}")
+        @worker_task_count += 1
+      end
+
+      #
+      # Handles when a worker has stopped.
+      #
+      # @param [Message::WorkerStopped] mesg
+      #   The worker stopped message.
+      #
+      # @api private
+      #
+      def process_worker_stopped(mesg)
+        @logger.debug("Worker shutdown: #{mesg.worker}")
+        @worker_task_count -= 1
+      end
+
+      #
+      # Handles when a worker job is started.
+      #
+      # @param [Message::JobStarted] mesg
+      #   The job started message.
+      #
+      # @api private
+      #
+      def process_job_started(mesg)
+        @logger.debug("Job started: #{mesg.worker.class} #{mesg.value.inspect}")
+        @job_started_callbacks.each do |callback|
+          callback.call(mesg.worker.class,mesg.value)
+        end
+
+        @value_status.job_started(mesg.worker.class,mesg.value)
+      end
+
+      #
+      # Handles when a worker job is completed.
+      #
+      # @param [Message::JobStarted] mesg
+      #   The job completed message.
+      #
+      # @api private
+      #
+      def process_job_completed(mesg)
+        @logger.debug("Job completed: #{mesg.worker.class} #{mesg.value.inspect}")
+
+        @job_completed_callbacks.each do |callback|
+          callback.call(mesg.worker.class,mesg.value)
+        end
+
+        @value_status.job_completed(mesg.worker.class,mesg.value)
+      end
+
+      #
+      # Handles when a worker job fails.
+      #
+      # @param [Message::JobFailed] mesg
+      #   The job failed message.
+      #
+      # @api private
+      #
+      def process_job_failed(mesg)
+        @logger.debug("Job failed: #{mesg.worker.class} #{mesg.value.inspect} #{mesg.exception.inspect}")
+
+        @job_failed_callbacks.each do |callback|
+          callback.call(mesg.worker.class,mesg.value,mesg.exception)
+        end
+
+        @value_status.job_failed(mesg.worker.class,mesg.value)
+      end
+
+      #
+      # Handles when a value is received.
+      #
+      # @param [Message::Value] mesg
+      #   The value message.
+      #
+      # @api private
+      #
+      def process_value(mesg)
+        value  = mesg.value
+        parent = mesg.parent
+
+        @logger.debug("Output value dequeued: #{mesg.worker.class} #{mesg.value.inspect}")
+
+        # check if the new value is "in scope"
+        if @scope.include?(value)
+          # check if the value hasn't been seen yet?
+          if @graph.add_node(value)
+            @logger.debug("Added value #{value.inspect} to graph")
+
+            @value_callbacks.each do |callback|
+              case callback.arity
+              when 1 then callback.call(value)
+              when 2 then callback.call(value,parent)
+              else        callback.call(mesg.worker.class,value,parent)
+              end
+            end
+
+            # check if the message has exceeded the max depth
+            if @max_depth.nil? || mesg.depth < @max_depth
+              @logger.debug("Re-enqueueing value: #{value.inspect} ...")
+
+              # feed the message back into the engine
+              enqueue_mesg(mesg)
+            end
+          end
+
+          if @graph.add_edge(value,parent)
+            @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
+
+            @connection_callbacks.each do |callback|
+              case callback.arity
+              when 2 then callback.call(value,parent)
+              else        callback.call(mesg.worker.class,value,parent)
+              end
+            end
+          end
+        end
+      end
+
+      public
 
       #
       # Starts the recon engine.
