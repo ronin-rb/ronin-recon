@@ -431,7 +431,7 @@ module Ronin
               case callback.arity
               when 1 then callback.call(value)
               when 2 then callback.call(value,parent)
-              else        callback.call(mesg.worker.class,value,parent)
+              else        callback.call(worker.class,value,parent)
               end
             end
 
@@ -450,7 +450,7 @@ module Ronin
             @connection_callbacks.each do |callback|
               case callback.arity
               when 2 then callback.call(value,parent)
-              else        callback.call(mesg.worker.class,value,parent)
+              else        callback.call(worker.class,value,parent)
               end
             end
           end
