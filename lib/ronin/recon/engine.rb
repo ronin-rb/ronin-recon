@@ -188,6 +188,19 @@ module Ronin
       end
 
       #
+      # The main recon engine event loop.
+      #
+      # @api private
+      #
+      def run
+        until (@value_status.empty? && @output_queue.empty?)
+          process(@output_queue.dequeue)
+        end
+
+        shutdown!
+      end
+
+      #
       # Adds a worker class to the engine.
       #
       # @param [Class<Worker>] worker_class
@@ -420,19 +433,6 @@ module Ronin
       def enqueue_value(value)
         @graph.add_node(value)
         enqueue_mesg(Message::Value.new(value))
-      end
-
-      #
-      # The main recon engine event loop.
-      #
-      # @api private
-      #
-      def run
-        until (@value_status.empty? && @output_queue.empty?)
-          process(@output_queue.dequeue)
-        end
-
-        shutdown!
       end
 
       #
