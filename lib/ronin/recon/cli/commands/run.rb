@@ -126,13 +126,7 @@ module Ronin
           #   The initial recon values.
           #
           def run(*values)
-            values = begin
-                       values.map(&Value.method(:parse))
-                     rescue UnknownValue => error
-                       print_error(error.message)
-                       print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
-                       exit(-1)
-                     end
+            values = values.map { |value| parse_value(value) }
 
             output_file = if options[:output] && options[:output_format]
                             options[:output_format].open(options[:output])
@@ -180,6 +174,23 @@ module Ronin
             ensure
               output_file.close if options[:output]
             end
+          end
+
+          #
+          # Parses the value string.
+          #
+          # @param [String] value
+          #   The value to parse.
+          #
+          # @return [Values::Value]
+          #   The parsed value.
+          #
+          def parse_value(value)
+            Value.parse(value)
+          rescue UnknownValue => error
+            print_error(error.message)
+            print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
+            exit(-1)
           end
 
           #
