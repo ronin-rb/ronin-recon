@@ -358,7 +358,7 @@ module Ronin
       #
       # Enqueues a message for processing.
       #
-      # @param [Message::Value, Message::STOP] mesg
+      # @param [Message::Value, Message::SHUTDOWN] mesg
       #   The message object.
       #
       # @raise [NotImplementedError]
