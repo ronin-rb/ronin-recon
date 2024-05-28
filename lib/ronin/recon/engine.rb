@@ -112,6 +112,18 @@ module Ronin
       end
 
       #
+      # The discovered recon values.
+      #
+      # @return [Set<Value>]
+      #   The set of discovered recon values.
+      #
+      # @api public
+      #
+      def values
+        @graph.nodes
+      end
+
+      #
       # Runs the recon engine with the given initial values.
       #
       # @param [Array<Value>] values
@@ -582,18 +594,6 @@ module Ronin
         until @worker_task_count == 0
           process(@output_queue.dequeue)
         end
-      end
-
-      #
-      # The discovered recon values.
-      #
-      # @return [Set<Value>]
-      #   The set of discovered recon values.
-      #
-      # @api public
-      #
-      def values
-        @graph.nodes
       end
 
     end
