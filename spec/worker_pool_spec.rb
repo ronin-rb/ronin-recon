@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'ronin/recon/worker_tasks'
+require 'ronin/recon/worker_pool'
 require 'ronin/recon/worker'
 require 'ronin/recon/message/value'
 
-describe Ronin::Recon::WorkerTasks do
+describe Ronin::Recon::WorkerPool do
   subject { described_class.new(worker, output_queue: Async::Queue.new) }
 
-  module TestWorkerTasks
+  module TestWorkerPool
     class TestWorker < Ronin::Recon::Worker
       def process(value)
         yield Ronin::Recon::Values::Domain.new('example.com')
@@ -20,7 +20,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#initialize" do
-    let(:worker) { TestWorkerTasks::TestWorker.new }
+    let(:worker) { TestWorkerPool::TestWorker.new }
 
     it "must initialize #worker worker object" do
       expect(subject.worker).to be(worker)
@@ -46,7 +46,7 @@ describe Ronin::Recon::WorkerTasks do
   describe "#enqueue_mesg" do
     context "for Message::SHUTDOWN" do
       let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
-      let(:worker)     { TestWorkerTasks::TestWorkerWithConcurrency.new }
+      let(:worker)     { TestWorkerPool::TestWorkerWithConcurrency.new }
 
       it "must enqueue Message::Shutdown into #input_queue 2 times" do
         Async { subject.enqueue_mesg(mesg_value) }
@@ -58,7 +58,7 @@ describe Ronin::Recon::WorkerTasks do
 
     context "for other Message's" do
       let(:mesg_value) { Ronin::Recon::Message::Value }
-      let(:worker)     { TestWorkerTasks::TestWorker.new }
+      let(:worker)     { TestWorkerPool::TestWorker.new }
 
       it "must enqueue Message into #input_queue" do
         Async { subject.enqueue_mesg(mesg_value) }
@@ -69,7 +69,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#run" do
-    let(:worker)        { TestWorkerTasks::TestWorker.new }
+    let(:worker)        { TestWorkerPool::TestWorker.new }
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
@@ -102,7 +102,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#start" do
-    let(:worker)        { TestWorkerTasks::TestWorkerWithConcurrency.new }
+    let(:worker)        { TestWorkerPool::TestWorkerWithConcurrency.new }
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
@@ -117,7 +117,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#started!" do
-    let(:worker) { TestWorkerTasks::TestWorker.new }
+    let(:worker) { TestWorkerPool::TestWorker.new }
 
     it "must enqueue Message::WorkerStarted instance into #output_queue" do
       Async { subject.started! }
@@ -128,7 +128,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#stopped!" do
-    let(:worker) { TestWorkerTasks::TestWorker.new }
+    let(:worker) { TestWorkerPool::TestWorker.new }
 
     it "must enqueue Message::WorkerStopped instance into #output_queue" do
       Async { subject.stopped! }
@@ -139,7 +139,7 @@ describe Ronin::Recon::WorkerTasks do
   end
 
   describe "#enqueue" do
-    let(:worker) { TestWorkerTasks::TestWorker.new }
+    let(:worker) { TestWorkerPool::TestWorker.new }
     let(:mesg)   { Ronin::Recon::Message::JobFailed }
 
     it "must enqueue Message into #output_queue" do

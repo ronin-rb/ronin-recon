@@ -32,12 +32,12 @@ require 'async/queue'
 module Ronin
   module Recon
     #
-    # Contains the `Async::Task` objects that process messages from the input
-    # queue and sends messages to the output queue.
+    # Contains the `Async::Task` objects for a worker, that process messages
+    # from the input queue and sends messages to the output queue.
     #
     # @api private
     #
-    class WorkerTasks
+    class WorkerPool
 
       # The recon worker's ID.
       #
@@ -70,7 +70,7 @@ module Ronin
       attr_reader :logger
 
       #
-      # Initializes the worker tasks.
+      # Initializes the worker pool.
       #
       # @param [Worker] worker
       #   The initialized worker object.
@@ -154,7 +154,7 @@ module Ronin
       end
 
       #
-      # Starts the worker.
+      # Starts the worker pool.
       #
       # @param [Async::Task] task
       #   The optional async task to register the worker under.
@@ -171,18 +171,18 @@ module Ronin
       end
 
       #
-      # Marks the worker as running.
+      # Marks the worker pool as running.
       #
       def started!
-        # send a message to the engine that the worker task has started
+        # send a message to the engine that the worker pool has started
         enqueue(Message::WorkerStarted.new(@worker))
       end
 
       #
-      # Marks the worker as stopped.
+      # Marks the worker pool as stopped.
       #
       def stopped!
-        # send a message to the engine that the worker task has stopped
+        # send a message to the engine that the worker pool has stopped
         enqueue(Message::WorkerStopped.new(@worker))
       end
 

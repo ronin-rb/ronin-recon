@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/worker_tasks'
+require 'ronin/recon/worker_pool'
 require 'ronin/recon/value_status'
 require 'ronin/recon/graph'
 require 'ronin/recon/scope'
@@ -88,8 +88,8 @@ module Ronin
         @scope = Scope.new(values, ignore: ignore)
 
         @worker_classes    = {}
-        @worker_tasks      = {}
-        @worker_task_count = 0
+        @worker_pools      = {}
+        @worker_pool_count = 0
 
         @value_status = ValueStatus.new
         @graph        = Graph.new
@@ -186,9 +186,9 @@ module Ronin
         end
 
         # start all work groups
-        @worker_tasks.each_value do |worker_tasks|
-          worker_tasks.each do |worker_task|
-            worker_task.start(task)
+        @worker_pools.each_value do |worker_pools|
+          worker_pools.each do |worker_pool|
+            worker_pool.start(task)
           end
         end
       end
@@ -207,13 +207,13 @@ module Ronin
       def add_worker(worker_class, concurrency: worker_class.concurrency,
                                    params: nil)
         worker       = worker_class.new(params: params)
-        worker_tasks = WorkerTasks.new(worker, concurrency:  concurrency,
-                                               output_queue: @output_queue,
-                                               logger:       @logger)
+        worker_pools = WorkerPool.new(worker, concurrency:  concurrency,
+                                              output_queue: @output_queue,
+                                              logger:       @logger)
 
         worker_class.accepts.each do |value_class|
           (@worker_classes[value_class] ||= []) << worker_class
-          (@worker_tasks[value_class]   ||= []) << worker_tasks
+          (@worker_pools[value_class]   ||= []) << worker_pools
         end
       end
 
@@ -405,7 +405,7 @@ module Ronin
       #
       def process_worker_started(mesg)
         @logger.debug("Worker started: #{mesg.worker}")
-        @worker_task_count += 1
+        @worker_pool_count += 1
       end
 
       #
@@ -418,7 +418,7 @@ module Ronin
       #
       def process_worker_stopped(mesg)
         @logger.debug("Worker shutdown: #{mesg.worker}")
-        @worker_task_count -= 1
+        @worker_pool_count -= 1
       end
 
       #
@@ -537,18 +537,18 @@ module Ronin
               @value_status.value_enqueued(worker_class,value)
             end
 
-            @worker_tasks[value.class].each do |worker_task|
-              worker_task.enqueue_mesg(mesg)
+            @worker_pools[value.class].each do |worker_pool|
+              worker_pool.enqueue_mesg(mesg)
             end
           end
         when Message::SHUTDOWN
           @logger.debug("Shutting down ...")
 
-          @worker_tasks.each_value do |worker_tasks|
-            worker_tasks.each do |worker_task|
-              @logger.debug("Shutting down worker: #{worker_task.worker} ...")
+          @worker_pools.each_value do |worker_pools|
+            worker_pools.each do |worker_pool|
+              @logger.debug("Shutting down worker: #{worker_pool.worker} ...")
 
-              worker_task.enqueue_mesg(mesg)
+              worker_pool.enqueue_mesg(mesg)
             end
           end
         else
@@ -570,7 +570,7 @@ module Ronin
       end
 
       #
-      # Sends the shutdown message and waits for all worker tasks to shutdown.
+      # Sends the shutdown message and waits for all worker pools to shutdown.
       #
       # @api private
       #
@@ -578,7 +578,7 @@ module Ronin
         enqueue_mesg(Message::SHUTDOWN)
 
         # wait until all workers report that they have exited
-        until @worker_task_count == 0
+        until @worker_pool_count == 0
           process(@output_queue.dequeue)
         end
       end
