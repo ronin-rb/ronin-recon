@@ -149,6 +149,33 @@ module Ronin
       end
 
       #
+      # Starts the recon engine.
+      #
+      # @param [Async::Task] task
+      #   The async task to run the recon engine under.
+      #
+      # @api private
+      #
+      def start(task=Async::Task.current)
+        # enqueue the scope values for processing
+        # rubocop:disable Style/HashEachMethods
+        @scope.values.each do |value|
+          enqueue_value(value)
+        end
+        # rubocop:enable Style/HashEachMethods
+
+        # output consumer task
+        task.async { run }
+
+        # start all work groups
+        @worker_tasks.each_value do |worker_tasks|
+          worker_tasks.each do |worker_task|
+            worker_task.start(task)
+          end
+        end
+      end
+
+      #
       # Adds a worker class to the engine.
       #
       # @param [Class<Worker>] worker_class
@@ -542,33 +569,6 @@ module Ronin
       end
 
       public
-
-      #
-      # Starts the recon engine.
-      #
-      # @param [Async::Task] task
-      #   The async task to run the recon engine under.
-      #
-      # @api private
-      #
-      def start(task=Async::Task.current)
-        # enqueue the scope values for processing
-        # rubocop:disable Style/HashEachMethods
-        @scope.values.each do |value|
-          enqueue_value(value)
-        end
-        # rubocop:enable Style/HashEachMethods
-
-        # output consumer task
-        task.async { run }
-
-        # start all work groups
-        @worker_tasks.each_value do |worker_tasks|
-          worker_tasks.each do |worker_task|
-            worker_task.start(task)
-          end
-        end
-      end
 
       #
       # Sends the shutdown message and waits for all worker tasks to shutdown.
