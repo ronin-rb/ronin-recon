@@ -96,11 +96,11 @@ module Ronin
         @max_depth    = max_depth
         @output_queue = Async::Queue.new
 
-        @value_callbacks         = []
-        @connection_callbacks    = []
-        @job_started_callbacks   = []
-        @job_completed_callbacks = []
-        @job_failed_callbacks    = []
+        @on_value_callbacks         = []
+        @on_connection_callbacks    = []
+        @on_job_started_callbacks   = []
+        @on_job_completed_callbacks = []
+        @on_job_failed_callbacks    = []
 
         @logger = logger
 
@@ -240,11 +240,11 @@ module Ronin
       #
       def on(event,&block)
         case event
-        when :value         then @value_callbacks         << block
-        when :connection    then @connection_callbacks    << block
-        when :job_started   then @job_started_callbacks   << block
-        when :job_completed then @job_completed_callbacks << block
-        when :job_failed    then @job_failed_callbacks    << block
+        when :value         then @on_value_callbacks         << block
+        when :connection    then @on_connection_callbacks    << block
+        when :job_started   then @on_job_started_callbacks   << block
+        when :job_completed then @on_job_completed_callbacks << block
+        when :job_failed    then @on_job_failed_callbacks    << block
         else
           raise(ArgumentError,"unsupported event type: #{event.inspect}")
         end
@@ -264,7 +264,7 @@ module Ronin
       # @api private
       #
       def on_job_started(worker,value)
-        @job_started_callbacks.each do |callback|
+        @on_job_started_callbacks.each do |callback|
           callback.call(worker.class,value)
         end
       end
@@ -281,7 +281,7 @@ module Ronin
       # @api private
       #
       def on_job_completed(worker,value)
-        @job_completed_callbacks.each do |callback|
+        @on_job_completed_callbacks.each do |callback|
           callback.call(worker.class,value)
         end
       end
@@ -297,11 +297,11 @@ module Ronin
       #
       # @param [RuntimeError] exception
       #   The exception raised by the worker.
-      # 
+      #
       # @api private
       #
       def on_job_failed(worker,value,exception)
-        @job_failed_callbacks.each do |callback|
+        @on_job_failed_callbacks.each do |callback|
           callback.call(worker.class,value,exception)
         end
       end
@@ -321,7 +321,7 @@ module Ronin
       # @api private
       #
       def on_value(worker,value,parent)
-        @value_callbacks.each do |callback|
+        @on_value_callbacks.each do |callback|
           case callback.arity
           when 1 then callback.call(value)
           when 2 then callback.call(value,parent)
@@ -345,7 +345,7 @@ module Ronin
       # @api private
       #
       def on_connection(worker,value,parent)
-        @connection_callbacks.each do |callback|
+        @on_connection_callbacks.each do |callback|
           case callback.arity
           when 2 then callback.call(value,parent)
           else        callback.call(worker.class,value,parent)
