@@ -223,6 +223,111 @@ module Ronin
         end
       end
 
+      private
+
+      #
+      # Calls the `on(:job_started) { ... }` callbacks.
+      #
+      # @param [Worker] worker
+      #   The worker that is processing the value.
+      #
+      # @param [Values::Value] value
+      #   The value that is being processed.
+      #
+      # @api private
+      #
+      def on_job_started(worker,value)
+        @job_started_callbacks.each do |callback|
+          callback.call(worker.class,value)
+        end
+      end
+
+      #
+      # Calls the `on(:job_completed) { ... }` callbacks.
+      #
+      # @param [Worker] worker
+      #   The worker that processed the value.
+      #
+      # @param [Values::Value] value
+      #   The value that was processed.
+      #
+      # @api private
+      #
+      def on_job_completed(worker,value)
+        @job_completed_callbacks.each do |callback|
+          callback.call(worker.class,value)
+        end
+      end
+
+      #
+      # Calls the `on(:job_failed) { ... }` callbacks.
+      #
+      # @param [Worker] worker
+      #   The worker that raised the exception.
+      #
+      # @param [Values::Value] value
+      #   The value that was being processed.
+      #
+      # @param [RuntimeError] exception
+      #   The exception raised by the worker.
+      # 
+      # @api private
+      #
+      def on_job_failed(worker,value,exception)
+        @job_failed_callbacks.each do |callback|
+          callback.call(worker.class,value,exception)
+        end
+      end
+
+      #
+      # Calls the `on(:value) { ... }` callbacks.
+      #
+      # @param [Worker] worker
+      #   The worker that discovered the value.
+      #
+      # @param [Values::Value] value
+      #   The newly discovered value.
+      #
+      # @param [Values::Value] parent
+      #   The parent value associated with the new value.
+      #
+      # @api private
+      #
+      def on_value(worker,value,parent)
+        @value_callbacks.each do |callback|
+          case callback.arity
+          when 1 then callback.call(value)
+          when 2 then callback.call(value,parent)
+          else        callback.call(worker.class,value,parent)
+          end
+        end
+      end
+
+      #
+      # Calls the `on(:connection) { ... }` callbacks.
+      #
+      # @param [Worker] worker
+      #   The worker that discovered the value.
+      #
+      # @param [Values::Value] value
+      #   The discovered value.
+      #
+      # @param [Values::Value] parent
+      #   The parent value associated with the value.
+      #
+      # @api private
+      #
+      def on_connection(worker,value,parent)
+        @connection_callbacks.each do |callback|
+          case callback.arity
+          when 2 then callback.call(value,parent)
+          else        callback.call(worker.class,value,parent)
+          end
+        end
+      end
+
+      public
+
       #
       # Enqueues a message for processing.
       #
@@ -356,10 +461,7 @@ module Ronin
         value  = mesg.value
 
         @logger.debug("Job started: #{worker.class} #{value.inspect}")
-
-        @job_started_callbacks.each do |callback|
-          callback.call(worker.class,value)
-        end
+        on_job_started(worker,value)
 
         @value_status.job_started(worker.class,value)
       end
@@ -377,10 +479,7 @@ module Ronin
         value  = mesg.value
 
         @logger.debug("Job completed: #{worker.class} #{value.inspect}")
-
-        @job_completed_callbacks.each do |callback|
-          callback.call(worker.class,value)
-        end
+        on_job_completed(worker,value)
 
         @value_status.job_completed(worker.class,value)
       end
@@ -399,10 +498,7 @@ module Ronin
         exception = mesg.exception
 
         @logger.debug("Job failed: #{worker.class} #{value.inspect} #{exception.inspect}")
-
-        @job_failed_callbacks.each do |callback|
-          callback.call(worker.class,value,exception)
-        end
+        on_job_failed(worker,value,exception)
 
         @value_status.job_failed(worker.class,value)
       end
@@ -416,24 +512,18 @@ module Ronin
       # @api private
       #
       def process_value(mesg)
+        worker = mesg.worker
         value  = mesg.value
         parent = mesg.parent
 
-        @logger.debug("Output value dequeued: #{mesg.worker.class} #{mesg.value.inspect}")
+        @logger.debug("Output value dequeued: #{worker.class} #{value.inspect}")
 
         # check if the new value is "in scope"
         if @scope.include?(value)
           # check if the value hasn't been seen yet?
           if @graph.add_node(value)
             @logger.debug("Added value #{value.inspect} to graph")
-
-            @value_callbacks.each do |callback|
-              case callback.arity
-              when 1 then callback.call(value)
-              when 2 then callback.call(value,parent)
-              else        callback.call(worker.class,value,parent)
-              end
-            end
+            on_value(worker,value,parent)
 
             # check if the message has exceeded the max depth
             if @max_depth.nil? || mesg.depth < @max_depth
@@ -446,13 +536,7 @@ module Ronin
 
           if @graph.add_edge(value,parent)
             @logger.debug("Added a new connection between #{value.inspect} and #{parent.inspect} to the graph")
-
-            @connection_callbacks.each do |callback|
-              case callback.arity
-              when 2 then callback.call(value,parent)
-              else        callback.call(worker.class,value,parent)
-              end
-            end
+            on_connection(worker,value,parent)
           end
         end
       end
