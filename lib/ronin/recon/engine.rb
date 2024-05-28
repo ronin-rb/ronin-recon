@@ -154,21 +154,21 @@ module Ronin
         # start the engine in it's own Async task
         Async do |task|
           # start the engine
-          engine.start(task)
+          engine.run(task)
         end
 
         return engine
       end
 
       #
-      # Starts the recon engine.
+      # The main recon engine event loop.
       #
       # @param [Async::Task] task
-      #   The async task to run the recon engine under.
+      #   The parent async task.
       #
       # @api private
       #
-      def start(task=Async::Task.current)
+      def run(task=Async::Task.current)
         # enqueue the scope values for processing
         # rubocop:disable Style/HashEachMethods
         @scope.values.each do |value|
@@ -177,7 +177,13 @@ module Ronin
         # rubocop:enable Style/HashEachMethods
 
         # output consumer task
-        task.async { run }
+        task.async do
+          until (@value_status.empty? && @output_queue.empty?)
+            process(@output_queue.dequeue)
+          end
+
+          shutdown!
+        end
 
         # start all work groups
         @worker_tasks.each_value do |worker_tasks|
@@ -185,19 +191,6 @@ module Ronin
             worker_task.start(task)
           end
         end
-      end
-
-      #
-      # The main recon engine event loop.
-      #
-      # @api private
-      #
-      def run
-        until (@value_status.empty? && @output_queue.empty?)
-          process(@output_queue.dequeue)
-        end
-
-        shutdown!
       end
 
       #
