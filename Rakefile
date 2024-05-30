@@ -70,3 +70,5 @@ CommandKit::Completion::Task.new(
   class_name:  'Ronin::Recon::CLI',
   output_file: 'data/completions/ronin-recon'
 )
+
+task :setup => %w[wordlists man command_kit:completion]
