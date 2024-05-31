@@ -48,6 +48,13 @@ module Ronin
       # @return [Scope]
       attr_reader :scope
 
+      # The maximum depth to recon.
+      #
+      # @return [Integer, nil]
+      #
+      # @api public
+      attr_reader :max_depth
+
       # The status of all values in the queue.
       #
       # @return [ValueStatus]
@@ -60,12 +67,12 @@ module Ronin
       # @api public
       attr_reader :graph
 
-      # The maximum depth to recon.
+      # The workers that the engine will use.
       #
-      # @return [Integer, nil]
+      # @return [WorkerSet]
       #
       # @api public
-      attr_reader :max_depth
+      attr_reader :workers
 
       # The common logger for the engine.
       #
@@ -88,12 +95,13 @@ module Ronin
       #
       # @api public
       #
-      def initialize(values, workers:   WorkerSet.default,
+      def initialize(values, ignore:    [],
                              max_depth: nil,
-                             logger:    Console.logger,
-                             ignore:    [])
+                             workers:   WorkerSet.default,
+                             logger:    Console.logger)
         @scope = Scope.new(values, ignore: ignore)
 
+        @workers           = workers
         @worker_classes    = {}
         @worker_pools      = {}
         @worker_pool_count = 0
@@ -111,7 +119,7 @@ module Ronin
 
         @logger = logger
 
-        workers.each do |worker_class|
+        @workers.each do |worker_class|
           add_worker(worker_class)
         end
 
