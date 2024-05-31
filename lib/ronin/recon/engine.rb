@@ -206,14 +206,14 @@ module Ronin
       #
       def add_worker(worker_class, concurrency: worker_class.concurrency,
                                    params: nil)
-        worker       = worker_class.new(params: params)
-        worker_pools = WorkerPool.new(worker, concurrency:  concurrency,
-                                              output_queue: @output_queue,
-                                              logger:       @logger)
+        worker      = worker_class.new(params: params)
+        worker_pool = WorkerPool.new(worker, concurrency:  concurrency,
+                                             output_queue: @output_queue,
+                                             logger:       @logger)
 
         worker_class.accepts.each do |value_class|
           (@worker_classes[value_class] ||= []) << worker_class
-          (@worker_pools[value_class]   ||= []) << worker_pools
+          (@worker_pools[value_class]   ||= []) << worker_pool
         end
       end
 
