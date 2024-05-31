@@ -283,6 +283,36 @@ describe Ronin::Recon::WorkerSet do
     end
   end
 
+  describe "#==" do
+    context "when given a #{described_class}" do
+      context "and it has the same worker classes" do
+        let(:other_workers) { workers }
+        let(:other)         { described_class.new(other_workers) }
+
+        it "must return true" do
+          expect(subject == other).to be(true)
+        end
+      end
+
+      context "but it has different worker classes" do
+        let(:other_workers) { workers - [Ronin::Recon::Web::Spider] }
+        let(:other)         { described_class.new(other_workers) }
+
+        it "must return false" do
+          expect(subject == other).to be(false)
+        end
+      end
+    end
+
+    context "when given another type of object" do
+      let(:other) { Object.new }
+
+      it "must return false" do
+        expect(subject == other).to be(false)
+      end
+    end
+  end
+
   describe "#to_set" do
     it "must return a Set of the workers" do
       expect(subject.to_set).to be_kind_of(Set)

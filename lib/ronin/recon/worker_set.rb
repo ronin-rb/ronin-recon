@@ -277,6 +277,19 @@ module Ronin
       end
 
       #
+      # Determines if the worker set is equal to another worker set.
+      #
+      # @param [Object] other
+      #   The other worker set.
+      #
+      # @return [Boolean]
+      #
+      def ==(other)
+        self.class == other.class &&
+          @workers == other.workers
+      end
+
+      #
       # Converts the worker set into a Set.
       #
       # @return [Set<Class<Worker>>]
