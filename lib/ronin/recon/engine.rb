@@ -84,6 +84,22 @@ module Ronin
       #
       # Initializes the recon engine.
       #
+      # @param [Array<Values::Value>] values
+      #   The values to start performing recon on.
+      #
+      # @param [Array<Values::Value>] ignore
+      #   The values to ignore while performing recon.
+      #
+      # @param [Integer, nil] max_depth
+      #   The maximum depth to limit recon to. If not specified recon will
+      #   continue until there are no more new values discovered.
+      #
+      # @param [WorkerSet] workers
+      #   The workers to use for recon.
+      #
+      # @param [Console::Logger] logger
+      #   The common logger for the recon engine.
+      #
       # @yield [self]
       #   If a block is given it will be passed the newly created engine.
       #
