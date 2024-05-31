@@ -113,6 +113,15 @@ module Ronin
         @edges[value]
       end
 
+      #
+      # Determines if the graph is empty.
+      #
+      # @return [Boolean]
+      #
+      def empty?
+        @nodes.empty?
+      end
+
     end
   end
 end
