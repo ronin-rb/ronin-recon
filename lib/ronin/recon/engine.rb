@@ -67,6 +67,13 @@ module Ronin
       # @api public
       attr_reader :max_depth
 
+      # The common logger for the engine.
+      #
+      # @return [Console::Logger]
+      #
+      # @api private
+      attr_reader :logger
+
       #
       # Initializes the recon engine.
       #
