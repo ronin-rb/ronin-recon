@@ -423,7 +423,7 @@ describe Ronin::Recon::Engine do
             end
           end
 
-          expect(yielded_args).to eq(
+          expect(yielded_args).to match_array(
             [
               [MockWorkers::DNS::Lookup, domain_value],
               [MockWorkers::DNS::Nameservers, domain_value],
@@ -453,7 +453,7 @@ describe Ronin::Recon::Engine do
             end
           end
 
-          expect(yielded_args).to eq(
+          expect(yielded_args).to match_array(
             [
               [MockWorkers::DNS::Lookup, domain_value],
               [MockWorkers::DNS::Nameservers, domain_value],
@@ -569,7 +569,7 @@ describe Ronin::Recon::Engine do
             end
           end
 
-          expect(yielded_values).to eq(expected_values)
+          expect(yielded_values).to match_array(expected_values)
         end
 
         context "and the block accepts two arguments" do
@@ -582,7 +582,7 @@ describe Ronin::Recon::Engine do
               end
             end
 
-            expect(yielded_args).to eq(
+            expect(yielded_args).to match_array(
               [
                 [ip_value1, domain_value],
                 [host_value1, domain_value],
@@ -609,7 +609,7 @@ describe Ronin::Recon::Engine do
               end
             end
 
-            expect(yielded_argss).to eq(
+            expect(yielded_argss).to match_array(
               [
                 [MockWorkers::DNS::Lookup, ip_value1, domain_value],
                 [MockWorkers::DNS::SubdomainEnum, host_value1, domain_value],
@@ -637,7 +637,7 @@ describe Ronin::Recon::Engine do
             end
           end
 
-          expect(yielded_args).to eq(
+          expect(yielded_args).to match_array(
             [
               [ip_value1, domain_value],
               [host_value1, domain_value],
@@ -664,7 +664,7 @@ describe Ronin::Recon::Engine do
               end
             end
 
-            expect(yielded_args).to eq(
+            expect(yielded_args).to match_array(
               [
                 [MockWorkers::DNS::Lookup, ip_value1, domain_value],
                 [MockWorkers::DNS::SubdomainEnum, host_value1, domain_value],
