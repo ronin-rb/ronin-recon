@@ -19,6 +19,9 @@
 #
 
 require 'ronin/recon/value'
+require 'ronin/recon/values/ip'
+require 'ronin/recon/values/website'
+require 'ronin/recon/values/url'
 
 module Ronin
   module Recon
@@ -59,7 +62,27 @@ module Ronin
           self.class == other.class && @name == other.name
         end
 
-        alias === eql?
+        #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Imdicates whether the other value is either a {Host} and has the
+        #   same host name, or an {IP}, {Website}, {URL} with the same host
+        #   name.
+        #
+        def ===(other)
+          case other
+          when Host
+            @name == other.name
+          when IP, Website, URL
+            @name == other.host
+          else
+            false
+          end
+        end
 
         #
         # The "hash" value of the host name.
