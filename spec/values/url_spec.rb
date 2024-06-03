@@ -81,6 +81,64 @@ describe Ronin::Recon::Values::URL do
     end
   end
 
+  describe "#scheme" do
+    it "must return the URI's scheme" do
+      expect(subject.scheme).to eq(uri.scheme)
+    end
+  end
+
+  describe "#userinfo" do
+    context "when the URI has userinfo" do
+      let(:userinfo) { "user:password" }
+      let(:url)      { "https://#{userinfo}@www.example.com/index.html" }
+
+      it "must return the URI's userinfo" do
+        expect(subject.userinfo).to eq(userinfo)
+      end
+    end
+
+    context "when the URI has no userinfo" do
+      it "must return nil" do
+        expect(subject.userinfo).to be(nil)
+      end
+    end
+  end
+
+  describe "#host" do
+    it "must return the URI's host" do
+      expect(subject.host).to eq(uri.host)
+    end
+  end
+
+  describe "#port" do
+    it "must return the URI's port" do
+      expect(subject.port).to eq(uri.port)
+    end
+  end
+
+  describe "#path" do
+    it "must return the URI's path" do
+      expect(subject.path).to eq(uri.path)
+    end
+  end
+
+  describe "#query" do
+    context "when the URI has a query string" do
+      let(:query) { "q=1" }
+      let(:url)   { "https://www.example.com/page?#{query}" }
+
+      it "must return the URI's query string" do
+        expect(subject.query).to eq(query)
+      end
+    end
+
+    context "when the URI has no query string" do
+      it "must return nil" do
+        expect(subject.query).to be(nil)
+      end
+    end
+  end
+
   describe "#eql?" do
     context "when given an URL object" do
       context "and the other URL object has the same #uri" do

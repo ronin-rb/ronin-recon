@@ -75,6 +75,78 @@ module Ronin
         end
 
         #
+        # The scheme of the URL.
+        #
+        # @return [String]
+        #
+        def scheme
+          @uri.scheme
+        end
+
+        #
+        # The URI's user information.
+        #
+        # @return [String, nil]
+        #
+        def userinfo
+          @uri.userinfo
+        end
+
+        #
+        # The URL's host name.
+        #
+        # @return [String]
+        #
+        def host
+          @uri.host
+        end
+
+        #
+        # The URL's port.
+        #
+        # @return [Integer]
+        #
+        def port
+          @uri.port
+        end
+
+        #
+        # The URL's path.
+        #
+        # @return [String]
+        #
+        def path
+          @uri.path
+        end
+
+        #
+        # The URL's query string.
+        #
+        # @return [String, nil]
+        #
+        def query
+          @uri.query
+        end
+
+        #
+        # The URL's query params.
+        #
+        # @return [Hash{String => String}, nil]
+        #
+        def query_params
+          @uri.query_params
+        end
+
+        #
+        # The URL's fragment string.
+        #
+        # @return [String, nil]
+        #
+        def fragment
+          @uri.fragment
+        end
+
+        #
         # Compares the value to another value.
         #
         # @param [Values::Value] other
