@@ -107,6 +107,11 @@ module Ronin
 
           man_page 'ronin-recon-run.1'
 
+          # The values that are out of scope.
+          #
+          # @return [Array<Values::Value>]
+          attr_reader :ignore
+
           #
           # Initializes the `ronin-recon run` command.
           #
