@@ -20,6 +20,8 @@
 
 require 'ronin/recon/values/host'
 require 'ronin/recon/values/ip'
+require 'ronin/recon/values/website'
+require 'ronin/recon/values/url'
 
 module Ronin
   module Recon
@@ -37,7 +39,8 @@ module Ronin
         #
         # @return [Boolean]
         #   Imdicates whether the other value is either a {Domain} and has the
-        #   same domain name, or a {Host} and shares the same domain name.
+        #   same domain name, or a {Host}, {IP}, {Website}, {URL} with the same
+        #   domain name.
         #
         def ===(other)
           case other
@@ -45,8 +48,10 @@ module Ronin
             @name == other.name
           when Host
             other.name.end_with?(".#{@name}")
-          when IP
-            other.host && other.host.end_with?(".#{@name}")
+          when IP, Website, URL
+            if (other_host = other.host)
+              other_host == @name || other_host.end_with?(".#{@name}")
+            end
           else
             false
           end
