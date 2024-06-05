@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/values'
+require 'ronin/core/cli/logging'
 
 module Ronin
   module Recon
@@ -27,6 +28,8 @@ module Ronin
       # Helper methods for printing {Values Value} objects.
       #
       module Printing
+        include Core::CLI::Logging
+
         #
         # Formats a value object into a human readable string.
         #
