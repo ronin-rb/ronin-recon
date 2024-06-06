@@ -203,6 +203,10 @@ describe Ronin::Recon::Workers do
     let(:fixtures_dir) { File.join(__dir__,'fixtures') }
     let(:path)         { File.join(fixtures_dir,'test_worker.rb') }
 
+    it "must return self" do
+      expect(subject.load_file(path)).to be(subject)
+    end
+
     it "must load the file and add the worker to the workers" do
       subject.load_file(path)
 
