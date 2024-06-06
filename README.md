@@ -298,7 +298,7 @@ end
 
 ## Requirements
 
-* [Ruby] >= 3.0.0
+* [Ruby] >= 3.1.0
 * [nmap] >= 5.00
 * [GraphViz][graphviz] (for SVG, PNG, or PDF output)
 * [thread-local] ~> 1.0
