@@ -19,7 +19,7 @@
 #
 
 require 'ronin/recon/cli/command'
-require 'ronin/recon/cli/worker_methods'
+require 'ronin/recon/registry'
 
 module Ronin
   module Recon
@@ -28,8 +28,6 @@ module Ronin
       # Base class for commands which load an individual worker.
       #
       class WorkerCommand < Command
-
-        include WorkerMethods
 
         usage '[options] {--file FILE | NAME}'
 
@@ -73,7 +71,14 @@ module Ronin
         #   The recon worker name to load.
         #
         def load_worker(id)
-          @worker_class = super(id)
+          @worker_class = Recon.load_class(id)
+        rescue Recon::ClassNotFound => error
+          print_error(error.message)
+          exit(1)
+        rescue => error
+          print_exception(error)
+          print_error("an unhandled exception occurred while loading worker #{id}")
+          exit(-1)
         end
 
         #
@@ -84,7 +89,14 @@ module Ronin
         #   The file to load the recon worker class from.
         #
         def load_worker_from(file)
-          @worker_class = super(file)
+          @worker_class = Recon.load_class_from_file(file)
+        rescue Recon::ClassNotFound => error
+          print_error(error.message)
+          exit(1)
+        rescue => error
+          print_exception(error)
+          print_error("an unhandled exception occurred while loading recon worker from file #{file}")
+          exit(-1)
         end
 
       end
