@@ -1,0 +1,7 @@
+foo
+admin
+bar
+downloads
+baz
+secret
+qux
