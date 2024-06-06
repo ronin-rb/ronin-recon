@@ -57,6 +57,7 @@ describe Ronin::Recon::Web::DirEnum do
       set :port, 80
 
       get '/' do
+        halt 200
       end
 
       get '/admin' do
