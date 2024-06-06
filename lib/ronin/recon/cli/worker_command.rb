@@ -77,7 +77,7 @@ module Ronin
           exit(1)
         rescue => error
           print_exception(error)
-          print_error("an unhandled exception occurred while loading worker #{id}")
+          print_error("an unhandled exception occurred while loading recon worker #{id}")
           exit(-1)
         end
 
