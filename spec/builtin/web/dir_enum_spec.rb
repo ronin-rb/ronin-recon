@@ -81,6 +81,8 @@ describe Ronin::Recon::Web::DirEnum do
     stub_request(:head, /#{Regexp.escape(host)}/).to_rack(app)
   end
 
+  after(:all) { WebMock.allow_net_connect! }
+
   let(:fixtures_dir)  { File.join(__dir__,'fixtures') }
   let(:wordlist_path) { File.join(fixtures_dir,'dir_enum_wordlist.txt') }
 
