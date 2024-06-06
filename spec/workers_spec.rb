@@ -203,15 +203,9 @@ describe Ronin::Recon::Workers do
     let(:fixtures_dir) { File.join(__dir__,'fixtures') }
     let(:path)         { File.join(fixtures_dir,'test_worker.rb') }
 
-    before do
-      # NOTE: remote the test_worker class so that it gets reloaded.
-      Ronin::Recon.registry.delete('test_worker')
-      $LOADED_FEATURES.delete(path)
-
-      subject.load_file(path)
-    end
-
     it "must load the file and add the worker to the workers" do
+      subject.load_file(path)
+
       expect(defined?(Ronin::Recon::TestWorker)).to be_truthy
       expect(subject.classes).to include(Ronin::Recon::TestWorker)
     end
