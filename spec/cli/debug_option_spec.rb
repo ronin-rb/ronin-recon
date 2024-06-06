@@ -21,6 +21,8 @@ describe Ronin::Recon::CLI::DebugOption do
       it "must set Console.logger.level to Console::Logger::DEBUG" do
         expect(Console.logger.level).to be(Console::Logger::DEBUG)
       end
+
+      after { Console.logger.level = Console::Logger::INFO }
     end
   end
 end
