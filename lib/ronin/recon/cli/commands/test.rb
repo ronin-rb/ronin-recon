@@ -96,7 +96,7 @@ module Ronin
           VALUE_CLASS_NAMES = {
             Values::Domain     => 'Domain',
             Values::Mailserver => "Mailserver",
-            Values::Nameserver => "nameserver",
+            Values::Nameserver => "Nameserver",
             Values::Host       => "Host",
             Values::IP         => "IP address",
             Values::IPRange    => "IP range",
