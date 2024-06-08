@@ -374,7 +374,7 @@ describe Ronin::Recon::Web::Spider do
       end
     end
   end
-  
+
   describe "#process", :network do
     context "when there are URLs in the website" do
       let(:website) { Ronin::Recon::Values::Website.new(:https, "www.google.com", 443) }
