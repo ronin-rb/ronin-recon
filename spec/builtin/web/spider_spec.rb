@@ -376,6 +376,8 @@ describe Ronin::Recon::Web::Spider do
   end
 
   describe "#process", :network do
+    before(:all) { WebMock.allow_net_connect! }
+
     context "when there are URLs in the website" do
       let(:website) { Ronin::Recon::Values::Website.new(:https, "www.google.com", 443) }
       let(:expected_uris) do
