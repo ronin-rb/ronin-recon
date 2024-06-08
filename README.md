@@ -298,7 +298,7 @@ end
 
 ## Requirements
 
-* [Ruby] >= 3.0.0
+* [Ruby] >= 3.1.0
 * [nmap] >= 5.00
 * [GraphViz][graphviz] (for SVG, PNG, or PDF output)
 * [thread-local] ~> 1.0
@@ -349,12 +349,11 @@ sudo setcap cap_net_raw,cap_net_admin,cap_net_bind_service+eip $(which masscan)
 1. [Fork It!](https://github.com/ronin-rb/ronin-recon/fork)
 2. Clone It!
 3. `cd ronin-recon/`
-4. `bundle install`
-5. `bundle exec rake wordlists` (generates the built-in wordlists)
-6. `git checkout -b my_feature`
-7. Code It!
-8. `bundle exec rake spec`
-9. `git push origin my_feature`
+4. `./scripts/setup`
+5. `git checkout -b my_feature`
+6. Code It!
+7. `bundle exec rake spec`
+8. `git push origin my_feature`
 
 ## License
 

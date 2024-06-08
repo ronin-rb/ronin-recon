@@ -40,6 +40,7 @@ module Ronin
 
         accepts URL
         outputs EmailAddress
+        intensity :passive
 
         #
         # Extract email addresses found in the pages body.

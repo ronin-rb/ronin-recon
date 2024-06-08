@@ -93,4 +93,20 @@ describe Ronin::Recon::Graph do
       end
     end
   end
+
+  describe "#empty?" do
+    context "when the graph does not have any nodes" do
+      it "must return true" do
+        expect(subject.empty?).to be(true)
+      end
+    end
+
+    context "when the graph does have nodes" do
+      before { subject.add_node(value1) }
+
+      it "must return false" do
+        expect(subject.empty?).to be(false)
+      end
+    end
+  end
 end

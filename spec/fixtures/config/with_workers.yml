@@ -1,0 +1,5 @@
+---
+:workers:
+  - test/worker1
+  - test/worker2
+  - test/worker3

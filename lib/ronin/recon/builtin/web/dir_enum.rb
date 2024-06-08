@@ -34,7 +34,7 @@ module Ronin
       #
       class DirEnum < WebWorker
 
-        DEFAULT_WORDLIST = File.join(WORDLISTS_DIR, 'combined_directories.txt.gz')
+        DEFAULT_WORDLIST = File.join(WORDLISTS_DIR, 'raft-small-directories.txt.gz')
 
         register 'web/dir_enum'
 
@@ -47,7 +47,7 @@ module Ronin
 
         accepts Website
         outputs URL
-        intensity :intensive
+        intensity :aggressive
 
         param :concurrency, Integer, default: 10,
                                      desc:    'Sets the number of async tasks'
@@ -95,7 +95,7 @@ module Ronin
 
                     if RESOURCE_STATUS_CODES.include?(response.status)
                       yield URL.new(url, status:  response.status,
-                                         headers: response.to_h)
+                                         headers: response.headers)
                     end
                   rescue Errno::ECONNREFUSED,
                          SocketError

@@ -1,0 +1,10 @@
+---
+:workers:
+  - dns/lookup
+  - dns/reverse_lookup
+  - dns/nameservers
+  - dns/mailservers
+  - dns/subdomain_enum
+  - net/port_scan
+  - net/service_id
+  - web/spider

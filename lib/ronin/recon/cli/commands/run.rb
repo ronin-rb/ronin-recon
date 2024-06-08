@@ -43,6 +43,13 @@ module Ronin
         # ## Options
         #
         #     -D, --debug                      Enable debugging output
+        #     -C, --config-file FILE           Loads the configuration file
+        #     -w, --worker WORKER              Explicitly uses a worker
+        #     -e, --enable WORKER              Enables a worker
+        #     -d, --disable WORKER             Disables a worker
+        #         --worker-file FILE           Loads a worker from a file
+        #     -p, --param WORKER.NAME=VALUE    Sets a param for a worker
+        #     -c, --concurrency WORKER=NUM     Sets the concurrency of a worker
         #         --max-depth NUM              The maximum recon depth (Default: 3)
         #     -o, --output FILE                The output file to write results to
         #     -I, --ignore VALUE               The values to ignore in result
@@ -63,6 +70,76 @@ module Ronin
           include DB::CLI::DatabaseOptions
 
           usage '[options] {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE} ...'
+
+          option :config_file, short: '-C',
+                               value: {
+                                 type:  String,
+                                 usage: 'FILE'
+                               },
+                               desc: 'Loads the configuration file'
+
+          option :worker, short: '-w',
+                          value: {
+                            type:  String,
+                            usage: 'WORKER'
+                          },
+                          desc: 'Explicitly uses a worker' do |worker|
+                            @only_workers << worker
+                          end
+
+          option :enable, short: '-e',
+                          value: {
+                            type:  String,
+                            usage: 'WORKER'
+                          },
+                          desc: 'Enables a worker' do |worker|
+                            @enable_workers << worker
+                          end
+
+          option :disable, short: '-d',
+                           value: {
+                             type:  String,
+                             usage: 'WORKER'
+                           },
+                           desc: 'Disables a worker' do |worker|
+                             @disable_workers << worker
+                           end
+
+          option :worker_file, value: {
+                                 type:  String,
+                                 usage: 'FILE'
+                               },
+                               desc: 'Loads a worker from a file' do |path|
+                                 @worker_files << path
+                               end
+
+          option :param, short: '-p',
+                         value: {
+                           type:  /\A[^\.\=\s]+\.[^=\s]+=.+\z/,
+                           usage: 'WORKER.NAME=VALUE'
+                         },
+                         desc: 'Sets a param for a worker' do |str|
+                           prefix, value = str.split('=',2)
+                           worker, name  = prefix.split('.',2)
+
+                           @worker_params[worker][name.to_sym] = value
+                         end
+
+          option :concurrency, short: '-c',
+                               value: {
+                                 type:  /\A[^\.\=\s]+=\d+\z/,
+                                 usage: 'WORKER=NUM'
+                               },
+                               desc: 'Sets the concurrency of a worker' do |str|
+                                 worker, concurrency = str.split('=',2)
+
+                                 @worker_concurrency[worker] = concurrency.to_i
+                               end
+
+          option :intensity, value: {
+                               type: [:passive, :active, :aggressive]
+                             },
+                             desc: 'Filter workers by intensity'
 
           option :max_depth, value: {
                                type:    Integer,
@@ -107,6 +184,51 @@ module Ronin
 
           man_page 'ronin-recon-run.1'
 
+          # Explicit set of workers to only use.
+          #
+          # @return [Set<String>]
+          attr_reader :only_workers
+
+          # Additional set of workers to enable.
+          #
+          # @return [Set<String>]
+          attr_reader :enable_workers
+
+          # Additional set of workers to disable.
+          #
+          # @return [Set<String>]
+          attr_reader :disable_workers
+
+          # Additional set of worker files to load.
+          #
+          # @return [Set<String>]
+          attr_reader :worker_files
+
+          # The loaded configuration for the {Engine}.
+          #
+          # @return [Config]
+          attr_reader :config
+
+          # The loaded workers for the {Engine}.
+          #
+          # @return [Workers]
+          attr_reader :workers
+
+          # The params for the workers.
+          #
+          # @return [Hash{String => Hash{String => String}}]
+          attr_reader :worker_params
+
+          # The concurrency for the workers.
+          #
+          # @return [Hash{String => Integer}]
+          attr_reader :worker_concurrency
+
+          # The values that are out of scope.
+          #
+          # @return [Array<Values::Value>]
+          attr_reader :ignore
+
           #
           # Initializes the `ronin-recon run` command.
           #
@@ -115,6 +237,14 @@ module Ronin
           #
           def initialize(**kwargs)
             super(**kwargs)
+
+            @only_workers    = Set.new
+            @enable_workers  = Set.new
+            @disable_workers = Set.new
+            @worker_files    = Set.new
+
+            @worker_params      = Hash.new { |hash,key| hash[key] = {} }
+            @worker_concurrency = {}
 
             @ignore = []
           end
@@ -126,13 +256,10 @@ module Ronin
           #   The initial recon values.
           #
           def run(*values)
-            values = begin
-                       values.map(&Value.method(:parse))
-                     rescue UnknownValue => error
-                       print_error(error.message)
-                       print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
-                       exit(-1)
-                     end
+            load_config
+            load_workers
+
+            values = values.map { |value| parse_value(value) }
 
             output_file = if options[:output] && options[:output_format]
                             options[:output_format].open(options[:output])
@@ -145,7 +272,10 @@ module Ronin
             end
 
             begin
-              Engine.run(values, max_depth: options[:max_depth], ignore: @ignore) do |engine|
+              Engine.run(values, config:    @config,
+                                 workers:   @workers,
+                                 max_depth: options[:max_depth],
+                                 ignore:    @ignore) do |engine|
                 engine.on(:value) do |value,parent|
                   print_value(value,parent)
                 end
@@ -179,6 +309,81 @@ module Ronin
               end
             ensure
               output_file.close if options[:output]
+            end
+          end
+
+          #
+          # Parses the value string.
+          #
+          # @param [String] value
+          #   The value to parse.
+          #
+          # @return [Values::Value]
+          #   The parsed value.
+          #
+          def parse_value(value)
+            Value.parse(value)
+          rescue UnknownValue => error
+            print_error(error.message)
+            print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
+            exit(-1)
+          end
+
+          #
+          # Loads the recon configuration file from either
+          # the `--config-file` option or `~/.config/ronin-recon/config.yml`.
+          #
+          def load_config
+            @config = if (path = options[:config_file])
+                        Config.load(path)
+                      else
+                        Config.default
+                      end
+
+            unless @only_workers.empty?
+              @config.workers = @only_workers
+            end
+
+            @enable_workers.each do |worker_id|
+              @config.workers.add(worker_id)
+            end
+
+            @disable_workers.each do |worker_id|
+              @config.workers.delete(worker_id)
+            end
+
+            @worker_params.each do |worker,params|
+              if @config.params.has_key?(params)
+                @config.params[worker].merge!(params)
+              else
+                @config.params[worker] = params
+              end
+            end
+
+            @worker_concurrency.each do |worker,concurrency|
+              @config.concurrency[worker] = concurrency
+            end
+          end
+
+          #
+          # Loads the worker classes from the {Config#workers}, as well as
+          # additional workers loaded by `--load-worker`.
+          #
+          # @note
+          #   If the `--intensity` option is given, then the workers will be
+          #   filtered by intensity.
+          #
+          def load_workers
+            @workers = Workers.load(@config.workers)
+
+            unless @worker_files.empty?
+              @worker_files.each do |path|
+                @workers.load_file(path)
+              end
+            end
+
+            if (level = options[:intensity])
+              @workers = @workers.intensity(level)
             end
           end
 

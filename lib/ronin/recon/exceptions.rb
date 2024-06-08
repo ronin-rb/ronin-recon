@@ -19,9 +19,27 @@
 module Ronin
   module Recon
     #
+    # Base class for all {Ronin::Recon} exceptions.
+    #
+    class Exception < RuntimeError
+    end
+
+    #
     # Indicates that a value string could not be parsed.
     #
-    class UnknownValue < RuntimeError
+    class UnknownValue < Exception
+    end
+
+    #
+    # Indicates invalid YAML configuration.
+    #
+    class InvalidConfig < Exception
+    end
+
+    #
+    # Indicates an invalid YAML configuration file.
+    #
+    class InvalidConfigFile < InvalidConfig
     end
   end
 end

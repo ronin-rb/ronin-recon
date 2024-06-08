@@ -38,6 +38,7 @@ module Ronin
 
         accepts OpenPort
         outputs Nameserver, Mailserver, Website
+        intensity :passive
 
         #
         # Identifies the service running on an open port.

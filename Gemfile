@@ -42,6 +42,8 @@ group :development do
 
   gem 'rspec',            '~> 3.0'
   gem 'simplecov',        '~> 0.20'
+  gem 'sinatra',          '~> 3.0'
+  gem 'webmock',          '~> 3.0'
 
   gem 'kramdown',         '~> 2.0'
   gem 'kramdown-man',     '~> 1.0'
@@ -56,5 +58,5 @@ group :development do
   gem 'rubocop',          require: false, platform: :mri
   gem 'rubocop-ronin',    require: false, platform: :mri
 
-  gem 'command_kit-completion', '~> 0.1', require: false
+  gem 'command_kit-completion', '~> 0.2', require: false
 end

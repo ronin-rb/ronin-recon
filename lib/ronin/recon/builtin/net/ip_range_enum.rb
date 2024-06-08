@@ -39,6 +39,7 @@ module Ronin
 
         accepts IPRange
         outputs IP
+        intensity :passive
 
         #
         # Enumerates an IP range.

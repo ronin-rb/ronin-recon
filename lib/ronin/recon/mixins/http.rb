@@ -50,7 +50,7 @@ module Ronin
           423, # Locked
           424, # Failed Dependency
           451, # Unavailable For Legal Reasons
-          500, # Internal Server Error
+          500  # Internal Server Error
         ]
       end
     end

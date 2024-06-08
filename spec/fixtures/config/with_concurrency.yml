@@ -1,0 +1,4 @@
+---
+:concurrency:
+  test/worker1: 3
+  test/worker2: 42
