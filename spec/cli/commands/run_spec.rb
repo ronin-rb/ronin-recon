@@ -330,6 +330,32 @@ describe Ronin::Recon::CLI::Commands::Run do
         expect(subject.workers.map(&:intensity)).to all(eq(intensity))
       end
     end
+
+    context "when one of the enabled workers cannot be found" do
+      let(:worker) { 'does/not/exist' }
+      before { subject.enable_workers << worker }
+
+      it "must print an error and exit with 1" do
+        expect(subject).to receive(:print_error).with("could not find file for #{worker.inspect}")
+        expect(subject).to receive(:exit).with(1)
+
+        subject.load_config
+        subject.load_workers
+      end
+    end
+
+    context "when one of the enabled worker files does not exist" do
+      let(:worker_file) { 'does/not/exist' }
+      before { subject.worker_files << worker_file }
+
+      it "must print an error and exit with 1" do
+        expect(subject).to receive(:print_error).with("no such file or directory: #{File.expand_path(worker_file).inspect}")
+        expect(subject).to receive(:exit).with(1)
+
+        subject.load_config
+        subject.load_workers
+      end
+    end
   end
 
   describe "#parse_value" do

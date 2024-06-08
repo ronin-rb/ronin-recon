@@ -385,6 +385,9 @@ module Ronin
             if (level = options[:intensity])
               @workers = @workers.intensity(level)
             end
+          rescue Ronin::Recon::ClassNotFound => error
+            print_error(error.message)
+            exit(1)
           end
 
           #
