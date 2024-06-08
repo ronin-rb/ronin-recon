@@ -77,12 +77,51 @@ module Ronin
                       Value.parse(value)
                     rescue UnknownValue => error
                       print_error(error.message)
-                      print_error("value must be an IP address, CIDR IP-range, domain, sub-domain, wildcard hostname, or website base URL")
+                      print_error("must be a #{worker_class.accepts.map(&method(:value_class_name)).join(', ')} value")
                       exit(-1)
                     end
 
+            unless worker_class.accepts.include?(value.class)
+              print_error "worker #{worker_class.id.inspect} does not accept #{value_class_name(value.class)} values"
+              print_error "must be a #{worker_class.accepts.map(&method(:value_class_name)).join(', ')} value"
+              exit(1)
+            end
+
             worker_class.run(value, params: options[:params]) do |new_value,parent|
               print_value(new_value,parent)
+            end
+          end
+
+          # Mapping of value classes to printable names.
+          VALUE_CLASS_NAMES = {
+            Values::Domain     => 'Domain',
+            Values::Mailserver => "Mailserver",
+            Values::Nameserver => "nameserver",
+            Values::Host       => "Host",
+            Values::IP         => "IP address",
+            Values::IPRange    => "IP range",
+            Values::OpenPort   => "Open Port",
+            Values::Cert       => "SSL/TLS certificate",
+            Values::URL        => "URL",
+            Values::Website    => "Website",
+            Values::Wildcard   => "Wildcard host name"
+          }
+
+          #
+          # Returns a printable name for the {Value} class.
+          #
+          # @param [Class<Value>] value_class
+          #   The value class.
+          #
+          # @return [String]
+          #   The printable name.
+          #
+          # @raise [NotImplementedError]
+          #   An unknown {Value} sub-class was given.
+          #
+          def value_class_name(value_class)
+            VALUE_CLASS_NAMES.fetch(value_class) do
+              raise(NotImplementedError,"unknown value class: #{value_class.inspect}")
             end
           end
 
