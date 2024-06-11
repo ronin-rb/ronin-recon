@@ -14,6 +14,121 @@ describe Ronin::Recon::CLI::Printing do
 
   let(:fixtures_dir) { File.join(__dir__,'..','fixtures') }
 
+  describe "#value_class_name" do
+    context "when given Ronin::Recon::Values::Domain" do
+      let(:value_class) { Ronin::Recon::Values::Domain }
+
+      it "must return 'domain'" do
+        expect(subject.value_class_name(value_class)).to eq("domain")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::Mailserver" do
+      let(:value_class) { Ronin::Recon::Values::Mailserver }
+
+      it "must return 'mailserver'" do
+        expect(subject.value_class_name(value_class)).to eq("mailserver")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::Nameserver" do
+      let(:value_class) { Ronin::Recon::Values::Nameserver }
+
+      it "must return 'nameserver'" do
+        expect(subject.value_class_name(value_class)).to eq("nameserver")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::Host" do
+      let(:value_class) { Ronin::Recon::Values::Host }
+
+      it "must return 'host'" do
+        expect(subject.value_class_name(value_class)).to eq("host")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::IP" do
+      let(:value_class) { Ronin::Recon::Values::IP }
+
+      it "must return 'IP address'" do
+        expect(subject.value_class_name(value_class)).to eq("IP address")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::IPRange" do
+      let(:value_class) { Ronin::Recon::Values::IPRange }
+
+      it "must return 'IP range'" do
+        expect(subject.value_class_name(value_class)).to eq("IP range")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::OpenPort" do
+      let(:value_class) { Ronin::Recon::Values::OpenPort }
+
+      it "must return 'open port'" do
+        expect(subject.value_class_name(value_class)).to eq("open port")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::Cert" do
+      let(:value_class) { Ronin::Recon::Values::Cert }
+
+      it "must return 'SSL/TLS certificate'" do
+        expect(subject.value_class_name(value_class)).to eq("SSL/TLS certificate")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::URL" do
+      let(:value_class) { Ronin::Recon::Values::URL }
+
+      it "must return 'URL'" do
+        expect(subject.value_class_name(value_class)).to eq("URL")
+      end
+    end
+
+    context "when given Ronin::Recon::Values::Website" do
+      let(:value_class) { Ronin::Recon::Values::Website }
+
+      it "must return 'website'" do
+        expect(subject.value_class_name(value_class)).to eq("website")
+      end
+    end
+
+    context "when given a Ronin::Recon::Values::Wildcard" do
+      let(:value_class) { Ronin::Recon::Values::Wildcard }
+
+      it "must return 'wildcard host name'" do
+        expect(subject.value_class_name(value_class)).to eq("wildcard host name")
+      end
+    end
+
+    context "when given another kind of Ronin::Recon::Value sub-class" do
+      module TestPrinting
+        class OtherValue < Ronin::Recon::Value
+        end
+      end
+
+      let(:value_class) { TestPrinting::OtherValue }
+
+      it do
+        expect {
+          subject.value_class_name(value_class)
+        }.to raise_error(NotImplementedError,"unknown value class: #{value_class.inspect}")
+      end
+    end
+
+    context "when given another kind of Object" do
+      let(:value_class) { Object }
+
+      it do
+        expect {
+          subject.value_class_name(value_class)
+        }.to raise_error(NotImplementedError,"unknown value class: #{value_class.inspect}")
+      end
+    end
+  end
+
   describe "#format_value" do
     context "when given a Ronin::Recon::Values::Domain value" do
       let(:value) do
