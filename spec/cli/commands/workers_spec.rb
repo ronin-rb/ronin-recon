@@ -7,25 +7,9 @@ describe Ronin::Recon::CLI::Commands::Workers do
       expect {
         subject.run
       }.to output(
-        [
-          '  dns/lookup',
-          '  dns/mailservers',
-          '  dns/nameservers',
-          '  dns/reverse_lookup',
-          '  dns/srv_enum',
-          '  dns/subdomain_enum',
-          '  dns/suffix_enum',
-          '  net/ip_range_enum',
-          '  net/port_scan',
-          '  net/service_id',
-          '  ssl/cert_enum',
-          '  ssl/cert_grab',
-          '  ssl/cert_sh',
-          '  web/dir_enum',
-          '  web/email_addresses',
-          '  web/spider',
-          ''
-        ].join($/)
+        Ronin::Recon.list_files.map { |id|
+          "  #{id}"
+        }.join($/) + $/
       ).to_stdout
     end
 
@@ -36,16 +20,11 @@ describe Ronin::Recon::CLI::Commands::Workers do
         expect {
           subject.run(dir)
         }.to output(
-          [
-            '  dns/lookup',
-            '  dns/mailservers',
-            '  dns/nameservers',
-            '  dns/reverse_lookup',
-            '  dns/srv_enum',
-            '  dns/subdomain_enum',
-            '  dns/suffix_enum',
-            ''
-          ].join($/)
+          Ronin::Recon.list_files.select { |id|
+            id.start_with?("#{dir}/")
+          }.map { |id|
+            "  #{id}"
+          }.join($/) + $/
         ).to_stdout
       end
     end
