@@ -374,7 +374,7 @@ module Ronin
           #   filtered by intensity.
           #
           def load_workers
-            @workers = Workers.load(@config.workers)
+            @workers = Ronin::Recon::Workers.load(@config.workers)
 
             unless @worker_files.empty?
               @worker_files.each do |path|
