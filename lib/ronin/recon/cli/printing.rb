@@ -39,6 +39,7 @@ module Ronin
           Values::Mailserver   => 'mailserver',
           Values::Nameserver   => 'nameserver',
           Values::OpenPort     => 'open port',
+          Values::Cert         => 'SSL/TLS certificate',
           Values::EmailAddress => 'email addresse',
           Values::URL          => 'URL',
           Values::Website      => 'website',
