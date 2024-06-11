@@ -92,39 +92,6 @@ module Ronin
             end
           end
 
-          # Mapping of value classes to printable names.
-          VALUE_CLASS_NAMES = {
-            Values::Domain     => 'Domain',
-            Values::Mailserver => "Mailserver",
-            Values::Nameserver => "Nameserver",
-            Values::Host       => "Host",
-            Values::IP         => "IP address",
-            Values::IPRange    => "IP range",
-            Values::OpenPort   => "Open Port",
-            Values::Cert       => "SSL/TLS certificate",
-            Values::URL        => "URL",
-            Values::Website    => "Website",
-            Values::Wildcard   => "Wildcard host name"
-          }
-
-          #
-          # Returns a printable name for the {Value} class.
-          #
-          # @param [Class<Value>] value_class
-          #   The value class.
-          #
-          # @return [String]
-          #   The printable name.
-          #
-          # @raise [NotImplementedError]
-          #   An unknown {Value} sub-class was given.
-          #
-          def value_class_name(value_class)
-            VALUE_CLASS_NAMES.fetch(value_class) do
-              raise(NotImplementedError,"unknown value class: #{value_class.inspect}")
-            end
-          end
-
         end
       end
     end

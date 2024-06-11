@@ -48,6 +48,7 @@ module Ronin
         #
         class Worker < WorkerCommand
 
+          include Printing
           include Core::CLI::Printing::Metadata
           include Core::CLI::Printing::Params
           include CommandKit::Printing::Lists
@@ -103,37 +104,6 @@ module Ronin
               puts "Intensity: #{worker.intensity}"
 
               print_params(worker)
-            end
-          end
-
-          VALUE_CLASS_NAMES = {
-            Values::Domain       => 'domains',
-            Values::Host         => 'hosts',
-            Values::IP           => 'IP addresses',
-            Values::IPRange      => 'IP ranges',
-            Values::Mailserver   => 'mailservers',
-            Values::Nameserver   => 'nameservers',
-            Values::OpenPort     => 'open ports',
-            Values::EmailAddress => 'email addresses',
-            Values::URL          => 'URLs',
-            Values::Website      => 'websites',
-            Values::Wildcard     => 'wildcard host names'
-          }
-
-          #
-          # Converts the value class into a printable name.
-          #
-          # @param [Class<Value>] value_class
-          #   The value class.
-          #
-          # @return [String]
-          #   The descriptive name for the value class.
-          #
-          # @raise [NotImplementedError]
-          #
-          def value_class_name(value_class)
-            VALUE_CLASS_NAMES.fetch(value_class) do
-              raise(NotImplementedError,"unknown value class: #{value_class.inspect}")
             end
           end
 
