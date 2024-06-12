@@ -12,6 +12,9 @@ module Ronin
       DESC
       author 'Postmodern', email: 'postmodern.mod3@gmail.com'
 
+      accepts Domain
+      outputs Host
+
       intensity :passive
 
       def process(value)
