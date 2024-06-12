@@ -160,6 +160,11 @@ module Ronin
           # @return [Set<String>]
           attr_reader :outputs
 
+          # The intensity level for the new worker.
+          #
+          # @return [:passive, :active, :aggressive, nil]
+          attr_reader :intensity
+
           #
           # Initializes the `ronin-recon new` command.
           #
