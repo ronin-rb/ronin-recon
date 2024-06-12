@@ -44,7 +44,7 @@ Generates a new recon worker file.
 `-O`, `--outputs` `cert`\|`domain|email_address|host|ip_range|ip|mailserver|nameserver|open_port|url|website|wildcard`
 : The value type(s) that the recon worker outputs.
 
-`-I`, `--intensity` `passive`\|`active`\|`intensive`
+`-I`, `--intensity` `passive`\|`active`\|`aggressive`
 : The intensity of the recon worker.
 
 `-h`, `--help`

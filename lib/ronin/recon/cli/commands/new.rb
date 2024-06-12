@@ -54,7 +54,7 @@ module Ronin
         #         --accepts                    The value type(s) the worker accepts
         #     -O cert|domain|email_address|host|ip_range|ip|mailserver|nameserver|open_port|url|website|wildcard,
         #         --outputs                    The value type(s) the worker outputs
-        #     -I passive|active|intensive,     Specifies the intensity of the recon worker
+        #     -I passive|active|aggressive,    Specifies the intensity of the recon worker
         #         --intensity
         #     -h, --help                       Print help information
         #
@@ -133,7 +133,7 @@ module Ronin
 
           option :intensity, short: '-I',
                              value: {
-                               type: [:passive, :active, :intensive]
+                               type: [:passive, :active, :aggressive]
                              },
                              desc: 'Specifies the intensity of the recon worker' do |intensity|
                                @intensity = intensity
