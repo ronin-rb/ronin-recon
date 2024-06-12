@@ -31,7 +31,7 @@ module Ronin
       #
       module HTTP
         # HTTP status codes that indicate a valid route.
-        RESOURCE_STATUS_CODES = Set[
+        VALID_STATUS_CODES = Set[
           200, # OK
           201, # Created
           202, # Accepted

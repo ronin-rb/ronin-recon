@@ -58,7 +58,7 @@ module Ronin
 
           Ronin::Web::Spider.site(base_uri) do |agent|
             agent.every_page do |page|
-              if RESOURCE_STATUS_CODES.include?(page.code)
+              if VALID_STATUS_CODES.include?(page.code)
                 yield URL.new(page.url, status:  page.code,
                                         headers: page.headers,
                                         body:    page.body)
