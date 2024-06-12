@@ -144,6 +144,21 @@ module Ronin
 
           man_page 'ronin-recon-new.1'
 
+          # The worker type information.
+          #
+          # @return [Hash{Symbol => String}, nil]
+          attr_reader :worker_type
+
+          # The values class names which the new worker will accept.
+          #
+          # @return [Array<String>]
+          attr_reader :accepts
+
+          # The values class names which the new worker will output.
+          #
+          # @return [Array<String>]
+          attr_reader :outputs
+
           #
           # Initializes the `ronin-recon new` command.
           #
