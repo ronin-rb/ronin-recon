@@ -62,9 +62,15 @@ describe Ronin::Recon::CLI::Commands::New do
     let(:tempdir) { Dir.mktmpdir('test-ronin-recon-new') }
     let(:path)    { File.join(tempdir,'test_worker.rb') }
 
+    let(:default_author_name)  { 'John Smith' }
+    let(:default_author_email) { 'john.smith@example.com' }
+
     let(:argv) { [] }
 
     before do
+      allow(Ronin::Core::CLI::Generator::Options::Author).to receive(:default_name).and_return(default_author_name)
+      allow(Ronin::Core::CLI::Generator::Options::Author).to receive(:default_email).and_return(default_author_email)
+
       subject.option_parser.parse(argv)
       subject.run(path)
     end
@@ -106,8 +112,50 @@ describe Ronin::Recon::CLI::Commands::New do
       )
     end
 
+    context "when the user's name cannot be inferred from git or $USERNAME" do
+      let(:default_author_name)  { nil }
+      let(:default_author_email) { nil }
+
+      it "must add a boilerplate `author` metadata attribute" do
+        expect(File.read(path)).to eq(
+          <<~RUBY
+            #!/usr/bin/env -S ronin-recon test -f
+
+            require 'ronin/recon/worker'
+
+            module Ronin
+              module Recon
+                class TestWorker < Worker
+
+                  register 'test_worker'
+
+                  author "FIX ME", email: "FIXME@example.com"
+                  summary "FIX ME"
+                  description <<~DESC
+                    FIX ME
+                  DESC
+                  # references [
+                  #   "https://...",
+                  #   "https://..."
+                  # ]
+
+                  accepts FIXME
+                  outputs FIXME
+
+                  def process(value)
+                    # ...
+                  end
+
+                end
+              end
+            end
+          RUBY
+        )
+      end
+    end
+
     context "when the '--author NAME' option is given" do
-      let(:name) { 'John Smith' }
+      let(:name) { 'Bob' }
       let(:argv) { ['--author', name] }
 
       it "must override the author name in the `author ...` metadata attribute with the '--author' name" do
@@ -123,7 +171,7 @@ describe Ronin::Recon::CLI::Commands::New do
 
                   register 'test_worker'
 
-                  author #{name.inspect}, email: #{subject.author_email.inspect}
+                  author #{name.inspect}, email: #{default_author_email.inspect}
                   summary "FIX ME"
                   description <<~DESC
                     FIX ME
@@ -148,7 +196,7 @@ describe Ronin::Recon::CLI::Commands::New do
       end
 
       context "and when the '--author-email EMAIL' option is given" do
-        let(:email) { 'john.smith@example.com' }
+        let(:email) { 'bob@example.com' }
         let(:argv)  { super() + ['--author-email', email] }
 
         it "must override the author email in the `author ...` metadata attribute with the '--author-email' email" do
