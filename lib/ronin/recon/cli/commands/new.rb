@@ -29,6 +29,7 @@ require 'ronin/core/cli/generator/options/reference'
 require 'ronin/core/git'
 
 require 'command_kit/inflector'
+require 'set'
 
 module Ronin
   module Recon
@@ -151,12 +152,12 @@ module Ronin
 
           # The values class names which the new worker will accept.
           #
-          # @return [Array<String>]
+          # @return [Set<String>]
           attr_reader :accepts
 
           # The values class names which the new worker will output.
           #
-          # @return [Array<String>]
+          # @return [Set<String>]
           attr_reader :outputs
 
           #
@@ -169,8 +170,8 @@ module Ronin
             super(**kwargs)
 
             @worker_type = WORKER_TYPES.fetch(:worker)
-            @accepts     = []
-            @outputs     = []
+            @accepts     = Set.new
+            @outputs     = Set.new
           end
 
           #
