@@ -146,6 +146,9 @@ module Ronin
       #
       # Imports a port number.
       #
+      # @param [:tcp, :udp] protocol
+      #   The protocol that the port uses.
+      #
       # @param [Integer] number
       #   The port number to import.
       #
