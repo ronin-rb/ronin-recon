@@ -87,7 +87,7 @@ module Ronin
               exit(1)
             end
 
-            worker_class.run(value, params: options[:params]) do |new_value,parent|
+            worker_class.run(value, params: params) do |new_value,parent|
               print_value(new_value,parent)
             end
           end
