@@ -47,7 +47,7 @@ describe Ronin::Recon::CLI::Commands::Worker do
       end
     end
 
-    context "when given the '--file FILE' option" do
+    context "when given the '--file FILE' option instead of a worker name argument" do
       let(:fixtures_dir) { File.join(__dir__,'..','..','fixtures') }
       let(:path)         { File.join(fixtures_dir,'test_worker.rb') }
 
