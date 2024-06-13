@@ -18,7 +18,8 @@ module Ronin
       intensity :passive
 
       def process(value)
-        # no-op
+        yield Host.new("test1.#{value}")
+        yield Host.new("test2.#{value}")
       end
 
     end
