@@ -191,7 +191,9 @@ module Ronin
       def self.import_open_port(open_port)
         imported_ip_address = import_ip_address(open_port.address)
         imported_port       = import_port(open_port.protocol,open_port.number)
-        imported_service    = import_service(open_port.service)
+        imported_service    = if (service = open_port.service)
+                                import_service(service)
+                              end
         imported_open_port  = DB::OpenPort.transaction do
                                 DB::OpenPort.find_or_create_by(
                                   ip_address: imported_ip_address,
