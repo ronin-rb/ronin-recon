@@ -17,9 +17,14 @@ module Ronin
 
       intensity :passive
 
+      param :prefix, default: 'test',
+                     desc:    'Example param'
+
       def process(value)
-        yield Host.new("test1.#{value}")
-        yield Host.new("test2.#{value}")
+        prefix = params[:prefix]
+
+        yield Host.new("#{prefix}1.#{value}")
+        yield Host.new("#{prefix}2.#{value}")
       end
 
     end

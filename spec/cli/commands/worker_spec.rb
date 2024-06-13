@@ -68,6 +68,14 @@ describe Ronin::Recon::CLI::Commands::Worker do
                 * host
 
               Intensity: passive
+              Params:
+
+                ┌────────┬────────┬──────────┬─────────┬───────────────┐
+                │  Name  │  Type  │ Required │ Default │  Description  │
+                ├────────┼────────┼──────────┼─────────┼───────────────┤
+                │ prefix │ String │ No       │ test    │ Example param │
+                └────────┴────────┴──────────┴─────────┴───────────────┘
+
           OUTPUT
         ).to_stdout
       end
