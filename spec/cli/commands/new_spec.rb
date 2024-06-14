@@ -112,6 +112,10 @@ describe Ronin::Recon::CLI::Commands::New do
       )
     end
 
+    it "must make the file executable" do
+      expect(File.executable?(path)).to be(true)
+    end
+
     context "when the user's name cannot be inferred from git or $USERNAME" do
       let(:default_author_name)  { nil }
       let(:default_author_email) { nil }
