@@ -186,8 +186,11 @@ module Ronin
           #   The path to the new recon worker file.
           #
           def run(file)
+            @directory  = File.dirname(file)
             @file_name  = File.basename(file,File.extname(file))
             @class_name = CommandKit::Inflector.camelize(@file_name)
+
+            mkdir @directory unless File.directory?(@directory)
 
             erb "worker.rb.erb", file
             chmod '+x', file

@@ -116,6 +116,14 @@ describe Ronin::Recon::CLI::Commands::New do
       expect(File.executable?(path)).to be(true)
     end
 
+    context "when the parent directory does not exist yet" do
+      let(:path) { File.join(tempdir,'does_not_exist_yet','test_worker.rb') }
+
+      it "must create the parent directory" do
+        expect(File.directory?(File.dirname(path))).to be(true)
+      end
+    end
+
     context "when the user's name cannot be inferred from git or $USERNAME" do
       let(:default_author_name)  { nil }
       let(:default_author_email) { nil }
