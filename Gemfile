@@ -12,29 +12,29 @@ end
 #                           branch: 'main'
 
 # Ronin dependencies
-gem 'ronin-support',  '~> 1.1', github: 'ronin-rb/ronin-support',
-                                branch: '1.1.0'
+# gem 'ronin-support',  '~> 1.1', github: 'ronin-rb/ronin-support',
+#                                 branch: 'main'
 
-gem 'ronin-core', '~> 0.2', github: 'ronin-rb/ronin-core',
-                            branch: '0.2.0'
+# gem 'ronin-core', '~> 0.2', github: 'ronin-rb/ronin-core',
+#                             branch: 'main'
 
 # gem 'ronin-repos',    '~> 0.1', github: 'ronin-rb/ronin-repos',
 #                                 branch: 'main'
 
-gem 'ronin-db-activerecord', '~> 0.2', github: 'ronin-rb/ronin-db-activerecord',
-                                       branch: '0.2.0'
+# gem 'ronin-db-activerecord', '~> 0.2', github: 'ronin-rb/ronin-db-activerecord',
+#                                        branch: 'main'
 
-gem 'ronin-db',      '~> 0.2', github: 'ronin-rb/ronin-db',
-                               branch: '0.2.0'
+# gem 'ronin-db',      '~> 0.2', github: 'ronin-rb/ronin-db',
+#                                branch: 'main'
 
-gem 'ronin-masscan', '~> 0.1', github: 'ronin-rb/ronin-masscan',
-                               branch: 'main'
+# gem 'ronin-masscan', '~> 0.1', github: 'ronin-rb/ronin-masscan',
+#                                branch: 'main'
 
-gem 'ronin-nmap',    '~> 0.1', github: 'ronin-rb/ronin-nmap',
-                               branch: 'main'
+# gem 'ronin-nmap',    '~> 0.1', github: 'ronin-rb/ronin-nmap',
+#                                branch: 'main'
 
-gem 'ronin-web-spider',  '~> 0.2', github: 'ronin-rb/ronin-web-spider',
-                                   branch: '0.2.0'
+# gem 'ronin-web-spider',  '~> 0.2', github: 'ronin-rb/ronin-web-spider',
+#                                    branch: 'main'
 
 group :development do
   gem 'rake'

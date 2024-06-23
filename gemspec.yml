@@ -45,13 +45,13 @@ dependencies:
   async-http: ~> 0.60
   wordlist: ~> 1.0, >= 1.0.3
   # Ronin dependencies:
-  ronin-support: ~> 1.1
-  ronin-core: ~> 0.1
-  ronin-db: ~> 0.2
+  ronin-support: ~> 1.1.0.rc1
+  ronin-core: ~> 0.2.0.rc1
+  ronin-db: ~> 0.2.0.rc1
   ronin-repos: ~> 0.1
-  ronin-masscan: ~> 0.1
-  ronin-nmap: ~> 0.1
-  ronin-web-spider: ~> 0.2
+  ronin-masscan: ~> 0.1.0.rc1
+  ronin-nmap: ~> 0.1.0.rc1
+  ronin-web-spider: ~> 0.2.0.rc1
 
 development_dependencies:
   bundler: ~> 2.0
