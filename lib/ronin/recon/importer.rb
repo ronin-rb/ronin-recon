@@ -49,10 +49,10 @@ module Ronin
       #
       # Imports the connection between two values.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   A discovered recon value to import.
       #
-      # @param [Values::Value] parent
+      # @param [Value] parent
       #   The parent value of the discovered recon value.
       #
       # @return [(Ronin::DB::Model, Ronin::DB::Model)]
@@ -78,7 +78,7 @@ module Ronin
       #
       # Imports a value into the database.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   A discovered recon value to import.
       #
       # @return [Ronin::DB::HostName,

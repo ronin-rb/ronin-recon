@@ -72,7 +72,7 @@ module Ronin
         #
         # Writes a value to the GraphViz output stream as a node declaration.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value object to write.
         #
         def <<(value)
@@ -82,10 +82,10 @@ module Ronin
         #
         # Appends a value and it's parent value to the GraphViz output stream.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value to append.
         #
-        # @param [Values::Value] parent
+        # @param [Value] parent
         #   The parent value of the given value.
         #
         # @return [self]

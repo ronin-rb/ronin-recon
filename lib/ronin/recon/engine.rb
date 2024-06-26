@@ -88,10 +88,10 @@ module Ronin
       #
       # Initializes the recon engine.
       #
-      # @param [Array<Values::Value>] values
+      # @param [Array<Value>] values
       #   The values to start performing recon on.
       #
-      # @param [Array<Values::Value>] ignore
+      # @param [Array<Value>] ignore
       #   The values to ignore while performing recon.
       #
       # @param [Integer, nil] max_depth
@@ -118,7 +118,7 @@ module Ronin
       # @yieldparam [Engine] self
       #   The newly initialized engine.
       #
-      # @yieldparam [Values::Value] parent
+      # @yieldparam [Value] parent
       #   The parent value which is associated to the discovered value.
       #
       # @api public
@@ -186,10 +186,10 @@ module Ronin
       #   If the block accepts two arguments the value and it's parent value
       #   will be passed to the block.
       #
-      # @yieldparam [Values::Value] value
+      # @yieldparam [Value] value
       #   A value discovered by one of the recon workers.
       #
-      # @yieldparam [Values::Value] parent
+      # @yieldparam [Value] parent
       #   The parent value which is associated to the discovered value.
       #
       # @return [Engine]
@@ -293,10 +293,10 @@ module Ronin
       #   If `:job_failed` is given, then any exception raised by a worker will
       #   be passed to the given block.
       #
-      # @yieldparam [Values::Value] value
+      # @yieldparam [Value] value
       #   A discovered value value.
       #
-      # @yieldparam [Values::Value] parent
+      # @yieldparam [Value] parent
       #   The parent value of the value.
       #
       # @yieldparam [Class<Worker>] worker_class
@@ -327,7 +327,7 @@ module Ronin
       # @param [Worker] worker
       #   The worker that is processing the value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The value that is being processed.
       #
       # @api private
@@ -344,7 +344,7 @@ module Ronin
       # @param [Worker] worker
       #   The worker that processed the value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The value that was processed.
       #
       # @api private
@@ -361,7 +361,7 @@ module Ronin
       # @param [Worker] worker
       #   The worker that raised the exception.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The value that was being processed.
       #
       # @param [RuntimeError] exception
@@ -381,10 +381,10 @@ module Ronin
       # @param [Worker] worker
       #   The worker that discovered the value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The newly discovered value.
       #
-      # @param [Values::Value] parent
+      # @param [Value] parent
       #   The parent value associated with the new value.
       #
       # @api private
@@ -405,10 +405,10 @@ module Ronin
       # @param [Worker] worker
       #   The worker that discovered the value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The discovered value.
       #
-      # @param [Values::Value] parent
+      # @param [Value] parent
       #   The parent value associated with the value.
       #
       # @api private
@@ -610,7 +610,7 @@ module Ronin
       #
       # Sends a new value into the recon engine for processing.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The value object to enqueue.
       #
       # @api private

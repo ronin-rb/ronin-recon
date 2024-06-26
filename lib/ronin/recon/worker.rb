@@ -392,7 +392,7 @@ module Ronin
       #
       # Initializes the worker and runs it with the single value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The input value to process.
       #
       # @param [Hash{Symbol => Object}] kwargs
@@ -413,13 +413,13 @@ module Ronin
       #
       # Calls the recon worker with the given input value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #   The input value.
       #
       # @yield [new_value]
       #   The `call` method can then `yield` one or more newly discovered values
       #
-      # @yieldparam [Values::Value] new_value
+      # @yieldparam [Value] new_value
       #   An newly discovered output value from the input value.
       #
       # @abstract

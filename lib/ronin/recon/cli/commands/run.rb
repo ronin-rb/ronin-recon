@@ -226,7 +226,7 @@ module Ronin
 
           # The values that are out of scope.
           #
-          # @return [Array<Values::Value>]
+          # @return [Array<Value>]
           attr_reader :ignore
 
           #
@@ -318,7 +318,7 @@ module Ronin
           # @param [String] value
           #   The value to parse.
           #
-          # @return [Values::Value]
+          # @return [Value]
           #   The parsed value.
           #
           def parse_value(value)
@@ -393,7 +393,7 @@ module Ronin
           #
           # Imports a discovered value into ronin-db.
           #
-          # @param [Values::Value] value
+          # @param [Value] value
           #   A discovered recon value to import.
           #
           def import_value(value)
@@ -403,10 +403,10 @@ module Ronin
           #
           # Imports a connection between two values into ronin-db.
           #
-          # @param [Values::Value] value
+          # @param [Value] value
           #   A discovered recon value to import.
           #
-          # @param [Values::Value] parent
+          # @param [Value] parent
           #   The parent value of the discovered recon value.
           #
           def import_connection(value,parent)

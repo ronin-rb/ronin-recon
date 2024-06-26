@@ -60,7 +60,7 @@ module Ronin
         #
         # Returns the descriptive type name for the value object.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value object.
         #
         # @return [String]
@@ -91,7 +91,7 @@ module Ronin
         #
         # Returns the body text for the value object.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value object.
         #
         # @return [String]
@@ -112,7 +112,7 @@ module Ronin
         # Writes a value to the GraphViz DOT output stream as a node
         # declaration.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value object to write.
         #
         def <<(value)
@@ -127,10 +127,10 @@ module Ronin
         # Appends a value and it's parent value to the GraphViz DOT output
         # stream.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value to append.
         #
-        # @param [Values::Value] parent
+        # @param [Value] parent
         #   The parent value of the given value.
         #
         # @return [self]

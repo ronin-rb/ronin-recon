@@ -33,7 +33,7 @@ module Ronin
 
         # The opened filenames and files within the output directory.
         #
-        # @return [Hash{Class<Values::Value> => File}]
+        # @return [Hash{Class<Value> => File}]
         attr_reader :files
 
         # Mapping of value classes to file names.
@@ -69,7 +69,7 @@ module Ronin
         #
         # Writes a new value to it's specific file.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value to write.
         #
         def <<(value)

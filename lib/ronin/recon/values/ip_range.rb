@@ -94,7 +94,7 @@ module Ronin
         #
         # Compares the value to another value.
         #
-        # @param [Values::Value] other
+        # @param [Value] other
         #
         # @return [Boolean]
         #

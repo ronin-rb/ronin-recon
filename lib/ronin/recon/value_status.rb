@@ -34,7 +34,7 @@ module Ronin
       #
       # Records that a value was enqueued for the given worker class.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #
       # @param [Class<Worker>] worker_class
       #
@@ -45,7 +45,7 @@ module Ronin
       #
       # Records that a worker has dequeued the value and started processing it.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #
       # @param [Class<Worker>] worker_class
       #
@@ -56,7 +56,7 @@ module Ronin
       #
       # Records that a worker has completed processing the value.
       #
-      # @param [Values::Value] value
+      # @param [Value] value
       #
       # @param [Class<Worker>] worker_class
       #

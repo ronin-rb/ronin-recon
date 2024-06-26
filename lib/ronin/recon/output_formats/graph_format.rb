@@ -29,10 +29,10 @@ module Ronin
         # Appends a value and it's parent value to the GraphViz DOT output
         # stream.
         #
-        # @param [Values::Value] value
+        # @param [Value] value
         #   The value to append.
         #
-        # @param [Values::Value] parent
+        # @param [Value] parent
         #   The parent value of the given value.
         #
         # @return [self]
