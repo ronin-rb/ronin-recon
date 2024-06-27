@@ -53,7 +53,7 @@ describe Ronin::Recon::Worker do
         expect(subject.id).to eq('registered_worker')
       end
 
-      it "must add the exploit class to Recon.registry" do
+      it "must add the exploit class to Ronin::Recon.registry" do
         expect(Ronin::Recon.registry['registered_worker']).to be(subject)
       end
     end
