@@ -6,6 +6,16 @@ describe Ronin::Recon::API::CertSh do
     expect(described_class.concurrency).to eq(1)
   end
 
+  describe "#initialize" do
+    it "must initialize #client for 'https://crt.sh'" do
+      expect(subject.client).to be_kind_of(Async::HTTP::Client)
+      expect(subject.client.endpoint).to be_kind_of(Async::HTTP::Endpoint)
+      expect(subject.client.endpoint.scheme).to eq('https')
+      expect(subject.client.endpoint.hostname).to eq('crt.sh')
+      expect(subject.client.endpoint.port).to eq(443)
+    end
+  end
+
   describe "#process", :network do
     context "for domain with certificates" do
       let(:domain) { Ronin::Recon::Values::Domain.new("example.com") }

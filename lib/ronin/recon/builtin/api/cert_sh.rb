@@ -43,6 +43,29 @@ module Ronin
         intensity :passive
         concurrency 1
 
+        # The HTTP client for `https://crt.sh`.
+        #
+        # @return [Async::HTTP::Client]
+        #
+        # @api private
+        attr_reader :client
+
+        #
+        # Initializes the `api/cert_sh` worker.
+        #
+        # @param [Hash{Symbol => Object}] kwargs
+        #   Additional keyword arguments.
+        #
+        # @api private
+        #
+        def initialize(**kwargs)
+          super(**kwargs)
+
+          @client  = Async::HTTP::Client.new(
+            Async::HTTP::Endpoint.for('https','crt.sh')
+          )
+        end
+
         #
         # Returns host from each domains certificate.
         #
@@ -58,10 +81,8 @@ module Ronin
         #
         def process(domain)
           Async do
-            internet = Async::HTTP::Internet.instance
-            path     = "https://crt.sh/?dNSName=#{domain}&exclude=expired&output=json"
-
-            response = internet.get(path)
+            path     = "/?dNSName=#{domain}&exclude=expired&output=json"
+            response = @client.get(path)
             certs    = JSON.parse(response.read, symbolize_names: true)
 
             certs.each do |cert|
