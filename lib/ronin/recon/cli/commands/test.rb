@@ -54,7 +54,7 @@ module Ronin
           include Core::CLI::Logging
           include Core::CLI::Options::Param
 
-          usage '[options] {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE}'
+          usage '[options] {--file FILE | NAME} {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE}'
 
           argument :value, required: true,
                            usage:    'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE',
