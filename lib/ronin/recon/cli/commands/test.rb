@@ -70,6 +70,9 @@ module Ronin
           # @param [String, nil] name
           #   The optional worker name to load and print metadata for.
           #
+          # @param [String] value
+          #   The input value for the worker.
+          #
           def run(name=nil,value)
             super(name)
 
