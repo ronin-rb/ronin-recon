@@ -69,7 +69,9 @@ module Ronin
         def process(website)
           wordlist = Wordlist.open(params[:wordlist] || DEFAULT_WORDLIST)
           queue    = Async::LimitedQueue.new(params[:concurrency])
-          base_url = website.to_s
+          endpoint = Async::HTTP::Endpoint.for(
+            website.scheme, website.host, port: website.port
+          )
 
           Async do |task|
             task.async do
@@ -83,15 +85,14 @@ module Ronin
             # spawn the sub-tasks
             params[:concurrency].times do
               task.async do
-                http = Async::HTTP::Internet.instance
+                http = Async::HTTP::Client.new(endpoint)
 
                 while (dir = queue.dequeue)
                   path    = "/#{URI.encode_uri_component(dir)}"
-                  url     = "#{base_url}#{path}"
                   retries = 0
 
                   begin
-                    response = http.head(url)
+                    response = http.head(path)
 
                     if VALID_STATUS_CODES.include?(response.status)
                       yield URL.new(url, status:  response.status,
