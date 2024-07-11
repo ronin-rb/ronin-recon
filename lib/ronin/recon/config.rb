@@ -72,6 +72,8 @@ module Ronin
 
         # The default workers configuration.
         DEFAULT = Set[
+          # NOTE: disabled due to rate limiting issues
+          # 'api/cert_sh',
           'dns/lookup',
           'dns/mailservers',
           'dns/nameservers',
@@ -84,8 +86,6 @@ module Ronin
           'net/service_id',
           'ssl/cert_grab',
           'ssl/cert_enum',
-          # NOTE: disabled due to rate limiting issues
-          # 'ssl/cert_sh',
           'web/dir_enum',
           'web/email_addresses',
           'web/spider'

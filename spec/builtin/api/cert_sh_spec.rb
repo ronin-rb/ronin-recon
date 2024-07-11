@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/ssl/cert_sh'
+require 'ronin/recon/builtin/api/cert_sh'
 
-describe Ronin::Recon::SSL::CertSh do
+describe Ronin::Recon::API::CertSh do
   describe "#process", :network do
     context "for domain with certificates" do
       let(:domain) { Ronin::Recon::Values::Domain.new("example.com") }
