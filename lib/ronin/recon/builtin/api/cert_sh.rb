@@ -41,6 +41,7 @@ module Ronin
         accepts Domain
         outputs Host
         intensity :passive
+        concurrency 1
 
         #
         # Returns host from each domains certificate.

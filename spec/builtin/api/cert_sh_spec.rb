@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'ronin/recon/builtin/api/cert_sh'
 
 describe Ronin::Recon::API::CertSh do
+  it "must set concurrency to 1" do
+    expect(described_class.concurrency).to eq(1)
+  end
+
   describe "#process", :network do
     context "for domain with certificates" do
       let(:domain) { Ronin::Recon::Values::Domain.new("example.com") }
