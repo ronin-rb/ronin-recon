@@ -95,8 +95,10 @@ module Ronin
                     response = http.head(path)
 
                     if VALID_STATUS_CODES.include?(response.status)
-                      yield URL.new(url, status:  response.status,
-                                         headers: response.headers)
+                      yield URL.new(
+                        "#{website}#{path}", status:  response.status,
+                                             headers: response.headers
+                      )
                     end
                   rescue Errno::ECONNREFUSED,
                          SocketError
