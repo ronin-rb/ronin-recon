@@ -72,6 +72,7 @@ module Ronin
           endpoint = Async::HTTP::Endpoint.for(
             website.scheme, website.host, port: website.port
           )
+          base_url = website.to_s
 
           Async do |task|
             task.async do
@@ -96,8 +97,8 @@ module Ronin
 
                     if VALID_STATUS_CODES.include?(response.status)
                       yield URL.new(
-                        "#{website}#{path}", status:  response.status,
-                                             headers: response.headers
+                        "#{base_url}#{path}", status:  response.status,
+                                              headers: response.headers
                       )
                     end
                   rescue Errno::ECONNREFUSED,
