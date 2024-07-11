@@ -61,7 +61,7 @@ module Ronin
         def initialize(**kwargs)
           super(**kwargs)
 
-          @client  = Async::HTTP::Client.new(
+          @client = Async::HTTP::Client.new(
             Async::HTTP::Endpoint.for('https','crt.sh')
           )
         end
