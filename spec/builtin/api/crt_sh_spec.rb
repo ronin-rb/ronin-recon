@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/recon/builtin/api/cert_sh'
+require 'ronin/recon/builtin/api/crt_sh'
 
-describe Ronin::Recon::API::CertSh do
+describe Ronin::Recon::API::CrtSh do
   it "must set concurrency to 1" do
     expect(described_class.concurrency).to eq(1)
   end

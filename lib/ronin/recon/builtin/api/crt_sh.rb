@@ -26,16 +26,17 @@ module Ronin
   module Recon
     module API
       #
-      # A recon worker that returns host from each domains certificate
+      # A recon worker that queries https://crt.sh and returns host from each
+      # domains certificate
       #
-      class CertSh < Worker
+      class CrtSh < Worker
 
-        register 'api/cert_sh'
+        register 'api/crt_sh'
 
-        summary 'Queries cert.sh and returns host from each domains certificate.'
+        summary 'Queries https://crt.sh and returns host from each domains certificate.'
 
         description <<~DESC
-          Queries cert.sh and returns host from each domains certificate.
+          Queries https://crt.sh and returns host from each domains certificate.
         DESC
 
         accepts Domain
@@ -51,7 +52,7 @@ module Ronin
         attr_reader :client
 
         #
-        # Initializes the `api/cert_sh` worker.
+        # Initializes the `api/crt_sh` worker.
         #
         # @param [Hash{Symbol => Object}] kwargs
         #   Additional keyword arguments.

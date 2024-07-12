@@ -86,7 +86,7 @@ List all available recon workers:
 
 ```shell
 $ ronin-recon workers
-  api/cert_sh
+  api/crt_sh
   dns/lookup
   dns/mailservers
   dns/nameservers
