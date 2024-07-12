@@ -64,7 +64,7 @@ module Ronin
             else
               yield Website.http(open_port.host,open_port.number)
             end
-          when 'https'
+          when 'https', 'https-alt'
             yield Website.https(open_port.host,open_port.number)
           end
         end

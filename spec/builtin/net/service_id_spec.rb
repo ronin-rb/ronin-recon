@@ -80,5 +80,21 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
         expect(yielded_value.host).to eq(port.host)
       end
     end
+
+    context 'when https-alt service is running on given port' do
+      let(:port) { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'https-alt', ssl: true) }
+
+      it 'must yield Values::Website' do
+        yielded_value = nil
+
+        subject.process(port) do |value|
+          yielded_value = value
+        end
+
+        expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
+        expect(yielded_value.scheme).to eq(:https)
+        expect(yielded_value.host).to eq(port.host)
+      end
+    end
   end
 end
