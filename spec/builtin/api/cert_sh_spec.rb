@@ -7,8 +7,6 @@ describe Ronin::Recon::API::CertSh do
   end
 
   describe "#initialize" do
-    before(:all) { WebMock.allow_net_connect! }
-
     it "must initialize #client for 'https://crt.sh'" do
       expect(subject.client).to be_kind_of(Async::HTTP::Client)
       # BUG: https://github.com/bblimke/webmock/issues/1060
