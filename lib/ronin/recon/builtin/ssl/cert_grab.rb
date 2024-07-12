@@ -58,9 +58,13 @@ module Ronin
         #
         def process(open_port)
           if open_port.ssl?
+            context = OpenSSL::SSL::SSLContext.new
+
+            context.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
             address  = open_port.address
             port     = open_port.number
-            endpoint = Async::IO::Endpoint.ssl(address,port)
+            endpoint = Async::IO::Endpoint.ssl(address,port, ssl_context: context)
 
             endpoint.connect do |socket|
               peer_cert = socket.peer_cert
