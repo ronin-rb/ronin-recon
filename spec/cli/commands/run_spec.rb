@@ -168,6 +168,23 @@ describe Ronin::Recon::CLI::Commands::Run do
         expect(subject.ignore).to eq([value1, value2])
       end
     end
+
+    context "when the '--max-depth' option is given" do
+      let(:max_depth) { 10 }
+      let(:argv)      { ['--max-depth', max_depth.to_s] }
+
+      it "must set the :max_depth option" do
+        expect(subject.options[:max_depth]).to eq(max_depth)
+      end
+    end
+
+    context "when the '--max-depth' option is not given" do
+      let(:argv) { [] }
+
+      it "must default the :max_depth option to 3" do
+        expect(subject.options[:max_depth]).to eq(3)
+      end
+    end
   end
 
   let(:fixtures_dir) { File.join(__dir__,'..','..','fixtures') }
