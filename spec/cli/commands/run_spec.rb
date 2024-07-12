@@ -170,7 +170,7 @@ describe Ronin::Recon::CLI::Commands::Run do
     end
 
     context "when the '--max-depth' option is given" do
-      let(:max_depth) { 10 }
+      let(:max_depth) { 11 }
       let(:argv)      { ['--max-depth', max_depth.to_s] }
 
       it "must set the :max_depth option" do
@@ -181,8 +181,8 @@ describe Ronin::Recon::CLI::Commands::Run do
     context "when the '--max-depth' option is not given" do
       let(:argv) { [] }
 
-      it "must default the :max_depth option to 3" do
-        expect(subject.options[:max_depth]).to eq(3)
+      it "must default the :max_depth option to 10" do
+        expect(subject.options[:max_depth]).to eq(10)
       end
     end
   end

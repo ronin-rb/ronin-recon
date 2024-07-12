@@ -50,7 +50,7 @@ module Ronin
         #         --worker-file FILE           Loads a worker from a file
         #     -p, --param WORKER.NAME=VALUE    Sets a param for a worker
         #     -c, --concurrency WORKER=NUM     Sets the concurrency of a worker
-        #         --max-depth NUM              The maximum recon depth (Default: 3)
+        #         --max-depth NUM              The maximum recon depth (Default: 10)
         #     -o, --output FILE                The output file to write results to
         #     -I, --ignore VALUE               The values to ignore in result
         #     -F txt|list|csv|json|ndjson|dot|svg|png|pdf,
@@ -144,7 +144,7 @@ module Ronin
           option :max_depth, value: {
                                type:    Integer,
                                usage:   'NUM',
-                               default: 3
+                               default: 10
                              },
                              desc: 'The maximum recon depth'
 

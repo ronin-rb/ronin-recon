@@ -60,7 +60,7 @@ Runs the recon engine with one or more initial values.
 : Overrides the concurrency for the given worker.
 
 `--max-depth` *NUM*
-: The maximum recon depth. Defaults to depth of `3` if the option is not
+: The maximum recon depth. Defaults to depth of `10` if the option is not
   specified.
 
 `-o`, `--output` *FILE*
