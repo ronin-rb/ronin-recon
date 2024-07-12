@@ -66,10 +66,14 @@ module Ronin
             port     = open_port.number
             endpoint = Async::IO::Endpoint.ssl(address,port, ssl_context: context)
 
-            endpoint.connect do |socket|
-              peer_cert = socket.peer_cert
+            begin
+              endpoint.connect do |socket|
+                peer_cert = socket.peer_cert
 
-              yield Cert.new(peer_cert)
+                yield Cert.new(peer_cert)
+              end
+            rescue OpenSSL::SSL::SSLError
+              # abort if we cannot successfully establish a SSL/TLS connection
             end
           end
         end
