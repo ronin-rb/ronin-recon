@@ -43,7 +43,6 @@ module Ronin
           208, # Already Reported
           226, # IM Used
           405, # Method Not Allowed
-          406, # Not Acceptable
           409, # Conflict
           415, # Unsupported Media Type
           422, # Unprocessable Content

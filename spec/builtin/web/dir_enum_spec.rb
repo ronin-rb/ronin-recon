@@ -124,7 +124,6 @@ describe Ronin::Recon::Web::DirEnum do
       208, # Already Reported
       226, # IM Used
       405, # Method Not Allowed
-      406, # Not Acceptable
       409, # Conflict
       415, # Unsupported Media Type
       422, # Unprocessable Content
@@ -179,6 +178,7 @@ describe Ronin::Recon::Web::DirEnum do
       402, # Payment Required
       403, # Forbidden
       404, # Not Found
+      406, # Not Acceptable
       407, # Proxy Authentication Required
       408, # Request Timeout
       410, # Gone
