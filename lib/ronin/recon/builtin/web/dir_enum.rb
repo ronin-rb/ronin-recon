@@ -70,7 +70,7 @@ module Ronin
           wordlist = Wordlist.open(params[:wordlist] || DEFAULT_WORDLIST)
           queue    = Async::LimitedQueue.new(params[:concurrency])
           endpoint = Async::HTTP::Endpoint.for(
-            website.scheme, website.host, port: website.port
+            website.scheme.to_s, website.host, port: website.port
           )
           base_url = website.to_s
 
