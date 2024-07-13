@@ -80,14 +80,14 @@ module Ronin
           when Values::Domain     then "domain #{value}"
           when Values::Mailserver then "mailserver #{value}"
           when Values::Nameserver then "nameserver #{value}"
+          when Values::Wildcard   then "wildcard host name #{value}"
           when Values::Host       then "host #{value}"
           when Values::IP         then "IP address #{value}"
           when Values::IPRange    then "IP range #{value}"
           when Values::OpenPort   then "open #{value.protocol.upcase} port #{value}"
           when Values::Cert       then "SSL/TLS certificate #{value.subject}"
-          when Values::URL        then "URL #{value}"
           when Values::Website    then "website #{value}"
-          when Values::Wildcard   then "wildcard host name #{value}"
+          when Values::URL        then "URL #{value}"
           else
             raise(NotImplementedError,"value class #{value.class} not supported")
           end
