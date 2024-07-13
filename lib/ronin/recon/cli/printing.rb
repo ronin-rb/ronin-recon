@@ -33,17 +33,17 @@ module Ronin
         # Mapping of {Value} classes to printable names.
         VALUE_CLASS_NAMES = {
           Values::Domain       => 'domain',
+          Values::Mailserver   => 'mailserver',
+          Values::Nameserver   => 'nameserver',
+          Values::Wildcard     => 'wildcard host name',
           Values::Host         => 'host',
           Values::IP           => 'IP address',
           Values::IPRange      => 'IP range',
-          Values::Mailserver   => 'mailserver',
-          Values::Nameserver   => 'nameserver',
           Values::OpenPort     => 'open port',
           Values::Cert         => 'SSL/TLS certificate',
-          Values::EmailAddress => 'email addresse',
-          Values::URL          => 'URL',
           Values::Website      => 'website',
-          Values::Wildcard     => 'wildcard host name'
+          Values::URL          => 'URL',
+          Values::EmailAddress => 'email addresse'
         }
 
         #
