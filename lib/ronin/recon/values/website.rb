@@ -34,7 +34,7 @@ module Ronin
 
         # Indicates whether the website uses `http://` or `https://`.
         #
-        # @return [:http, :https]
+        # @return ['http', 'https']
         attr_reader :scheme
 
         # The website's host name.
@@ -50,7 +50,7 @@ module Ronin
         #
         # Initializes the website.
         #
-        # @param [:http, :https] scheme
+        # @param ['http', 'https'] scheme
         #   Indicates whether the website uses `http://` or `https://`.
         #
         # @param [String] host
@@ -78,7 +78,7 @@ module Ronin
         #   The new website value.
         #
         def self.http(host,port=80)
-          new(:http,host,port)
+          new('http',host,port)
         end
 
         #
@@ -94,7 +94,7 @@ module Ronin
         #   The new website value.
         #
         def self.https(host,port=443)
-          new(:https,host,port)
+          new('https',host,port)
         end
 
         #
@@ -109,7 +109,7 @@ module Ronin
         def self.parse(url)
           uri = URI.parse(url)
 
-          Values::Website.new(uri.scheme.to_sym,uri.host,uri.port)
+          Values::Website.new(uri.scheme,uri.host,uri.port)
         end
 
         #
@@ -140,8 +140,8 @@ module Ronin
         #
         # @api private
         URI_CLASSES = {
-          https: URI::HTTPS,
-          http:  URI::HTTP
+          'https' => URI::HTTPS,
+          'http'  => URI::HTTP
         }
 
         #
@@ -161,8 +161,8 @@ module Ronin
         #   The base URL value for the website.
         #
         def to_s
-          if ((@scheme == :https) && (@port != 443)) ||
-             ((@scheme == :http)  && (@port != 80))
+          if ((@scheme == 'https') && (@port != 443)) ||
+             ((@scheme == 'http')  && (@port != 80))
             "#{@scheme}://#{@host}:#{@port}"
           else
             "#{@scheme}://#{@host}"

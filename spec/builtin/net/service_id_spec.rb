@@ -44,7 +44,7 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
         end
 
         expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
-        expect(yielded_value.scheme).to eq(:http)
+        expect(yielded_value.scheme).to eq('http')
         expect(yielded_value.host).to eq(port.host)
       end
 
@@ -59,7 +59,7 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
           end
 
           expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(yielded_value.scheme).to eq(:https)
+          expect(yielded_value.scheme).to eq('https')
           expect(yielded_value.host).to eq(port.host)
         end
       end
@@ -76,7 +76,7 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
         end
 
         expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
-        expect(yielded_value.scheme).to eq(:https)
+        expect(yielded_value.scheme).to eq('https')
         expect(yielded_value.host).to eq(port.host)
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe Ronin::Recon::Net::ServiceID do
         end
 
         expect(yielded_value).to be_kind_of(Ronin::Recon::Values::Website)
-        expect(yielded_value.scheme).to eq(:https)
+        expect(yielded_value.scheme).to eq('https')
         expect(yielded_value.host).to eq(port.host)
       end
     end

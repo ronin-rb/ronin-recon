@@ -452,7 +452,9 @@ describe Ronin::Recon::Web::Spider do
     end
 
     context "when there are no URLs in the website" do
-      let(:website) { Ronin::Recon::Values::Website.new(:https, "www.foo.invalid", 443) }
+      let(:website) do
+        Ronin::Recon::Values::Website.https("www.foo.invalid",443)
+      end
 
       it "must not yield anything" do
         expect { |b|

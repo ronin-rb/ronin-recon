@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'ronin/recon/values/website'
 
 describe Ronin::Recon::Values::Website do
-  let(:scheme) { :http }
+  let(:scheme) { 'http' }
   let(:host)   { 'example.com' }
   let(:port)   { 80 }
 
@@ -25,8 +25,8 @@ describe Ronin::Recon::Values::Website do
   describe ".http" do
     subject { described_class.http(host,port) }
 
-    it "must create a Website object with #scheme of :http" do
-      expect(subject.scheme).to eq(:http)
+    it "must create a Website object with #scheme of 'http'" do
+      expect(subject.scheme).to eq('http')
     end
 
     it "must set #host" do
@@ -41,8 +41,8 @@ describe Ronin::Recon::Values::Website do
   describe ".https" do
     subject { described_class.https(host,port) }
 
-    it "must create a Website object with #scheme of :https" do
-      expect(subject.scheme).to eq(:https)
+    it "must create a Website object with #scheme of 'https'" do
+      expect(subject.scheme).to eq('https')
     end
 
     it "must set #host" do
@@ -61,13 +61,13 @@ describe Ronin::Recon::Values::Website do
     let(:string) { "#{scheme}://#{host}" }
 
     context "and the string starts with 'http://'" do
-      let(:scheme) { :http }
+      let(:scheme) { 'http' }
 
-      it "must return a Values::Website object with a :http scheme, host, and port of 443" do
+      it "must return a Values::Website object with a 'http' scheme, host, and port of 443" do
         value = subject.parse(string)
 
         expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-        expect(value.scheme).to be(scheme)
+        expect(value.scheme).to eq(scheme)
         expect(value.host).to eq(host)
         expect(value.port).to eq(80)
       end
@@ -80,7 +80,7 @@ describe Ronin::Recon::Values::Website do
           value = subject.parse(string)
 
           expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(value.scheme).to be(scheme)
+          expect(value.scheme).to eq(scheme)
           expect(value.host).to eq(host)
           expect(value.port).to eq(port)
         end
@@ -88,13 +88,13 @@ describe Ronin::Recon::Values::Website do
     end
 
     context "and the string starts with 'https://'" do
-      let(:scheme) { :https }
+      let(:scheme) { 'https' }
 
-      it "must return a Values::Website object with a :https scheme, host, and port of 443" do
+      it "must return a Values::Website object with a 'https' scheme, host, and port of 443" do
         value = subject.parse(string)
 
         expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-        expect(value.scheme).to be(scheme)
+        expect(value.scheme).to eq(scheme)
         expect(value.host).to eq(host)
         expect(value.port).to eq(443)
       end
@@ -107,7 +107,7 @@ describe Ronin::Recon::Values::Website do
           value = subject.parse(string)
 
           expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(value.scheme).to be(scheme)
+          expect(value.scheme).to eq(scheme)
           expect(value.host).to eq(host)
           expect(value.port).to eq(port)
         end
@@ -126,7 +126,7 @@ describe Ronin::Recon::Values::Website do
       end
 
       context "but the other Website object has a different #scheme" do
-        let(:other) { described_class.new(:https,host,port) }
+        let(:other) { described_class.new('https',host,port) }
 
         it "must return true" do
           expect(subject.eql?(other)).to be(false)
@@ -166,8 +166,8 @@ describe Ronin::Recon::Values::Website do
   end
 
   describe "#to_uri" do
-    context "when the #scheme is :http" do
-      let(:scheme) { :http }
+    context "when the #scheme is 'http'" do
+      let(:scheme) { 'http' }
 
       it "must return a URI::HTTP object with the #host, #port, and path of '/'" do
         expect(subject.to_uri).to eq(
@@ -180,8 +180,8 @@ describe Ronin::Recon::Values::Website do
       end
     end
 
-    context "when the #scheme is :https" do
-      let(:scheme) { :https }
+    context "when the #scheme is 'https'" do
+      let(:scheme) { 'https' }
 
       it "must return a URI::HTTPS object with the #host, #port, and path of '/'" do
         expect(subject.to_uri).to eq(
@@ -200,8 +200,8 @@ describe Ronin::Recon::Values::Website do
       expect(subject.to_s).to eq("#{scheme}://#{host}")
     end
 
-    context "when the #scheme is :http" do
-      let(:scheme) { :http }
+    context "when the #scheme is 'http'" do
+      let(:scheme) { 'http' }
 
       context "and the #port is 80" do
         let(:port) { 80 }
@@ -220,8 +220,8 @@ describe Ronin::Recon::Values::Website do
       end
     end
 
-    context "when the #scheme is :https" do
-      let(:scheme) { :https }
+    context "when the #scheme is 'https'" do
+      let(:scheme) { 'https' }
 
       context "and the #port is 443" do
         let(:port) { 443 }

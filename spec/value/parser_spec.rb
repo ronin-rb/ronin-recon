@@ -45,13 +45,13 @@ describe Ronin::Recon::Value do
       let(:string) { "#{scheme}://#{host}" }
 
       context "and the string starts with 'http://'" do
-        let(:scheme) { :http }
+        let(:scheme) { 'http' }
 
-        it "must return a Values::Website object with a :http scheme, host, and port of 443" do
+        it "must return a Values::Website object with a 'http' scheme, host, and port of 443" do
           value = subject.parse(string)
 
           expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(value.scheme).to be(scheme)
+          expect(value.scheme).to eq(scheme)
           expect(value.host).to eq(host)
           expect(value.port).to eq(80)
         end
@@ -64,7 +64,7 @@ describe Ronin::Recon::Value do
             value = subject.parse(string)
 
             expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-            expect(value.scheme).to be(scheme)
+            expect(value.scheme).to eq(scheme)
             expect(value.host).to eq(host)
             expect(value.port).to eq(port)
           end
@@ -72,13 +72,13 @@ describe Ronin::Recon::Value do
       end
 
       context "and the string starts with 'https://'" do
-        let(:scheme) { :https }
+        let(:scheme) { 'https' }
 
-        it "must return a Values::Website object with a :https scheme, host, and port of 443" do
+        it "must return a Values::Website object with a 'https' scheme, host, and port of 443" do
           value = subject.parse(string)
 
           expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-          expect(value.scheme).to be(scheme)
+          expect(value.scheme).to eq(scheme)
           expect(value.host).to eq(host)
           expect(value.port).to eq(443)
         end
@@ -91,7 +91,7 @@ describe Ronin::Recon::Value do
             value = subject.parse(string)
 
             expect(value).to be_kind_of(Ronin::Recon::Values::Website)
-            expect(value.scheme).to be(scheme)
+            expect(value.scheme).to eq(scheme)
             expect(value.host).to eq(host)
             expect(value.port).to eq(port)
           end

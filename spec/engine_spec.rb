@@ -280,7 +280,7 @@ describe Ronin::Recon::Engine do
         outputs URL
 
         def process(website)
-          if website.scheme == :http && website.host == 'example.com'
+          if website.scheme == 'http' && website.host == 'example.com'
             yield URL.new(
               URI.parse('http://example.com/'), status: 200,
                                                 headers: {
@@ -288,7 +288,7 @@ describe Ronin::Recon::Engine do
                                                 },
                                                 body: "http page"
             )
-          elsif website.scheme == :https && website.host == 'example.com'
+          elsif website.scheme == 'https' && website.host == 'example.com'
             yield URL.new(
               URI.parse('https://example.com/'), status: 200,
                                                  headers: {
@@ -354,10 +354,10 @@ describe Ronin::Recon::Engine do
       )
     end
     let(:website_value1) do
-      Ronin::Recon::Values::Website.new(:http,'example.com',80)
+      Ronin::Recon::Values::Website.http('example.com',80)
     end
     let(:website_value2) do
-      Ronin::Recon::Values::Website.new(:https,'example.com',443)
+      Ronin::Recon::Values::Website.https('example.com',443)
     end
     let(:url_value1) do
       Ronin::Recon::Values::URL.new(
