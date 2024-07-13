@@ -267,6 +267,16 @@ describe Ronin::Recon::CLI::Printing do
       end
     end
 
+    context "when given a Ronin::Recon::Values::EmailAddress value" do
+      let(:value) do
+        Ronin::Recon::Values::EmailAddress.new('bob@example.com')
+      end
+
+      it "must return 'email address \#{value}'" do
+        expect(subject.format_value(value)).to eq("email address #{value}")
+      end
+    end
+
     context "when given another kind of Ronin::Recon::Value object" do
       module TestPrinting
         class OtherValue < Ronin::Recon::Value
