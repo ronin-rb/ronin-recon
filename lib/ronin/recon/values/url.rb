@@ -21,6 +21,7 @@
 require 'ronin/recon/value'
 
 require 'uri'
+require 'base64'
 
 module Ronin
   module Recon
@@ -192,7 +193,6 @@ module Ronin
 
           hash[:status]  = @status  if @status
           hash[:headers] = @headers if @headers
-          hash[:body]    = @body    if @body
 
           return hash
         end

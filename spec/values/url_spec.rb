@@ -216,12 +216,11 @@ describe Ronin::Recon::Values::URL do
     context "when #body is set" do
       subject { described_class.new(url, body: body) }
 
-      it "must include the body: attribute in the Hash" do
+      it "must not include the body: attribute in the Hash" do
         expect(subject.as_json).to eq(
           {
             type: :url,
-            url:  url,
-            body: body
+            url:  url
           }
         )
       end
