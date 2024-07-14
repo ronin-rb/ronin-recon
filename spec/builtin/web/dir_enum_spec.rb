@@ -93,6 +93,15 @@ describe Ronin::Recon::Web::DirEnum do
   describe "#process" do
     let(:website) { Ronin::Recon::Values::Website.http(host) }
 
+    let(:expected_headers) do
+      {
+        'content-type'           => 'text/html;charset=utf-8',
+        'x-content-type-options' => ['nosniff'],
+        'x-frame-options'        => ['SAMEORIGIN'],
+        'x-xss-protection'       => ['1; mode=block']
+      }
+    end
+
     it "must bruteforce directories by sending HTTP HEAD requests using the default wordlist" do
       yielded_values = []
 
@@ -105,10 +114,19 @@ describe Ronin::Recon::Web::DirEnum do
       expect(yielded_values.length).to eq(3)
       expect(yielded_values[0]).to be_kind_of(Ronin::Recon::Values::URL)
       expect(yielded_values[0].uri).to eq(URI('http://example.com/admin'))
+      expect(yielded_values[0].status).to eq(200)
+      expect(yielded_values[0].headers).to eq(expected_headers)
+      expect(yielded_values[0].body).to be(nil)
       expect(yielded_values[1]).to be_kind_of(Ronin::Recon::Values::URL)
       expect(yielded_values[1].uri).to eq(URI('http://example.com/downloads'))
+      expect(yielded_values[1].status).to eq(200)
+      expect(yielded_values[1].headers).to eq(expected_headers)
+      expect(yielded_values[1].body).to be(nil)
       expect(yielded_values[2]).to be_kind_of(Ronin::Recon::Values::URL)
       expect(yielded_values[2].uri).to eq(URI('http://example.com/secret'))
+      expect(yielded_values[2].status).to eq(200)
+      expect(yielded_values[2].headers).to eq(expected_headers)
+      expect(yielded_values[2].body).to be(nil)
     end
 
     # Valid HTTP status codes

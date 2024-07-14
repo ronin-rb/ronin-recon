@@ -94,11 +94,14 @@ module Ronin
 
                   begin
                     response = http.head(path)
+                    status   = response.status
 
-                    if VALID_STATUS_CODES.include?(response.status)
+                    if VALID_STATUS_CODES.include?(status)
+                      headers = response.headers.to_h
+
                       yield URL.new(
-                        "#{base_url}#{path}", status:  response.status,
-                                              headers: response.headers
+                        "#{base_url}#{path}", status:  status,
+                                              headers: headers
                       )
                     end
                   rescue Errno::ECONNREFUSED,
