@@ -55,12 +55,12 @@ module Ronin
         #   Email address found on the page.
         #
         def process(url)
-          return nil unless url.body
+          if (body = url.body)
+            email_pattern = Ronin::Support::Text::Patterns::EMAIL_ADDRESS
 
-          email_pattern = Ronin::Support::Text::Patterns::EMAIL_ADDRESS
-
-          url.body.force_encoding(Encoding::UTF_8).scan(email_pattern) do |email|
-            yield EmailAddress.new(email)
+            body.force_encoding(Encoding::UTF_8).scan(email_pattern) do |email|
+              yield EmailAddress.new(email)
+            end
           end
         end
 
