@@ -56,9 +56,14 @@ module Ronin
         #
         def process(url)
           if (body = url.body)
-            email_pattern = Ronin::Support::Text::Patterns::EMAIL_ADDRESS
+            if body.encoding == Encoding::ASCII_8BIT
+              # forcibly convert and scrub binary data into UTF-8 data
+              body = body.dup
+              body.force_encoding(Encoding::UTF_8)
+              body.scrub!
+            end
 
-            body.force_encoding(Encoding::UTF_8).scan(email_pattern) do |email|
+            body.scan(Support::Text::Patterns::EMAIL_ADDRESS) do |email|
               yield EmailAddress.new(email)
             end
           end
