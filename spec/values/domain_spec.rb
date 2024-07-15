@@ -157,6 +157,38 @@ describe Ronin::Recon::Values::Domain do
       end
     end
 
+    context "when given an EmailAddress object" do
+      context "and the other EmailAddress ends with the domain name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@#{name}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "and the other EmailAddress's host name is a sub-domain of the domain name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@subdomain.#{name}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other EmailAddress has a different domain name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@other.com")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
     context "when given a non-Host object" do
       let(:other) { Object.new }
 
