@@ -48,7 +48,7 @@ module Ronin
       #
       # Initializes the scope.
       #
-      # @param [Array<Values::Wildcard, Values::Domain, Values::Host, Values::IPRange, Values::IP>] values
+      # @param [Array<Values::Wildcard, Values::Domain, Values::Host, Values::Website, Values::IPRange, Values::IP>] values
       #   The list of "in scope" values.
       #
       # @param [Array<Value>] ignore
@@ -66,7 +66,7 @@ module Ronin
 
         values.each do |value|
           case value
-          when Values::Wildcard, Values::Domain, Values::Host
+          when Values::Wildcard, Values::Domain, Values::Host, Values::Website
             @host_values << value
           when Values::IP, Values::IPRange
             @ip_values << value
@@ -93,6 +93,7 @@ module Ronin
                        when Values::Wildcard,
                             Values::Domain,
                             Values::Host,
+                            Values::Website,
                             Values::URL,
                             Values::EmailAddress
                          @host_values

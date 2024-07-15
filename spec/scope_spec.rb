@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'ronin/recon/scope'
 require 'ronin/recon/values/url'
-require 'ronin/recon/values/website'
 
 describe Ronin::Recon::Scope do
   let(:values) do
@@ -10,7 +9,8 @@ describe Ronin::Recon::Scope do
       Ronin::Recon::Values::IPRange.new('1.2.3.4/24'),
       Ronin::Recon::Values::Domain.new('example.com'),
       Ronin::Recon::Values::Host.new('www.example.com'),
-      Ronin::Recon::Values::Wildcard.new('*.example.com')
+      Ronin::Recon::Values::Wildcard.new('*.example.com'),
+      Ronin::Recon::Values::Website.parse('https://blog.example.com')
     ]
   end
 
@@ -24,14 +24,15 @@ describe Ronin::Recon::Scope do
     end
 
     context "for non-supported values" do
-      let(:values) do
-        [Ronin::Recon::Values::Website.parse('https://example.com')]
+      let(:value) do
+        Ronin::Recon::Values::URL.new('https://example.com/foo')
       end
+      let(:values) { [value] }
 
-      it "must raise NotImplementedError" do
+      it do
         expect {
-          subject
-        }.to raise_error(NotImplementedError)
+          described_class.new(values)
+        }.to raise_error(NotImplementedError,"scope value type not supported: #{value.inspect}")
       end
     end
 
