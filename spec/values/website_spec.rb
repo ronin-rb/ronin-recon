@@ -159,6 +159,98 @@ describe Ronin::Recon::Values::Website do
     end
   end
 
+  describe "#===" do
+    context "when given a Website object" do
+      context "and it is equal to the other Website value" do
+        let(:other) { described_class.new(scheme,host,port) }
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other Website value has a different scheme" do
+        let(:other) do
+          described_class.new('https',host,port)
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+
+      context "but the other Website value has a different host" do
+        let(:other) do
+          described_class.new(scheme,'other.com',port)
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+
+      context "but the other Website value has a different port" do
+        let(:other) do
+          described_class.new(scheme,host,8000)
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given a URL object" do
+      context "and the other URL object has the same scheme, host, and port" do
+        let(:other) do
+          Ronin::Recon::Values::URL.new("#{scheme}://#{host}:#{port}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other URL object has a different scheme" do
+        let(:other) do
+          Ronin::Recon::Values::URL.new("https://#{host}:#{port}")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+
+      context "but the other URL object has a different host" do
+        let(:other) do
+          Ronin::Recon::Values::URL.new("#{scheme}://other.com:#{port}")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+
+      context "but the other URL object has a different port" do
+        let(:other) do
+          Ronin::Recon::Values::URL.new("#{scheme}://#{host}:8000")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given a non-Value object" do
+      let(:other) { Object.new }
+
+      it "must return false" do
+        expect(subject === other).to be(false)
+      end
+    end
+  end
+
   describe "#hash" do
     it "must return the #hash of an Array containing the class and the #scheme, #host, and #port" do
       expect(subject.hash).to eq([described_class, scheme, host, port].hash)

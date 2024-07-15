@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/value'
+require 'ronin/recon/values/url'
 
 require 'uri'
 
@@ -124,6 +125,30 @@ module Ronin
             @scheme == other.scheme &&
             @host   == other.host &&
             @port   == other.port
+        end
+
+        #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Imdicates whether the other value is either the same {Website} or
+        #   a {URL} with the same {#scheme}, {#host}, and {#port} as the
+        #   website.
+        #
+        def ===(other)
+          case other
+          when Website
+            self == other
+          when URL
+            @scheme == other.scheme &&
+              @host == other.host &&
+              @port == other.port
+          else
+            false
+          end
         end
 
         #
