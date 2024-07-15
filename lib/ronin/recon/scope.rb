@@ -24,6 +24,7 @@ require 'ronin/recon/values/host'
 require 'ronin/recon/values/ip_range'
 require 'ronin/recon/values/ip'
 require 'ronin/recon/values/url'
+require 'ronin/recon/values/email_address'
 
 module Ronin
   module Recon
@@ -92,7 +93,8 @@ module Ronin
                        when Values::Wildcard,
                             Values::Domain,
                             Values::Host,
-                            Values::URL
+                            Values::URL,
+                            Values::EmailAddress
                          @host_values
                        when Values::IP,
                             Values::IPRange
