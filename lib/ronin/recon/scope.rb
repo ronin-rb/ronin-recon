@@ -23,6 +23,7 @@ require 'ronin/recon/values/domain'
 require 'ronin/recon/values/host'
 require 'ronin/recon/values/ip_range'
 require 'ronin/recon/values/ip'
+require 'ronin/recon/values/url'
 
 module Ronin
   module Recon
