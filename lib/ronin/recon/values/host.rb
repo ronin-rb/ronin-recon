@@ -22,6 +22,7 @@ require 'ronin/recon/value'
 require 'ronin/recon/values/ip'
 require 'ronin/recon/values/website'
 require 'ronin/recon/values/url'
+require 'ronin/recon/values/email_address'
 
 module Ronin
   module Recon
@@ -79,6 +80,8 @@ module Ronin
             @name == other.name
           when IP, Website, URL
             @name == other.host
+          when EmailAddress
+            other.address.end_with?("@#{@name}")
           else
             false
           end

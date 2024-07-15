@@ -137,6 +137,28 @@ describe Ronin::Recon::Values::Host do
       end
     end
 
+    context "when given an EmailAddress object" do
+      context "and the other EmailAddress's host name is the same host name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@#{name}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other EmailAddress has a different host name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@other.com")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
     context "when given a non-Host object" do
       let(:other) { Object.new }
 
