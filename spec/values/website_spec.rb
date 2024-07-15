@@ -242,6 +242,38 @@ describe Ronin::Recon::Values::Website do
       end
     end
 
+    context "when given a EmailAddress object" do
+      context "and the other EmailAddress value ends with the same domain as the website" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@#{host}")
+        end
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but the other EmailAddress value ends with a sub-domain of the website's host name" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@subdomain.#{host}")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+
+      context "but the other EmailAddress value ends with a different domain than the website" do
+        let(:other) do
+          Ronin::Recon::Values::EmailAddress.new("john.smith@other.com")
+        end
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
     context "when given a non-Value object" do
       let(:other) { Object.new }
 

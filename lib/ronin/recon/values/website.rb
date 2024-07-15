@@ -20,6 +20,7 @@
 
 require 'ronin/recon/value'
 require 'ronin/recon/values/url'
+require 'ronin/recon/values/email_address'
 
 require 'uri'
 
@@ -146,6 +147,8 @@ module Ronin
             @scheme == other.scheme &&
               @host == other.host &&
               @port == other.port
+          when EmailAddress
+            other.address.end_with?("@#{@host}")
           else
             false
           end
