@@ -41,6 +41,7 @@ module Ronin
 
         accepts IP
         outputs OpenPort
+        concurrency 1 # prevents overloading the network interface
 
         param :ports, String, desc: 'Optional port list to scan'
 
