@@ -88,20 +88,18 @@ module Ronin
         #   The host from certificate.
         #
         def process(domain)
-          Async do
-            path      = "/?dNSName=#{domain}&exclude=expired&output=json"
-            response  = @client.get(path)
-            certs     = JSON.parse(response.read, symbolize_names: true)
-            hostnames = Set.new
+          path      = "/?dNSName=#{domain}&exclude=expired&output=json"
+          response  = @client.get(path)
+          certs     = JSON.parse(response.read, symbolize_names: true)
+          hostnames = Set.new
 
-            certs.each do |cert|
-              common_name = cert[:common_name]
+          certs.each do |cert|
+            common_name = cert[:common_name]
 
-              if common_name &&
-                 common_name =~ HOST_NAME_REGEX &&
-                 hostnames.add?(common_name)
-                yield Host.new(common_name)
-              end
+            if common_name &&
+               common_name =~ HOST_NAME_REGEX &&
+               hostnames.add?(common_name)
+              yield Host.new(common_name)
             end
           end
         end
