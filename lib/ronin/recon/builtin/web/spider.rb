@@ -32,10 +32,14 @@ module Ronin
 
         register 'web/spider'
 
-        summary 'Spiders a website'
+        summary 'Spiders a website and finds every URL'
 
         description <<~DESC
-          Spiders a website and returns every URL.
+          Spiders a website and finds every URL.
+
+          * Visits every `a`, `iframe`, `frame`, `link`, and `script` URL.
+          * Extracts paths from JavaScript.
+          * Extracts URLs from JavaScript.
         DESC
 
         accepts Website
