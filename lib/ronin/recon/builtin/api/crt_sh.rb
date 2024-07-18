@@ -19,6 +19,7 @@
 #
 
 require 'ronin/recon/worker'
+require 'ronin/support/text/patterns/network'
 
 require 'async/http/internet/instance'
 require 'set'
@@ -68,6 +69,11 @@ module Ronin
           )
         end
 
+        # Regular expression to verify valid host names.
+        #
+        # @api private
+        HOST_NAME_REGEX = Support::Text::Patterns::HOST_NAME
+
         #
         # Returns host from each domains certificate.
         #
@@ -91,7 +97,9 @@ module Ronin
             certs.each do |cert|
               common_name = cert[:common_name]
 
-              if common_name && hostnames.add?(common_name)
+              if common_name &&
+                 common_name =~ HOST_NAME_REGEX &&
+                 hostnames.add?(common_name)
                 yield Host.new(common_name)
               end
             end
