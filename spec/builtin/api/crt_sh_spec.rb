@@ -23,10 +23,10 @@ describe Ronin::Recon::API::CrtSh do
       let(:expected) do
         %w[
           www.example.org
-          www.example.org
           example.com
         ]
       end
+
       it "must yield Values::Host for each certificate" do
         yielded_values = []
 

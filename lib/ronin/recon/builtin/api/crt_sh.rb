@@ -21,6 +21,7 @@
 require 'ronin/recon/worker'
 
 require 'async/http/internet/instance'
+require 'set'
 
 module Ronin
   module Recon
@@ -82,13 +83,16 @@ module Ronin
         #
         def process(domain)
           Async do
-            path     = "/?dNSName=#{domain}&exclude=expired&output=json"
-            response = @client.get(path)
-            certs    = JSON.parse(response.read, symbolize_names: true)
+            path      = "/?dNSName=#{domain}&exclude=expired&output=json"
+            response  = @client.get(path)
+            certs     = JSON.parse(response.read, symbolize_names: true)
+            hostnames = Set.new
 
             certs.each do |cert|
               if (common_name = cert[:common_name])
-                yield Host.new(common_name)
+                if hostnames.add?(common_name)
+                  yield Host.new(common_name)
+                end
               end
             end
           end
