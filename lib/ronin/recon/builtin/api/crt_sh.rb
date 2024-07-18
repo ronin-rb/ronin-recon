@@ -89,10 +89,10 @@ module Ronin
             hostnames = Set.new
 
             certs.each do |cert|
-              if (common_name = cert[:common_name])
-                if hostnames.add?(common_name)
-                  yield Host.new(common_name)
-                end
+              common_name = cert[:common_name]
+
+              if common_name && hostnames.add?(common_name)
+                yield Host.new(common_name)
               end
             end
           end
