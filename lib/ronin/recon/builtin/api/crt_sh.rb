@@ -35,10 +35,11 @@ module Ronin
 
         register 'api/crt_sh'
 
-        summary 'Queries https://crt.sh and returns host from each domains certificate.'
+        summary 'Queries https://crt.sh'
 
         description <<~DESC
-          Queries https://crt.sh and returns host from each domains certificate.
+          Queries https://crt.sh and returns the host names from each valid
+          certificate for the domain.
         DESC
 
         accepts Domain
