@@ -56,6 +56,7 @@ and uses asynchronous I/O to maximize efficiency.
 
 * Does not require API keys to run.
 * Not just a script that runs a bunch of other recon tools.
+* Does not use AI.
 
 ## Synopsis
 
