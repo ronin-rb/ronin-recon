@@ -21,7 +21,6 @@
 require 'ronin/recon/value'
 
 require 'uri'
-require 'base64'
 
 module Ronin
   module Recon
