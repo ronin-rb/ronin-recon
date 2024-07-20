@@ -30,8 +30,10 @@ describe Ronin::Recon::API::CrtSh do
       it "must yield Values::Host for each certificate" do
         yielded_values = []
 
-        subject.process(domain) do |host|
-          yielded_values << host
+        Async do
+          subject.process(domain) do |host|
+            yielded_values << host
+          end
         end
 
         expect(yielded_values).to_not be_empty
@@ -46,8 +48,10 @@ describe Ronin::Recon::API::CrtSh do
       it "must not yield anything" do
         yielded_values = []
 
-        subject.process(domain) do |host|
-          yielded_values << host
+        Async do
+          subject.process(domain) do |host|
+            yielded_values << host
+          end
         end
 
         expect(yielded_values).to be_empty
