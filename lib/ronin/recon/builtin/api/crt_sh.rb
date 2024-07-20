@@ -73,7 +73,7 @@ module Ronin
         # Regular expression to verify valid host names.
         #
         # @api private
-        HOST_NAME_REGEX = Support::Text::Patterns::HOST_NAME
+        HOST_NAME_REGEX = /\A#{Support::Text::Patterns::HOST_NAME}\z/
 
         #
         # Returns host from each domains certificate.
