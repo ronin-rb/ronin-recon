@@ -124,6 +124,11 @@ $ ronin-recon worker dns/lookup
     * nameservers
     * mailservers
 
+  Outputs:
+
+    * IP address
+
+  Intensity: passive
 ```
 
 Run the recon engine on a single domain:
