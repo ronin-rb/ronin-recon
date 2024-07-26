@@ -5,8 +5,8 @@ require 'ronin/support/crypto'
 require 'openssl'
 
 describe Ronin::Recon::Values::Cert do
-  let(:fixtures_dir) { File.join(__dir__,'fixtures') }
-  let(:cert_path)    { File.join(fixtures_dir,'example.crt') }
+  let(:fixtures_dir) { File.join(__dir__,'..','fixtures') }
+  let(:cert_path)    { File.join(fixtures_dir,'certs','example.crt') }
   let(:cert) do
     Ronin::Support::Crypto::Cert(OpenSSL::X509::Certificate.new(File.read(cert_path)))
   end
@@ -66,7 +66,7 @@ describe Ronin::Recon::Values::Cert do
       end
 
       context "but the other Cert object has a different #cert" do
-        let(:other_cert_path) { File.join(fixtures_dir,'other.crt') }
+        let(:other_cert_path) { File.join(fixtures_dir,'certs','other.crt') }
         let(:other_cert) do
           OpenSSL::X509::Certificate.new(File.read(other_cert_path))
         end

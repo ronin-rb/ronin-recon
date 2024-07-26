@@ -5,8 +5,8 @@ describe Ronin::Recon::SSL::CertEnum do
   describe "#process" do
     context "when there are values in cert" do
       context "with subject alt names" do
-        let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','values','fixtures')) }
-        let(:cert_path)     { File.join(fixtures_dir,'example.crt') }
+        let(:fixtures_dir)  { File.expand_path(File.join(__dir__,'..','..','fixtures')) }
+        let(:cert_path)     { File.join(fixtures_dir,'certs','example.crt') }
         let(:cert)          { Ronin::Support::Crypto::Cert.load_file(cert_path) }
         let(:expected) do
           %w[

@@ -52,7 +52,7 @@ RSpec.describe Ronin::Recon::Importer do
     end
 
     context "when the value is a Ronin::Recon::Values::Cert" do
-      let(:cert_path) { File.join(fixtures_dir,'values','cert.crt') }
+      let(:cert_path) { File.join(fixtures_dir,'certs','example.crt') }
       let(:cert)      { Ronin::Support::Crypto::Cert.load_file(cert_path) }
       let(:value)     { Ronin::Recon::Values::Cert.new(cert) }
 
@@ -140,7 +140,7 @@ RSpec.describe Ronin::Recon::Importer do
     end
 
     context "when the value is a Ronin::Recon::Values::Cert" do
-      let(:cert_path) { File.join(fixtures_dir,'values','cert.crt') }
+      let(:cert_path) { File.join(fixtures_dir,'certs','example.crt') }
       let(:cert)      { Ronin::Support::Crypto::Cert.load_file(cert_path) }
       let(:value)     { Ronin::Recon::Values::Cert.new(cert) }
 
@@ -252,7 +252,7 @@ RSpec.describe Ronin::Recon::Importer do
   end
 
   describe ".import_cert" do
-    let(:cert_path) { File.join(fixtures_dir,'values','cert.crt') }
+    let(:cert_path) { File.join(fixtures_dir,'certs','example.crt') }
     let(:cert)      { Ronin::Support::Crypto::Cert.load_file(cert_path) }
 
     it "must import and return a Ronin::DB::Cert" do

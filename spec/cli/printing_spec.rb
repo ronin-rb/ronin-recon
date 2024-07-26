@@ -228,7 +228,7 @@ describe Ronin::Recon::CLI::Printing do
     end
 
     context "when given a Ronin::Recon::Values::Cert value" do
-      let(:cert_path) { File.join(fixtures_dir,'values','cert.crt') }
+      let(:cert_path) { File.join(fixtures_dir,'certs','example.crt') }
       let(:cert)      { Ronin::Support::Crypto::Cert.load_file(cert_path) }
       let(:value)     { Ronin::Recon::Values::Cert.new(cert) }
 

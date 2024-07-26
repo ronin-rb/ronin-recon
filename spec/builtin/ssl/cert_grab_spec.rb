@@ -5,7 +5,7 @@ describe Ronin::Recon::SSL::CertGrab do
   describe "#process", :network do
     context "when there are certificates in the open port" do
       let(:port)          { Ronin::Recon::Values::OpenPort.new("93.184.216.34", 443, service: 'http', ssl: true) }
-      let(:fixtures_dir)  { File.join(__dir__,'fixtures') }
+      let(:fixtures_dir)  { File.join(__dir__,'..','..','fixtures','certs') }
       let(:cert_path)     { File.join(fixtures_dir,'example.crt') }
       let(:cert)          { Ronin::Support::Crypto::Cert.load_file(cert_path) }
 

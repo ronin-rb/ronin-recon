@@ -5,9 +5,9 @@ require 'tmpdir'
 describe Ronin::Recon::OutputFormats::Dir do
   subject { described_class.new(path) }
 
-  let(:path)               { Dir.mktmpdir('ronin-recon-output-dir') }
-  let(:values_fixutre_dir) { File.expand_path(File.join(__dir__,'..','values','fixtures')) }
-  let(:cert_path)          { File.join(values_fixutre_dir,'example.crt') }
+  let(:path)         { Dir.mktmpdir('ronin-recon-output-dir') }
+  let(:fixtures_dir) { File.expand_path(File.join(__dir__,'..','fixtures')) }
+  let(:cert_path)    { File.join(fixtures_dir,'certs','example.crt') }
 
   it "must inherit from Ronin::Core::OutputFormats::OutputDir" do
     expect(described_class).to be < Ronin::Core::OutputFormats::OutputDir

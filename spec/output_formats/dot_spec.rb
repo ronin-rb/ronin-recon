@@ -7,9 +7,9 @@ describe Ronin::Recon::OutputFormats::Dot do
 
   let(:io) { StringIO.new }
 
-  let(:values_fixutre_dir) { File.expand_path(File.join(__dir__,'..','values','fixtures')) }
-  let(:cert_path)          { File.join(values_fixutre_dir,'example.crt') }
-  let(:cert)               { OpenSSL::X509::Certificate.new(File.read(cert_path)) }
+  let(:fixtures_dir) { File.expand_path(File.join(__dir__,'..','fixtures')) }
+  let(:cert_path)    { File.join(fixtures_dir,'certs','example.crt') }
+  let(:cert)         { OpenSSL::X509::Certificate.new(File.read(cert_path)) }
 
   it 'must inherit from Ronin::Core::OutputFormats::OutputFile' do
     expect(described_class).to be < Ronin::Core::OutputFormats::OutputFile
