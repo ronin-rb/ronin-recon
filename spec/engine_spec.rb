@@ -15,6 +15,16 @@ describe Ronin::Recon::Engine do
     ]
   end
 
+  let(:suffix_path) do
+    File.join(__dir__,'builtin','dns','fixtures','public_domains.dat')
+  end
+  let(:suffix_list) do
+    Ronin::Support::Network::PublicSuffix::List.load_file(suffix_path)
+  end
+  before do
+    allow(Ronin::Support::Network::PublicSuffix).to receive(:list).and_return(suffix_list)
+  end
+
   subject { described_class.new(values) }
 
   describe "#initialize" do

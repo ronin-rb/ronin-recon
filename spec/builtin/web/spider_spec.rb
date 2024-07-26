@@ -79,8 +79,6 @@ describe Ronin::Recon::Web::Spider do
     stub_request(:get, /#{Regexp.escape(host)}/).to_rack(app)
   end
 
-  after(:all) { WebMock.allow_net_connect! }
-
   describe "#process" do
     let(:website) { Ronin::Recon::Values::Website.http(host) }
 

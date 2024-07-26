@@ -46,6 +46,8 @@ describe Ronin::Recon::API::CrtSh do
   end
 
   describe "#process", :network do
+    before(:all) { WebMock.allow_net_connect! }
+
     context "for domain with certificates" do
       let(:domain) { Ronin::Recon::Values::Domain.new("example.com") }
       let(:expected) do
