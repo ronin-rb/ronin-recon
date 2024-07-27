@@ -89,16 +89,16 @@ module Ronin
                 http = Async::HTTP::Client.new(endpoint)
 
                 while (dir = queue.dequeue)
-                  path    = "/#{URI.encode_uri_component(dir)}"
-                  retries = 0
+                  path     = "/#{URI.encode_uri_component(dir)}"
+                  retries  = 0
+                  response = nil
 
                   begin
                     response = http.head(path)
                     status   = response.status
+                    headers  = response.headers.to_h
 
                     if VALID_STATUS_CODES.include?(status)
-                      headers = response.headers.to_h
-
                       yield URL.new(
                         "#{base_url}#{path}", status:  status,
                                               headers: headers
@@ -115,6 +115,8 @@ module Ronin
                       sleep 1
                       retry
                     end
+                  ensure
+                    response.close
                   end
                 end
               end
