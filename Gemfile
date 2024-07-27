@@ -27,9 +27,6 @@ end
 # gem 'ronin-db',      '~> 0.2', github: 'ronin-rb/ronin-db',
 #                                branch: 'main'
 
-# gem 'ronin-masscan', '~> 0.1', github: 'ronin-rb/ronin-masscan',
-#                                branch: 'main'
-
 # gem 'ronin-nmap',    '~> 0.1', github: 'ronin-rb/ronin-nmap',
 #                                branch: 'main'
 

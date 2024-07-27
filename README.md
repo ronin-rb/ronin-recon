@@ -316,7 +316,6 @@ end
 * [ronin-core] ~> 0.2
 * [ronin-db] ~> 0.2
 * [ronin-repos] ~> 0.1
-* [ronin-masscan] ~> 0.1
 * [ronin-nmap] ~> 0.1
 * [ronin-web-spider] ~> 0.2
 
