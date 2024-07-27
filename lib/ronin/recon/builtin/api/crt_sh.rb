@@ -91,7 +91,13 @@ module Ronin
         def process(domain)
           path      = "/?dNSName=#{domain}&exclude=expired&output=json"
           response  = @client.get(path)
-          certs     = JSON.parse(response.read, symbolize_names: true)
+          body      = begin
+                        response.read
+                      ensure
+                        response.close
+                      end
+
+          certs     = JSON.parse(body, symbolize_names: true)
           hostnames = Set.new
 
           certs.each do |cert|
