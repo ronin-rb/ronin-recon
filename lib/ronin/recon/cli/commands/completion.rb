@@ -19,6 +19,7 @@
 #
 
 require_relative '../../root'
+
 require 'ronin/core/cli/completion_command'
 
 module Ronin

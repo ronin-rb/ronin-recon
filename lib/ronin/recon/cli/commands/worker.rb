@@ -20,6 +20,7 @@
 
 require_relative '../worker_command'
 require_relative '../printing'
+
 require 'ronin/core/cli/printing/metadata'
 require 'ronin/core/cli/printing/params'
 

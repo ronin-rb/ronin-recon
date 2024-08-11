@@ -19,8 +19,8 @@
 #
 
 require_relative '../../worker'
-require 'ronin/support/text/patterns/network'
 
+require 'ronin/support/text/patterns/network'
 require 'async/http/internet/instance'
 require 'set'
 

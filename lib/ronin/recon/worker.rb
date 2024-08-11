@@ -20,13 +20,13 @@
 
 require_relative 'registry'
 require_relative 'values'
+
 require 'ronin/core/metadata/id'
 require 'ronin/core/metadata/authors'
 require 'ronin/core/metadata/summary'
 require 'ronin/core/metadata/description'
 require 'ronin/core/metadata/references'
 require 'ronin/core/params/mixin'
-
 require 'async'
 
 module Ronin

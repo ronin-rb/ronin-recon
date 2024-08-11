@@ -25,8 +25,8 @@ require_relative 'message/job_started'
 require_relative 'message/job_completed'
 require_relative 'message/job_failed'
 require_relative 'message/shutdown'
-require 'ronin/core/params/mixin'
 
+require 'ronin/core/params/mixin'
 require 'async/queue'
 
 module Ronin

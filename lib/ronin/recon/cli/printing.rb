@@ -19,6 +19,7 @@
 #
 
 require_relative '../values'
+
 require 'ronin/core/cli/logging'
 
 module Ronin

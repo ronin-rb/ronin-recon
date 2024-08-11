@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ronin/recon/cli/commands/completion'
+
 require_relative 'man_page_example'
 
 describe Ronin::Recon::CLI::Commands::Completion do

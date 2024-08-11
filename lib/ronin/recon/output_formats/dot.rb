@@ -18,7 +18,6 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats/output_file'
 require_relative 'graph_format'
 require_relative '../values/domain'
 require_relative '../values/mailserver'
@@ -33,6 +32,7 @@ require_relative '../values/url'
 require_relative '../values/website'
 require_relative '../values/wildcard'
 
+require 'ronin/core/output_formats/output_file'
 require 'set'
 
 module Ronin

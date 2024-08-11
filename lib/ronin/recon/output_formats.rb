@@ -18,12 +18,13 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats'
 require_relative 'output_formats/dir'
 require_relative 'output_formats/dot'
 require_relative 'output_formats/svg'
 require_relative 'output_formats/png'
 require_relative 'output_formats/pdf'
+
+require 'ronin/core/output_formats'
 
 module Ronin
   module Recon

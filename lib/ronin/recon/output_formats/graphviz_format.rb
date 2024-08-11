@@ -18,10 +18,10 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats/output_file'
 require_relative 'graph_format'
 require_relative 'dot'
 
+require 'ronin/core/output_formats/output_file'
 require 'tempfile'
 
 module Ronin

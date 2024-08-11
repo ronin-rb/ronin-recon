@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'ronin/recon/cli/commands/run'
 require 'ronin/recon/importer'
+
 require_relative 'man_page_example'
 
 describe Ronin::Recon::CLI::Commands::Run do

@@ -19,8 +19,8 @@
 #
 
 require_relative '../../dns_worker'
-require 'ronin/support/network/public_suffix'
 
+require 'ronin/support/network/public_suffix'
 require 'async/queue'
 
 module Ronin

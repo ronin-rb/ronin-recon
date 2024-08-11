@@ -19,6 +19,7 @@
 #
 
 require_relative '../../worker'
+
 require 'ronin/support/network/ip_range'
 
 module Ronin

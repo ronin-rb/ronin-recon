@@ -18,9 +18,9 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/core/output_formats/output_dir'
 require_relative '../values'
 
+require 'ronin/core/output_formats/output_dir'
 require 'set'
 
 module Ronin

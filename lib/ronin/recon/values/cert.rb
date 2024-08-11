@@ -19,6 +19,7 @@
 #
 
 require_relative '../value'
+
 require 'ronin/support/crypto'
 
 module Ronin

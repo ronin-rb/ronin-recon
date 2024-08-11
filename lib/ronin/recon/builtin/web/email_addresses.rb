@@ -20,6 +20,7 @@
 
 require_relative '../../web_worker'
 require_relative 'spider'
+
 require 'ronin/support/text/patterns'
 
 module Ronin
