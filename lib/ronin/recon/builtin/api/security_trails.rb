@@ -47,8 +47,9 @@ module Ronin
         intensity :passive
         concurrency 1
 
-        param :api_key, String, required: true, default: ENV['SECURITYTRAILS_API_KEY'],
-                                                desc: 'The API key for SecurityTrails'
+        param :api_key, String, required: true,
+                                default:  ENV['SECURITYTRAILS_API_KEY'],
+                                desc:     'The API key for SecurityTrails'
 
         # The HTTP client for `https://crt.sh`.
         #
