@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/dns_worker'
-require 'ronin/recon/root'
+require_relative '../../dns_worker'
+require_relative '../../root'
 
 require 'wordlist'
 require 'async/queue'

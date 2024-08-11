@@ -18,13 +18,13 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/cli/command'
-require 'ronin/recon/cli/debug_option'
-require 'ronin/recon/cli/printing'
-require 'ronin/recon/value/parser'
-require 'ronin/recon/registry'
-require 'ronin/recon/engine'
-require 'ronin/recon/output_formats'
+require_relative '../command'
+require_relative '../debug_option'
+require_relative '../printing'
+require_relative '../../value/parser'
+require_relative '../../registry'
+require_relative '../../engine'
+require_relative '../../output_formats'
 
 require 'ronin/db/cli/database_options'
 require 'ronin/core/cli/logging'
@@ -267,7 +267,7 @@ module Ronin
 
             if options[:import]
               require 'ronin/db'
-              require 'ronin/recon/importer'
+              require_relative 'importer'
               db_connect
             end
 

@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/worker'
-require 'ronin/recon/mixins/http'
+require_relative 'worker'
+require_relative 'mixins/http'
 
 module Ronin
   module Recon

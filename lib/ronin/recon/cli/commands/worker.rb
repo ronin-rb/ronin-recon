@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/cli/worker_command'
-require 'ronin/recon/cli/printing'
+require_relative '../worker_command'
+require_relative '../printing'
 require 'ronin/core/cli/printing/metadata'
 require 'ronin/core/cli/printing/params'
 

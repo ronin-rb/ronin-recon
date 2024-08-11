@@ -19,11 +19,11 @@
 #
 
 require 'ronin/core/output_formats'
-require 'ronin/recon/output_formats/dir'
-require 'ronin/recon/output_formats/dot'
-require 'ronin/recon/output_formats/svg'
-require 'ronin/recon/output_formats/png'
-require 'ronin/recon/output_formats/pdf'
+require_relative 'output_formats/dir'
+require_relative 'output_formats/dot'
+require_relative 'output_formats/svg'
+require_relative 'output_formats/png'
+require_relative 'output_formats/pdf'
 
 module Ronin
   module Recon

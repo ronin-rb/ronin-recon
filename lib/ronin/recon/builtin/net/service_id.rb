@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/worker'
+require_relative '../../worker'
 
 module Ronin
   module Recon

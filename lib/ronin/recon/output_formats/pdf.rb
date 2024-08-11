@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/output_formats/graphviz_format'
+require_relative 'graphviz_format'
 
 module Ronin
   module Recon

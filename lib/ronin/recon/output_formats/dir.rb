@@ -19,7 +19,7 @@
 #
 
 require 'ronin/core/output_formats/output_dir'
-require 'ronin/recon/values'
+require_relative '../values'
 
 require 'set'
 

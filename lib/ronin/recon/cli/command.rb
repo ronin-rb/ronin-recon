@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/root'
+require_relative '../root'
 
 require 'ronin/core/cli/command'
 

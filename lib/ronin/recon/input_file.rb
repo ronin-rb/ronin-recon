@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/value/parser'
+require_relative 'value/parser'
 
 module Ronin
   module Recon

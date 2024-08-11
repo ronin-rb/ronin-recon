@@ -18,9 +18,9 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/value'
-require 'ronin/recon/values/url'
-require 'ronin/recon/values/email_address'
+require_relative '../value'
+require_relative 'url'
+require_relative 'email_address'
 
 require 'uri'
 

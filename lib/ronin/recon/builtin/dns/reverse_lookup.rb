@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/dns_worker'
+require_relative '../../dns_worker'
 
 module Ronin
   module Recon

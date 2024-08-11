@@ -18,10 +18,10 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/cli/worker_command'
-require 'ronin/recon/cli/debug_option'
-require 'ronin/recon/cli/printing'
-require 'ronin/recon/value/parser'
+require_relative '../worker_command'
+require_relative '../debug_option'
+require_relative '../printing'
+require_relative '../../value/parser'
 
 require 'ronin/core/cli/options/param'
 require 'ronin/core/cli/logging'

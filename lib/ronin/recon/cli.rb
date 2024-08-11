@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/version'
+require_relative 'version'
 require 'ronin/core/cli/help/banner'
 
 require 'command_kit/commands'

@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/web_worker'
-require 'ronin/recon/builtin/web/spider'
+require_relative '../../web_worker'
+require_relative 'spider'
 require 'ronin/support/text/patterns'
 
 module Ronin
