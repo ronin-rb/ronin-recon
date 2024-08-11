@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/worker'
-require 'ronin/recon/mixins/dns'
+require_relative 'worker'
+require_relative 'mixins/dns'
 
 require 'ronin/support/network/dns'
 

@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/cli/command'
-require 'ronin/recon/root'
+require_relative '../command'
+require_relative '../../root'
 
 require 'ronin/core/cli/generator'
 require 'ronin/core/cli/generator/options/author'

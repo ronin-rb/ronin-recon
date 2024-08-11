@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/web_worker'
-require 'ronin/recon/root'
+require_relative '../../web_worker'
+require_relative '../../root'
 
 require 'wordlist'
 require 'uri'

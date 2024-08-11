@@ -18,4 +18,4 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/mixins/dns'
+require_relative 'mixins/dns'

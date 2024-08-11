@@ -18,13 +18,13 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/message/value'
-require 'ronin/recon/message/worker_started'
-require 'ronin/recon/message/worker_stopped'
-require 'ronin/recon/message/job_started'
-require 'ronin/recon/message/job_completed'
-require 'ronin/recon/message/job_failed'
-require 'ronin/recon/message/shutdown'
+require_relative 'message/value'
+require_relative 'message/worker_started'
+require_relative 'message/worker_stopped'
+require_relative 'message/job_started'
+require_relative 'message/job_completed'
+require_relative 'message/job_failed'
+require_relative 'message/shutdown'
 require 'ronin/core/params/mixin'
 
 require 'async/queue'

@@ -19,8 +19,8 @@
 #
 
 require 'ronin/core/output_formats/output_file'
-require 'ronin/recon/output_formats/graph_format'
-require 'ronin/recon/output_formats/dot'
+require_relative 'graph_format'
+require_relative 'dot'
 
 require 'tempfile'
 

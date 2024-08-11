@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/cli/command'
-require 'ronin/recon/registry'
+require_relative '../command'
+require_relative '../../registry'
 
 module Ronin
   module Recon

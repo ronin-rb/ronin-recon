@@ -18,13 +18,13 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/values/wildcard'
-require 'ronin/recon/values/domain'
-require 'ronin/recon/values/host'
-require 'ronin/recon/values/ip_range'
-require 'ronin/recon/values/ip'
-require 'ronin/recon/values/url'
-require 'ronin/recon/values/email_address'
+require_relative 'values/wildcard'
+require_relative 'values/domain'
+require_relative 'values/host'
+require_relative 'values/ip_range'
+require_relative 'values/ip'
+require_relative 'values/url'
+require_relative 'values/email_address'
 
 module Ronin
   module Recon

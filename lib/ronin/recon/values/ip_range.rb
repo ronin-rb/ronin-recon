@@ -18,8 +18,8 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/value'
-require 'ronin/recon/values/ip'
+require_relative '../value'
+require_relative 'ip'
 
 require 'ronin/support/network/ip_range'
 

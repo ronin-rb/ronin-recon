@@ -18,10 +18,10 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/recon/value'
-require 'ronin/recon/values/domain'
-require 'ronin/recon/values/host'
-require 'ronin/recon/values/url'
+require_relative '../value'
+require_relative 'domain'
+require_relative 'host'
+require_relative 'url'
 
 module Ronin
   module Recon
