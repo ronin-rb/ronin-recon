@@ -51,11 +51,13 @@ module Ronin
                                 default:  ENV['SECURITYTRAILS_API_KEY'],
                                 desc:     'The API key for SecurityTrails'
 
-        # The HTTP client for `https://crt.sh`.
+        #
+        # The HTTP client for `https://securitytrails.com`.
         #
         # @return [Async::HTTP::Client]
         #
         # @api private
+        #
         attr_reader :client
 
         #
