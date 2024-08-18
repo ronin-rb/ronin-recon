@@ -154,8 +154,7 @@ module Ronin
                             usage: 'FILE'
                           },
                           desc: 'The output file to write results to' do |path|
-                            options[:output]          = path
-                            options[:output_format] ||= OutputFormats.infer_from(path)
+                            @outputs << [path, options[:output_format] || OutputFormats.infer_from(path)]
                           end
 
           option :output_format, short: '-F',
@@ -229,6 +228,11 @@ module Ronin
           # @return [Array<Value>]
           attr_reader :ignore
 
+          # The output files and formats
+          #
+          # @return [Array<(String, Class)>]
+          attr_reader :outputs
+
           #
           # Initializes the `ronin-recon run` command.
           #
@@ -246,7 +250,8 @@ module Ronin
             @worker_params      = Hash.new { |hash,key| hash[key] = {} }
             @worker_concurrency = {}
 
-            @ignore = []
+            @ignore  = []
+            @outputs = []
           end
 
           #
@@ -261,9 +266,9 @@ module Ronin
 
             values = values.map { |value| parse_value(value) }
 
-            output_file = if options[:output] && options[:output_format]
-                            options[:output_format].open(options[:output])
-                          end
+            output_files = outputs.filter_map do |output, output_format|
+              output_format.open(output)
+            end
 
             if options[:import]
               require 'ronin/db'
@@ -280,7 +285,7 @@ module Ronin
                   print_value(value,parent)
                 end
 
-                if output_file
+                output_files.each do |output_file|
                   engine.on(:value) do |value|
                     output_file << value
                   end
@@ -308,7 +313,7 @@ module Ronin
                 end
               end
             ensure
-              output_file.close if options[:output]
+              output_files&.each(&:close)
             end
           end
 
