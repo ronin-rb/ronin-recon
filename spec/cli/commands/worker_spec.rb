@@ -131,5 +131,45 @@ describe Ronin::Recon::CLI::Commands::Worker do
         OUTPUT
       ).to_stdout
     end
+
+    context "when the worker class does not define `outputs`" do
+      module TestWorkerCommand
+        class WorkerWithoutOutputs < Ronin::Recon::Worker
+
+          id 'worker_without_outputs'
+          summary 'Test worker without `outputs`'
+          description <<~DESC
+            Test printing a worker without an `outputs`.
+          DESC
+
+          accepts URL
+          intensity :passive
+
+        end
+      end
+
+      let(:worker_class) { TestWorkerCommand::WorkerWithoutOutputs }
+
+      it "must omit the 'Outputs:' line and list" do
+        expect {
+          subject.print_worker(worker_class)
+        }.to output(
+          <<~OUTPUT
+            [ worker_without_outputs ]
+
+              Summary: Test worker without `outputs`
+              Description:
+
+                Test printing a worker without an `outputs`.
+
+              Accepts:
+
+                * URL
+
+              Intensity: passive
+          OUTPUT
+        ).to_stdout
+      end
+    end
   end
 end
