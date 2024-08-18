@@ -147,7 +147,9 @@ describe Ronin::Recon::CLI::Commands::Run do
       end
 
       it "must set the :output_format option using the path's file extension" do
-        expect(subject.options[:output_format]).to be(Ronin::Core::OutputFormats::JSON)
+        expect(subject.outputs.size).to eq(1)
+        expect(subject.outputs[0][0]).to eq(path)
+        expect(subject.outputs[0][1]).to be(Ronin::Core::OutputFormats::JSON)
       end
 
       context "but the '--output-format' has already been specified" do
