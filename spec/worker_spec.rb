@@ -156,10 +156,8 @@ describe Ronin::Recon::Worker do
 
       subject { TestWorkers::WorkerWithoutOutputs }
 
-      it "must raise a NotImplementedError excpetion when called" do
-        expect {
-          subject.outputs
-        }.to raise_error(NotImplementedError,"#{subject} did not set outputs")
+      it "must return nil" do
+        expect(subject.outputs).to be(nil)
       end
 
       context "but the Worker class inherits from another worker class" do

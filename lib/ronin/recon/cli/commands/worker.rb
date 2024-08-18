@@ -95,12 +95,14 @@ module Ronin
               end
               puts
 
-              puts 'Outputs:'
-              puts
-              indent do
-                print_list(worker.outputs.map(&method(:value_class_name)))
+              if (outputs = worker.outputs)
+                puts 'Outputs:'
+                puts
+                indent do
+                  print_list(outputs.map(&method(:value_class_name)))
+                end
+                puts
               end
-              puts
 
               puts "Intensity: #{worker.intensity}"
 

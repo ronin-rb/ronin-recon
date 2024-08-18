@@ -305,11 +305,8 @@ module Ronin
       # @param [Array<Class<Value>>] value_classes
       #   The optional new value class(es) to outputs.
       #
-      # @return [Array<Class<Value>>]
+      # @return [Array<Class<Value>>, nil]
       #   the value class which the recon worker outputs.
-      #
-      # @raise [NotImplementedError]
-      #   No value class was defined for the recon worker.
       #
       # @example define that the recon worker outputs Host values:
       #   outputs Host
@@ -320,8 +317,6 @@ module Ronin
         else
           @outputs || if superclass < Worker
                         superclass.outputs
-                      else
-                        raise(NotImplementedError,"#{self} did not set outputs")
                       end
         end
       end
