@@ -410,6 +410,16 @@ module Ronin
         data.to_yaml(options)
       end
 
+      #
+      # Writes config converted to YAML into a file.
+      #
+      # @param [String] path
+      #   The output file path.
+      #
+      def save(path=DEFAULT_PATH)
+        File.write(path,to_yaml)
+      end
+
     end
   end
 end
