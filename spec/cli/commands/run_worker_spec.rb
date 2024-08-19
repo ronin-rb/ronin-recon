@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'ronin/recon/cli/commands/test'
+require 'ronin/recon/cli/commands/run_worker'
 
 require 'fixtures/test_worker'
 
-describe Ronin::Recon::CLI::Commands::Test do
+describe Ronin::Recon::CLI::Commands::RunWorker do
   describe "#run" do
     let(:name)  { 'test_worker' }
     let(:value) { 'example.com' }
