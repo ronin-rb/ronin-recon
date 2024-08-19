@@ -42,8 +42,8 @@ Runs a `ronin-recon` *COMMAND*.
 *run*
 : Runs the recon engine with one or more initial values.
 
-*test*
-: Loads an individual worker and tests it.
+*run-worker*, *test*
+: Loads an individual worker and runs it.
 
 *worker*
 : Prints information about a recon worker.

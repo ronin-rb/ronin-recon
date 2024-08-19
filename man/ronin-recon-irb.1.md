@@ -23,4 +23,4 @@ Postmodern <postmodern.mod3@gmail.com>
 
 ## SEE ALSO
 
-[ronin-recon-workers](ronin-recon-workers.1.md) [ronin-recon-worker](ronin-recon-worker.1.md) [ronin-recon-run](ronin-recon-run.1.md) [ronin-recon-test](ronin-recon-test.1.md)
+[ronin-recon-workers](ronin-recon-workers.1.md) [ronin-recon-worker](ronin-recon-worker.1.md) [ronin-recon-run](ronin-recon-run.1.md) [ronin-recon-run-worker](ronin-recon-run-worker.1.md)

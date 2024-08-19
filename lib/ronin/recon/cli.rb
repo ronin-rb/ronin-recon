@@ -46,6 +46,8 @@ module Ronin
       command_name 'ronin-recon'
       version Ronin::Recon::VERSION
 
+      command_aliases['test'] = 'run-worker'
+
     end
   end
 end

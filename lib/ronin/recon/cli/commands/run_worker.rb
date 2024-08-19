@@ -31,11 +31,11 @@ module Ronin
     class CLI
       module Commands
         #
-        # Loads an individual worker and tests it.
+        # Loads an individual worker and runs it.
         #
         # ## Usage
         #
-        #     ronin-recon test [options] {--file FILE | NAME} {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE}
+        #     ronin-recon run-worker [options] {--file FILE | NAME} {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE}
         #
         # ## Options
         #
@@ -47,7 +47,9 @@ module Ronin
         #
         #     IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE  An initial recon value.
         #
-        class Test < WorkerCommand
+        # @since 0.2.0
+        #
+        class RunWorker < WorkerCommand
 
           include DebugOption
           include Printing
@@ -60,12 +62,12 @@ module Ronin
                            usage:    'IP|IP-range|DOMAIN|HOST|WILDCARD|WEBSITE',
                            desc:     'The initial recon value'
 
-          description 'Loads an individual worker and tests it'
+          description 'Loads an individual worker and runs it'
 
-          man_page 'ronin-recon-test.1'
+          man_page 'ronin-recon-run-worker.1'
 
           #
-          # Runs the `ronin-recon test` command.
+          # Runs the `ronin-recon run-worker` command.
           #
           # @param [String, nil] name
           #   The optional worker name to load and print metadata for.

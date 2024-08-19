@@ -1,16 +1,16 @@
-# ronin-recon-test 1 "2023-05-01" Ronin "User Manuals"
+# ronin-recon-run-worker 1 "2023-05-01" Ronin "User Manuals"
 
 ## NAME
 
-ronin-recon-test - Loads an individual worker and tests it
+ronin-recon-run-worker - Loads an individual worker and runs it
 
 ## SYNOPSIS
 
-`ronin-recon test` [*options*] {`--file` *FILE* \| *NAME*} {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*}
+`ronin-recon run-worker` [*options*] {`--file` *FILE* \| *NAME*} {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*}
 
 ## DESCRIPTION
 
-Loads an individual worker and tests it with an input value..
+Loads an individual worker and runs it with an input value..
 
 ## ARGUMENTS
 

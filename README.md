@@ -78,7 +78,7 @@ Commands:
     irb
     new
     run
-    test
+    run-worker, test
     worker
     workers
 ```

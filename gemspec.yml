@@ -31,7 +31,7 @@ generated_files:
  - man/ronin-recon-new.1
  - man/ronin-recon-workers.1
  - man/ronin-recon-worker.1
- - man/ronin-recon-test.1
+ - man/ronin-recon-run-worker.1
  - man/ronin-recon-run.1
  - data/wordlists/subdomains-1000.txt.gz
  - data/wordlists/raft-small-directories.txt.gz

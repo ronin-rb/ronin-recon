@@ -78,7 +78,7 @@ describe Ronin::Recon::CLI::Commands::New do
     it "must generate a new file containing a new Ronin::Recon::Worker class" do
       expect(File.read(path)).to eq(
         <<~RUBY
-          #!/usr/bin/env -S ronin-recon test -f
+          #!/usr/bin/env -S ronin-recon run-worker -f
 
           require 'ronin/recon/worker'
 
@@ -131,7 +131,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must add a boilerplate `author` metadata attribute" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -173,7 +173,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must override the author name in the `author ...` metadata attribute with the '--author' name" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -214,7 +214,7 @@ describe Ronin::Recon::CLI::Commands::New do
         it "must override the author email in the `author ...` metadata attribute with the '--author-email' email" do
           expect(File.read(path)).to eq(
             <<~RUBY
-              #!/usr/bin/env -S ronin-recon test -f
+              #!/usr/bin/env -S ronin-recon run-worker -f
 
               require 'ronin/recon/worker'
 
@@ -257,7 +257,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must fill in the `summary ...` metadata attribute with the '--summary' text" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -299,7 +299,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must fill in the `description ...` metadata attribute with the '--description' text" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -344,7 +344,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must fill in the `references [...]` metadata attribute containing the '--reference' URLs" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -391,7 +391,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must set the `accepts ...` metadata attribute in the worker class with the '--accepts' value classes" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -438,7 +438,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must set the `outputs ...` metadata attribute in the worker class with the '--outputs' value classes" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
@@ -480,7 +480,7 @@ describe Ronin::Recon::CLI::Commands::New do
       it "must add the `intensity :level` metadata attribute to the worker class using the '--intensity' level" do
         expect(File.read(path)).to eq(
           <<~RUBY
-            #!/usr/bin/env -S ronin-recon test -f
+            #!/usr/bin/env -S ronin-recon run-worker -f
 
             require 'ronin/recon/worker'
 
