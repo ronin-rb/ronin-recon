@@ -172,6 +172,17 @@ module Ronin
 
         alias == eql?
 
+        #
+        # Converts workers ids to array
+        #
+        # @return [Array<String>]
+        #
+        # @since 0.2.0
+        #
+        def as_yaml
+          @ids.to_a
+        end
+
       end
 
       # The workers to use.
@@ -366,6 +377,25 @@ module Ronin
 
       alias == eql?
 
+      #
+      # Converts config into YAML string.
+      #
+      # @params [Hash{Symbol => Object}] options
+      #   Additional options for Object#to_yaml.
+      #
+      # @return [String]
+      #
+      # @since 0.2.0
+      #
+      def to_yaml(options={})
+        data = {}
+
+        data[:params]      = @params unless @params.empty?
+        data[:concurrency] = @concurrency unless @concurrency.empty?
+        data[:workers]     = @workers.as_yaml if @workers
+
+        data.to_yaml(options)
+      end
     end
   end
 end

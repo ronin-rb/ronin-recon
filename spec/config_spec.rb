@@ -759,4 +759,14 @@ describe Ronin::Recon::Config do
       end
     end
   end
+
+  describe "#to_yaml" do
+    let(:expected_yml) { File.join(fixtures_dir,'with_params_and_workers.yml') }
+
+    subject { described_class.load(expected_yml) }
+
+    it "must convert Config into YAML string" do
+      expect(subject.to_yaml).to eq(File.read(expected_yml))
+    end
+  end
 end
