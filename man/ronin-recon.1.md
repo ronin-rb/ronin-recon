@@ -39,6 +39,9 @@ Runs a `ronin-recon` *COMMAND*.
 *new*
 : Creates a new recon worker file.
 
+*run*
+: Runs the recon engine with one or more initial values.
+
 *test*
 : Loads an individual worker and tests it.
 
