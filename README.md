@@ -313,7 +313,7 @@ end
 * [async-http] ~> 0.60
 * [wordlist] ~> 1.0, >= 1.0.3
 * [ronin-support] ~> 1.1
-* [ronin-core] ~> 0.2
+* [ronin-core] ~> 0.3
 * [ronin-db] ~> 0.2
 * [ronin-repos] ~> 0.1
 * [ronin-nmap] ~> 0.1
