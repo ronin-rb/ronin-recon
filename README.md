@@ -223,7 +223,7 @@ $ ronin-recon new example_worker.rb \
                   --description "This is an example."
 ```
 
-Generate a ronin repository of your own payloads (or exploits):
+Generate a ronin repository of your own recon workers:
 
 ```shell
 $ ronin-repos new my-repo
@@ -231,7 +231,7 @@ $ cd my-repo/
 $ mkdir recon
 $ ronin-recon new recon/my_recon.rb \
                   --author You \
-                  --description "This is my payload."
+                  --description "This is my recon worker."
 $ vim recon/my_recon.rb
 $ git add recon/my_recon.rb
 $ git commit
