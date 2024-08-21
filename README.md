@@ -219,8 +219,7 @@ Generate a boilerplate recon worker file, with some custom information:
 
 ```shell
 $ ronin-recon new example_worker.rb \
-                  --name Example \
-                  --authors Postmodern \
+                  --author Postmodern \
                   --description "This is an example."
 ```
 
@@ -231,8 +230,7 @@ $ ronin-repos new my-repo
 $ cd my-repo/
 $ mkdir recon
 $ ronin-recon new recon/my_recon.rb \
-                  --name MyRecon \
-                  --authors You \
+                  --author You \
                   --description "This is my payload."
 $ vim recon/my_recon.rb
 $ git add recon/my_recon.rb
