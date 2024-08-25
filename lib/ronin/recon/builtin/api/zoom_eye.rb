@@ -31,7 +31,7 @@ module Ronin
       #
       # ## Environment Variables
       #
-      # * `ZOOM_EYE_API_KEY` - Specifies the api key used for authorization.
+      # * `ZOOM_EYE_API_KEY` - Specifies the API key used for authorization.
       #
       class ZoomEye < Worker
 
@@ -41,6 +41,7 @@ module Ronin
         description <<~DESC
           Queries the Domains https://api.zoomeye.hk API and returns subdomains
           and ip addresses of the domain.
+
           The ZoomEye API key can be specified via the api/zoom_eye.api_key
           param or the ZOOM_EYE_API_KEY env variables.
         DESC
@@ -100,13 +101,15 @@ module Ronin
                        response.close
                      end
 
-          list     = body.fetch(:list, [])
+          list = body.fetch(:list, [])
+
           list.each do |record|
             if (subdomain = record[:name])
               yield Domain.new(subdomain)
             end
 
             ip_addresses = record.fetch(:ip, [])
+
             ip_addresses.each do |ip_addr|
               yield IP.new(ip_addr)
             end
