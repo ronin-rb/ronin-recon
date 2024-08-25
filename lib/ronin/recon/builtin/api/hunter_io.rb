@@ -95,10 +95,10 @@ module Ronin
           path     = "/v2/domain-search?domain=#{domain}&api_key=#{params[:api_key]}"
           response = @client.get(path)
           body     = begin
-                   JSON.parse(response.read, symbolize_names: true)
-                 ensure
-                   response.close
-                 end
+                       JSON.parse(response.read, symbolize_names: true)
+                     ensure
+                       response.close
+                     end
 
           if (emails = body.dig(:data, :emails))
             emails.each do |email|

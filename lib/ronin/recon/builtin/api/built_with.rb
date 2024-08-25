@@ -55,13 +55,11 @@ module Ronin
                                 default:  ENV['BUILT_WITH_API_KEY'],
                                 desc:     'The API key for BuiltWith'
 
-        #
         # The HTTP client for `https://api.builtwith.com`
         #
         # @return [Async::HTTP::Client]
         #
         # @api private
-        #
         attr_reader :client
 
         #
@@ -124,6 +122,7 @@ module Ronin
             end
           end
         end
+
       end
     end
   end

@@ -60,7 +60,6 @@ module Ronin
         # @return [Async::HTTP::Client]
         #
         # @api private
-        #
         attr_reader :client
 
         #
