@@ -32,7 +32,7 @@ module Ronin
       #
       # ## Environment Variables
       #
-      # * `BUILT_WITH_API_KEY` - Specifies the api key used for authorization.
+      # * `BUILT_WITH_API_KEY` - Specifies the API key used for authorization.
       #
       class BuiltWith < Worker
 
@@ -41,8 +41,9 @@ module Ronin
         summary "Queries the domain informations from https://api.builtwith.com"
         description <<~DESC
           Queriest the domain informations from https://api.builtwith.com.
+          
           The BuiltWith API key can be specified via the api/built_with.api_key
-          param or the BUILT_WITH_API_KEY env variables.
+          param or the BUILT_WITH_API_KEY environment variables.
         DESC
 
         accepts Domain
@@ -89,7 +90,7 @@ module Ronin
         #   The found value will be yielded
         #
         # @yieldparam [Values::Domain, Values::EmailAddress]
-        #   The found domains or email_addresses
+        #   The found domains or email addresses
         #
         def process(domain)
           path     = "/v21/api.json?KEY=#{params[:api_key]}&LOOKUP=#{domain}"
@@ -115,6 +116,7 @@ module Ronin
             end
 
             emails = results.fetch(:Meta, {}).fetch(:Emails, [])
+            
             emails.each do |email|
               yield EmailAddress.new(email) if email_addresses.add?(email)
             end
