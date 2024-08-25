@@ -41,7 +41,7 @@ module Ronin
         summary "Queries the domain informations from https://api.builtwith.com"
         description <<~DESC
           Queriest the domain informations from https://api.builtwith.com.
-          
+
           The BuiltWith API key can be specified via the api/built_with.api_key
           param or the BUILT_WITH_API_KEY environment variables.
         DESC
@@ -116,7 +116,7 @@ module Ronin
             end
 
             emails = results.fetch(:Meta, {}).fetch(:Emails, [])
-            
+
             emails.each do |email|
               yield EmailAddress.new(email) if email_addresses.add?(email)
             end
