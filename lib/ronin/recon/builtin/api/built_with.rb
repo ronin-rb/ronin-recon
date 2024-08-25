@@ -104,21 +104,23 @@ module Ronin
           domains         = Set.new
           email_addresses = Set.new
 
-          body.fetch(:Results, []).each do |results|
-            paths = results.fetch(:Result, {}).fetch(:Paths, [])
+          if (results = body[:Results])
+            results.each do |result|
+              if (paths = result.dig(:Result, :Paths))
+                paths.each do |result_path|
+                  if (sub_domain = result_path[:SubDomain])
+                    new_domain = "#{sub_domain}.#{domain}"
 
-            paths.each do |result_path|
-              if (sub_domain = result_path[:SubDomain])
-                new_domain = "#{sub_domain}.#{domain}"
-
-                yield Domain.new(new_domain) if domains.add?(new_domain)
+                    yield Domain.new(new_domain) if domains.add?(new_domain)
+                  end
+                end
               end
-            end
 
-            emails = results.fetch(:Meta, {}).fetch(:Emails, [])
-
-            emails.each do |email|
-              yield EmailAddress.new(email) if email_addresses.add?(email)
+              if (emails = result.dig(:Meta, :Emails))
+                emails.each do |email|
+                  yield EmailAddress.new(email) if email_addresses.add?(email)
+                end
+              end
             end
           end
         end

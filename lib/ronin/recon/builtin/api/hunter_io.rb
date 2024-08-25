@@ -100,11 +100,11 @@ module Ronin
                    response.close
                  end
 
-          emails = body.fetch(:data, {}).fetch(:emails, [])
-
-          emails.each do |email|
-            if (email_addr = email[:value])
-              yield EmailAddress.new(email_addr)
+          if (emails = body.dig(:data, :emails))
+            emails.each do |email|
+              if (email_addr = email[:value])
+                yield EmailAddress.new(email_addr)
+              end
             end
           end
         end

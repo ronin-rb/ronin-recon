@@ -101,17 +101,17 @@ module Ronin
                        response.close
                      end
 
-          list = body.fetch(:list, [])
+          if (list = body[:list])
+            list.each do |record|
+              if (subdomain = record[:name])
+                yield Domain.new(subdomain)
+              end
 
-          list.each do |record|
-            if (subdomain = record[:name])
-              yield Domain.new(subdomain)
-            end
-
-            ip_addresses = record.fetch(:ip, [])
-
-            ip_addresses.each do |ip_addr|
-              yield IP.new(ip_addr)
+              if (ip_addresses = record[:ip])
+                ip_addresses.each do |ip_addr|
+                  yield IP.new(ip_addr)
+                end
+              end
             end
           end
         end
