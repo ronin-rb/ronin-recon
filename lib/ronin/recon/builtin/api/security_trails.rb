@@ -97,13 +97,14 @@ module Ronin
                          ensure
                            response.close
                          end
-          subdomains   = body.fetch(:subdomains, [])
           full_domains = Set.new
 
-          subdomains.each do |subdomain|
-            full_domain = "#{subdomain}.#{domain}"
+          if (subdomains = body.fetch(:subdomains))
+            subdomains.each do |subdomain|
+              full_domain = "#{subdomain}.#{domain}"
 
-            yield Host.new(full_domain) if full_domains.add?(full_domain)
+              yield Host.new(full_domain) if full_domains.add?(full_domain)
+            end
           end
         end
 
