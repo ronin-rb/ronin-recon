@@ -31,7 +31,7 @@ module Ronin
       #
       # ## Environment Variables
       #
-      # * `HUNTER_IO_API_KEY` - Specifies the api key used for authorization.
+      # * `HUNTER_IO_API_KEY` - Specifies the API key used for authorization.
       #
       class HunterIO < Worker
 
@@ -41,6 +41,7 @@ module Ronin
         description <<~DESC
           Queries the Domains https://api.hunter.io/domain-search and returns
           corresponding email addresses.
+
           The hunter.io API key can be specified via the api/hunter_io.api_key
           param or the HUNTER_IO_API_KEY env variables.
         DESC
@@ -99,7 +100,8 @@ module Ronin
                    response.close
                  end
 
-          emails   = body.fetch(:data, {}).fetch(:emails, [])
+          emails = body.fetch(:data, {}).fetch(:emails, [])
+
           emails.each do |email|
             if (email_addr = email[:value])
               yield EmailAddress.new(email_addr)
