@@ -197,6 +197,27 @@ module Ronin
         end
 
         #
+        # Case equality method used for fuzzy matching.
+        #
+        # @param [URL, Value] other
+        #   The other value to compare.
+        #
+        # @return [Boolean]
+        #   Indicates whether the other value is an URL with
+        #   the same uri.
+        #
+        # @since 0.3.0
+        #
+        def ===(other)
+          case other
+          when URL
+            @uri == other.uri
+          else
+            false
+          end
+        end
+
+        #
         # Returns the type or kind of recon value.
         #
         # @return [:url]
@@ -210,25 +231,7 @@ module Ronin
         def self.value_type
           :url
         end
-
-        #
-        # Case equality method used for fuzzy matching.
-        #
-        # @param [URL, Value] other
-        #   The other value to compare.
-        #
-        # @return [Boolean]
-        #   Indicates whether the other value is an URL with
-        #   the same uri.
-        #
-        def ===(other)
-          case other
-          when URL
-            @uri == other.uri
-          else
-            false
-          end
-        end
+        
       end
     end
   end
