@@ -231,7 +231,7 @@ module Ronin
         def self.value_type
           :url
         end
-        
+
       end
     end
   end
