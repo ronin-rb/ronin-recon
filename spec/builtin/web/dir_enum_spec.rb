@@ -57,19 +57,19 @@ describe Ronin::Recon::Web::DirEnum do
       set :port, 80
 
       get '/' do
-        halt 200
+        [200, ['Body for index']]
       end
 
       get '/admin' do
-        halt 200
+        [200, ['Body for /admin']]
       end
 
       get '/downloads' do
-        halt 200
+        [200, ['Body for /downloads']]
       end
 
       get '/secret' do
-        halt 200
+        [200, ['Body for /secret']]
       end
     end
   end
@@ -79,6 +79,7 @@ describe Ronin::Recon::Web::DirEnum do
 
   before do
     stub_request(:head, /#{Regexp.escape(host)}/).to_rack(app)
+    stub_request(:get, /#{Regexp.escape(host)}/).to_rack(app)
   end
 
   let(:fixtures_dir)  { File.join(__dir__,'fixtures') }
@@ -114,17 +115,17 @@ describe Ronin::Recon::Web::DirEnum do
       expect(yielded_values[0].uri).to eq(URI('http://example.com/admin'))
       expect(yielded_values[0].status).to eq(200)
       expect(yielded_values[0].headers).to eq(expected_headers)
-      expect(yielded_values[0].body).to be(nil)
+      expect(yielded_values[0].body).to eq('Body for /admin')
       expect(yielded_values[1]).to be_kind_of(Ronin::Recon::Values::URL)
       expect(yielded_values[1].uri).to eq(URI('http://example.com/downloads'))
       expect(yielded_values[1].status).to eq(200)
       expect(yielded_values[1].headers).to eq(expected_headers)
-      expect(yielded_values[1].body).to be(nil)
+      expect(yielded_values[1].body).to eq('Body for /downloads')
       expect(yielded_values[2]).to be_kind_of(Ronin::Recon::Values::URL)
       expect(yielded_values[2].uri).to eq(URI('http://example.com/secret'))
-      expect(yielded_values[2].status).to eq(200)
+      expect(yielded_values[2].status).to be(200)
       expect(yielded_values[2].headers).to eq(expected_headers)
-      expect(yielded_values[2].body).to be(nil)
+      expect(yielded_values[2].body).to eq('Body for /secret')
     end
 
     # Valid HTTP status codes
