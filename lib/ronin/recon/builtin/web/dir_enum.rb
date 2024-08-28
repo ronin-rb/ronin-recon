@@ -99,9 +99,17 @@ module Ronin
                     headers  = response.headers.to_h
 
                     if VALID_STATUS_CODES.include?(status)
+                      get_response = http.get(path)
+                      body         = begin
+                                       get_response.read
+                                     ensure
+                                       get_response.close
+                                     end
+
                       yield URL.new(
                         "#{base_url}#{path}", status:  status,
-                                              headers: headers
+                                              headers: headers,
+                                              body:    body
                       )
                     end
                   rescue Errno::ECONNREFUSED,
