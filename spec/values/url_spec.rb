@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'ronin/recon/values/url'
+require 'ronin/recon/values/domain'
 
 describe Ronin::Recon::Values::URL do
   let(:url) { 'https://www.example.com/index.html' }
@@ -232,6 +233,36 @@ describe Ronin::Recon::Values::URL do
 
     it "must return :url" do
       expect(subject.value_type).to be(:url)
+    end
+  end
+
+  describe "#===" do
+    let(:url) { 'https://www.foo.example.com/index.html' }
+
+    context "when given an URL object" do
+      context "and it has the same uri as the other URL value" do
+        let(:other) { described_class.new(url) }
+
+        it "must return true" do
+          expect(subject === other).to be(true)
+        end
+      end
+
+      context "but it has diffferent uri than the other URL value" do
+        let(:other) { described_class.new('https://www.example.net/index.html') }
+
+        it "must return false" do
+          expect(subject === other).to be(false)
+        end
+      end
+    end
+
+    context "when given non-URL object" do
+      let(:other) { Ronin::Recon::Values::Domain.new('example.com') }
+
+      it "must return false" do
+        expect(subject === other).to be(false)
+      end
     end
   end
 end
