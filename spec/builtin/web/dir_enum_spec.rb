@@ -172,6 +172,7 @@ describe Ronin::Recon::Web::DirEnum do
           expect(yielded_values.length).to eq(1)
           expect(yielded_values[0]).to be_kind_of(Ronin::Recon::Values::URL)
           expect(yielded_values[0].uri).to eq(URI('http://example.com/admin'))
+          expect(yielded_values[0].status).to eq(status_code)
         end
       end
     end
