@@ -28,6 +28,7 @@ require_relative '../../output_formats'
 
 require 'ronin/db/cli/database_options'
 require 'ronin/core/cli/logging'
+require 'set'
 
 module Ronin
   module Recon
