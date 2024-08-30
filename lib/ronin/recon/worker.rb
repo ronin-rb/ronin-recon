@@ -417,7 +417,8 @@ module Ronin
       #   The input value.
       #
       # @yield [new_value]
-      #   The `call` method can then `yield` one or more newly discovered values
+      #   The `process` method can then `yield` one or more newly discovered
+      #   values
       #
       # @yieldparam [Value] new_value
       #   An newly discovered output value from the input value.
