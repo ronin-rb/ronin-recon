@@ -316,6 +316,7 @@ end
 * [ronin-repos] ~> 0.1
 * [ronin-nmap] ~> 0.1
 * [ronin-web-spider] ~> 0.2
+* [ronin-web-browser] ~> 0.1
 
 ## Install
 
@@ -392,3 +393,4 @@ along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 [ronin-masscan]: https://github.com/ronin-rb/ronin-masscan#readme
 [ronin-nmap]: https://github.com/ronin-rb/ronin-nmap#readme
 [ronin-web-spider]: https://github.com/ronin-rb/ronin-web-spider#readme
+[ronin-web-browser]: https://github.com/ronin-rb/ronin-web-browser#readme
