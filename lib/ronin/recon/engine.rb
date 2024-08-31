@@ -178,16 +178,12 @@ module Ronin
       # @param [Hash{Symbol => Object}] kwargs
       #   Additional keyword arguments for {#initialize}.
       #
-      # @yield [value, (value, parent)]
-      #   The given block will be passed each discovered value during recon.
-      #   If the block accepts two arguments the value and it's parent value
-      #   will be passed to the block.
+      # @yield [engine]
+      #   The given block will be passed the newly initialized engine for
+      #   further configuration.
       #
-      # @yieldparam [Value] value
-      #   A value discovered by one of the recon workers.
-      #
-      # @yieldparam [Value] parent
-      #   The parent value which is associated to the discovered value.
+      # @yieldparam [Engine] engine
+      #   The newly initialized engine.
       #
       # @return [Engine]
       #   The engine instance.
