@@ -118,9 +118,6 @@ module Ronin
       # @yieldparam [Engine] self
       #   The newly initialized engine.
       #
-      # @yieldparam [Value] parent
-      #   The parent value which is associated to the discovered value.
-      #
       # @api public
       #
       def initialize(values, ignore:      [],
