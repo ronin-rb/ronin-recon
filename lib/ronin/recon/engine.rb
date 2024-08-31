@@ -298,6 +298,10 @@ module Ronin
       # @yieldparam [RuntimeError] exception
       #   An exception that was raised by a worker.
       #
+      # @raise [ArgumentError]
+      #   `event` was not `:value`, `:connection`, `:job_started`,
+      #   `:job_completed`, or `:job_failed`.
+      #
       # @api public
       #
       def on(event,&block)
