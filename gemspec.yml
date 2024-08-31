@@ -52,6 +52,7 @@ dependencies:
   ronin-repos: ~> 0.1
   ronin-nmap: ~> 0.1
   ronin-web-spider: ~> 0.2
+  ronin-web-browser: ~> 0.1
 
 development_dependencies:
   bundler: ">= 2.0.0"
