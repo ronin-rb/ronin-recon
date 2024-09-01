@@ -63,7 +63,7 @@ describe Ronin::Recon::Values::Website do
     context "and the string starts with 'http://'" do
       let(:scheme) { 'http' }
 
-      it "must return a Values::Website object with a 'http' scheme, host, and port of 443" do
+      it "must return a Values::Website object with a 'http' scheme, host, and port of 80" do
         value = subject.parse(string)
 
         expect(value).to be_kind_of(Ronin::Recon::Values::Website)
@@ -128,7 +128,7 @@ describe Ronin::Recon::Values::Website do
       context "but the other Website object has a different #scheme" do
         let(:other) { described_class.new('https',host,port) }
 
-        it "must return true" do
+        it "must return false" do
           expect(subject.eql?(other)).to be(false)
         end
       end
@@ -136,7 +136,7 @@ describe Ronin::Recon::Values::Website do
       context "but the other Website object has a different #host" do
         let(:other) { described_class.new(scheme,'other.com',port) }
 
-        it "must return true" do
+        it "must return false" do
           expect(subject.eql?(other)).to be(false)
         end
       end
@@ -144,7 +144,7 @@ describe Ronin::Recon::Values::Website do
       context "but the other Website object has a different #port" do
         let(:other) { described_class.new(scheme,host,8000) }
 
-        it "must return true" do
+        it "must return false" do
           expect(subject.eql?(other)).to be(false)
         end
       end
