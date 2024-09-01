@@ -354,7 +354,7 @@ module Ronin
             end
 
             @worker_params.each do |worker,params|
-              if @config.params.has_key?(params)
+              if @config.params.has_key?(worker)
                 @config.params[worker].merge!(params)
               else
                 @config.params[worker] = params
