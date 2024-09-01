@@ -172,14 +172,27 @@ module Ronin
         alias == eql?
 
         #
-        # Converts workers ids to array
+        # Converts workers to a YAML Hash.
         #
-        # @return [Array<String>]
+        # @return [Hash{String => Boolean}]
+        #   The hash of worker IDs and whether to enable/disable them.
         #
         # @since 0.2.0
         #
         def as_yaml
-          @ids.to_a
+          hash = {}
+
+          # enable the workers in the set.
+          (@ids - DEFAULT).each do |worker_id|
+            hash[worker_id] = true
+          end
+
+          # disable the default workers that are not in the set.
+          (DEFAULT - @ids).each do |worker_id|
+            hash[worker_id] = false
+          end
+
+          return hash
         end
 
       end
