@@ -169,12 +169,12 @@ describe Ronin::Recon::Config do
       end
     end
 
-    describe "#as_yaml" do
+    describe "#to_h" do
       context "when initialized the default set of workers" do
         subject { described_class.default }
 
         it "must return an empty Hash" do
-          expect(subject.as_yaml).to eq({})
+          expect(subject.to_h).to eq({})
         end
       end
 
@@ -184,7 +184,7 @@ describe Ronin::Recon::Config do
         subject { described_class.new(set) }
 
         it "must return a Hash with the worker IDs from the default, that are not in the array, disabled and the worker IDs that are not in the default set, but in the array, enabled" do
-          expect(subject.as_yaml).to eq(
+          expect(subject.to_h).to eq(
             {
               'dns/mailservers'     => false,
               'dns/nameservers'     => false,
@@ -211,7 +211,7 @@ describe Ronin::Recon::Config do
         subject { described_class.new(array) }
 
         it "must return a Hash with the worker IDs from the default, that are not in the array, disabled and the worker IDs that are not in the default set, but in the array, enabled" do
-          expect(subject.as_yaml).to eq(
+          expect(subject.to_h).to eq(
             {
               'dns/mailservers'     => false,
               'dns/nameservers'     => false,
@@ -245,7 +245,7 @@ describe Ronin::Recon::Config do
         subject { described_class.new(hash) }
 
         it "must return a Hash with the worker IDs that are disabled and enabled, which are not already in the default set" do
-          expect(subject.as_yaml).to eq(
+          expect(subject.to_h).to eq(
             {
               'net/port_scan'  => false,
               'web/new_worker' => true
