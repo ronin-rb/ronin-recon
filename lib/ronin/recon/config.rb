@@ -179,7 +179,7 @@ module Ronin
         #
         # @since 0.2.0
         #
-        def as_yaml
+        def to_h
           hash = {}
 
           # enable the workers in the set.
@@ -404,7 +404,7 @@ module Ronin
 
         data[:params]      = @params unless @params.empty?
         data[:concurrency] = @concurrency unless @concurrency.empty?
-        data[:workers]     = @workers.as_yaml if @workers
+        data[:workers]     = @workers.to_h if @workers
 
         data.to_yaml(options)
       end
