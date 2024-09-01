@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'ronin/recon/config'
 
+require 'tmpdir'
+
 describe Ronin::Recon::Config do
   describe described_class::Workers do
     describe "#initialize" do
@@ -853,6 +855,19 @@ describe Ronin::Recon::Config do
 
     it "must convert Config into YAML string" do
       expect(subject.to_yaml).to eq(File.read(expected_yml))
+    end
+  end
+
+  describe "#save" do
+    subject { described_class.default }
+
+    let(:tempdir) { Dir.mktmpdir('test-ronin-recon-config-save') }
+    let(:path)    { File.join(tempdir, 'test-config.yml') }
+
+    it "must write Config converted to YAML into a file" do
+      subject.save(path)
+
+      expect(File.read(path)).to eq(subject.to_yaml)
     end
   end
 end
