@@ -395,6 +395,7 @@ module Ronin
 
         data.to_yaml(options)
       end
+
     end
   end
 end
