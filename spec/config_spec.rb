@@ -168,6 +168,92 @@ describe Ronin::Recon::Config do
         end
       end
     end
+
+    describe "#as_yaml" do
+      context "when initialized the default set of workers" do
+        subject { described_class.default }
+
+        it "must return an empty Hash" do
+          expect(subject.as_yaml).to eq({})
+        end
+      end
+
+      context "when given a Set" do
+        let(:set) { Set['dns/lookup', 'web/dir_enum', 'web/new_worker'] }
+
+        subject { described_class.new(set) }
+
+        it "must return a Hash with the worker IDs from the default, that are not in the array, disabled and the worker IDs that are not in the default set, but in the array, enabled" do
+          expect(subject.as_yaml).to eq(
+            {
+              'dns/mailservers'     => false,
+              'dns/nameservers'     => false,
+              'dns/reverse_lookup'  => false,
+              'dns/srv_enum'        => false,
+              'dns/subdomain_enum'  => false,
+              'dns/suffix_enum'     => false,
+              'net/ip_range_enum'   => false,
+              'net/port_scan'       => false,
+              'net/service_id'      => false,
+              'ssl/cert_enum'       => false,
+              'ssl/cert_grab'       => false,
+              'web/email_addresses' => false,
+              'web/new_worker'      => true,
+              'web/spider'          => false
+            }
+          )
+        end
+      end
+
+      context "when given an Array" do
+        let(:array) { %w[dns/lookup web/dir_enum web/new_worker] }
+
+        subject { described_class.new(array) }
+
+        it "must return a Hash with the worker IDs from the default, that are not in the array, disabled and the worker IDs that are not in the default set, but in the array, enabled" do
+          expect(subject.as_yaml).to eq(
+            {
+              'dns/mailservers'     => false,
+              'dns/nameservers'     => false,
+              'dns/reverse_lookup'  => false,
+              'dns/srv_enum'        => false,
+              'dns/subdomain_enum'  => false,
+              'dns/suffix_enum'     => false,
+              'net/ip_range_enum'   => false,
+              'net/port_scan'       => false,
+              'net/service_id'      => false,
+              'ssl/cert_enum'       => false,
+              'ssl/cert_grab'       => false,
+              'web/email_addresses' => false,
+              'web/new_worker'      => true,
+              'web/spider'          => false
+            }
+          )
+        end
+      end
+
+      context "when initialized with a Hash" do
+        let(:hash) do
+          {
+            'dns/lookup'     => true,
+            'web/dir_enum'   => true,
+            'net/port_scan'  => false,
+            'web/new_worker' => true
+          }
+        end
+
+        subject { described_class.new(hash) }
+
+        it "must return a Hash with the worker IDs that are disabled and enabled, which are not already in the default set" do
+          expect(subject.as_yaml).to eq(
+            {
+              'net/port_scan'  => false,
+              'web/new_worker' => true
+            }
+          )
+        end
+      end
+    end
   end
 
   describe "#initialize" do
