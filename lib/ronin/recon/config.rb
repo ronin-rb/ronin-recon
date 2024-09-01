@@ -416,6 +416,8 @@ module Ronin
       # @param [String] path
       #   The output file path.
       #
+      # @since 0.2.0
+      #
       def save(path=DEFAULT_PATH)
         File.write(path,to_yaml)
       end
