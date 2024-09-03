@@ -1,6 +1,8 @@
 ---
 ronin-recon worker: &worker_ids
   - $(ronin-recon workers)
+ronin-recon config enable:  *worker_ids
+ronin-recon config disable: *worker_ids
 ronin-recon run*-w: *worker_ids
 ronin-recon run*-e: *worker_ids
 ronin-recon run*-d: *worker_ids

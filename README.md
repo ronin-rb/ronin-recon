@@ -74,6 +74,7 @@ Arguments:
 
 Commands:
     completion
+    config
     help
     irb
     new
@@ -213,6 +214,24 @@ Save the recon results to a PDF image:
 
 ```shell
 $ ronin-recon run -o output.pdf example.com
+```
+
+Enable an optional worker by default:
+
+```shell
+$ ronin-recon config enable api/hunter_io
+```
+
+Set the default concurrency for a worker:
+
+```shell
+$ ronin-recon config set --concurrency web/spider=4
+```
+
+Set the API key for a worker:
+
+```shell
+$ ronin-recon config set --param api/hunter_io.api_key=...
 ```
 
 Generate a boilerplate recon worker file, with some custom information:

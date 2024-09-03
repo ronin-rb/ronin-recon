@@ -27,6 +27,13 @@ generated_files:
  - data/completions/ronin-recon
  - man/ronin-recon.1
  - man/ronin-recon-completion.1
+ - man/ronin-recon-config.1
+ - man/ronin-recon-config-disable.1
+ - man/ronin-recon-config-enable.1
+ - man/ronin-recon-config-get.1
+ - man/ronin-recon-config-list.1
+ - man/ronin-recon-config-set.1
+ - man/ronin-recon-config-unset.1
  - man/ronin-recon-irb.1
  - man/ronin-recon-new.1
  - man/ronin-recon-workers.1
