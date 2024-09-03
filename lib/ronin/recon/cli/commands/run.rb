@@ -19,6 +19,7 @@
 #
 
 require_relative '../command'
+require_relative '../config_file_option'
 require_relative '../debug_option'
 require_relative '../printing'
 require_relative '../../value/parser'
@@ -66,18 +67,12 @@ module Ronin
         class Run < Command
 
           include DebugOption
+          include ConfigFileOption
           include Printing
           include Core::CLI::Logging
           include DB::CLI::DatabaseOptions
 
           usage '[options] {IP | IP-range | DOMAIN | HOST | WILDCARD | WEBSITE} ...'
-
-          option :config_file, short: '-C',
-                               value: {
-                                 type:  String,
-                                 usage: 'FILE'
-                               },
-                               desc: 'Loads the configuration file'
 
           option :worker, short: '-w',
                           value: {
@@ -203,11 +198,6 @@ module Ronin
           #
           # @return [Set<String>]
           attr_reader :worker_files
-
-          # The loaded configuration for the {Engine}.
-          #
-          # @return [Config]
-          attr_reader :config
 
           # The loaded workers for the {Engine}.
           #
@@ -340,11 +330,7 @@ module Ronin
           # the `--config-file` option or `~/.config/ronin-recon/config.yml`.
           #
           def load_config
-            @config = if (path = options[:config_file])
-                        Config.load(path)
-                      else
-                        Config.default
-                      end
+            super()
 
             unless @only_workers.empty?
               @config.workers = @only_workers
