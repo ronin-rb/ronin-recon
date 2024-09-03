@@ -30,6 +30,9 @@ Runs a `ronin-recon` *COMMAND*.
 *completion*
 : Manages the shell completion rules for `ronin-recon`.
 
+*config*
+: Get and set ronin-recon configuration.
+
 *help*
 : Lists available commands or shows help about a specific command.
 
@@ -57,4 +60,4 @@ Postmodern <postmodern.mod3@gmail.com>
 
 ## SEE ALSO
 
-[ronin-recon-completion](ronin-recon-completion.1.md) [ronin-recon-new](ronin-recon-new.1.md) [ronin-recon-test](ronin-recon-test.1.md) [ronin-recon-worker](ronin-recon-worker.1.md) [ronin-recon-workers](ronin-recon-workers.1.md)
+[ronin-recon-completion](ronin-recon-completion.1.md) [ronin-recon-config](ronin-recon-config.1.md) [ronin-recon-new](ronin-recon-new.1.md) [ronin-recon-test](ronin-recon-test.1.md) [ronin-recon-worker](ronin-recon-worker.1.md) [ronin-recon-workers](ronin-recon-workers.1.md)
