@@ -22,6 +22,7 @@ require_relative 'exceptions'
 
 require 'ronin/core/home'
 require 'set'
+require 'fileutils'
 
 module Ronin
   module Recon
@@ -419,6 +420,7 @@ module Ronin
       # @since 0.2.0
       #
       def save(path=DEFAULT_PATH)
+        FileUtils.mkdir_p(File.dirname(path))
         File.write(path,to_yaml)
       end
 
