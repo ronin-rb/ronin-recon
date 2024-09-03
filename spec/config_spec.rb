@@ -869,5 +869,15 @@ describe Ronin::Recon::Config do
 
       expect(File.read(path)).to eq(subject.to_yaml)
     end
+
+    context "when the parent directory does not exist yet" do
+      let(:path) { File.join(tempdir,'does','not','exist','test-config.yml') }
+
+      it "must create the parent directory" do
+        subject.save(path)
+
+        expect(File.directory?(File.dirname(path))).to be(true)
+      end
+    end
   end
 end
