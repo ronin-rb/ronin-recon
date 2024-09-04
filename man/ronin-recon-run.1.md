@@ -6,7 +6,7 @@ ronin-recon-run - Runs the recon engine with one or more initial values
 
 ## SYNOPSIS
 
-`ronin-recon run` [*options*] {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*} ... 
+`ronin-recon run` [*options*] {*IP* \| *IP-range* \| *DOMAIN* \| *HOST* \| *WILDCARD* \| *WEBSITE*} ...
 
 ## DESCRIPTION
 
