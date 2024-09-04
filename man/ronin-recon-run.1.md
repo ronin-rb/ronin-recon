@@ -1,4 +1,4 @@
-# ronin-recon-test 1 "2023-05-01" Ronin "User Manuals"
+# ronin-recon-run 1 "2023-05-01" Ronin Recon "User Manuals"
 
 ## NAME
 
