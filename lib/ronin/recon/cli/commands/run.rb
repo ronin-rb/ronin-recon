@@ -56,6 +56,7 @@ module Ronin
         #     -I, --ignore VALUE               The values to ignore in result
         #     -F txt|list|csv|json|ndjson|dot|svg|png|pdf,
         #         --output-format              The output format
+        #         --output-dir DIR             Writes data to an output directory
         #         --import                     Imports each newly discovered value into the Ronin database
         #     -h, --help                       Print help information
         #
@@ -152,6 +153,14 @@ module Ronin
                                    type: OutputFormats.formats
                                  },
                                  desc: 'The output format'
+
+          option :output_dir, value: {
+                                type:  String,
+                                usage: 'DIR'
+                              },
+                              desc: 'Writes data to an output directory' do |path|
+                                @outputs << [path, OutputFormats::Dir]
+                              end
 
           option :import, desc: 'Imports each newly discovered value into the Ronin database'
 
