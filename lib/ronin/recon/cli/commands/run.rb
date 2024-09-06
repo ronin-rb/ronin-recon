@@ -110,24 +110,19 @@ module Ronin
 
           option :param, short: '-p',
                          value: {
-                           type:  /\A[^\.\=\s]+\.[^=\s]+=.+\z/,
+                           type:  /\A([^\.\=\s]+)\.([^=\s]+)=(.+)\z/,
                            usage: 'WORKER.NAME=VALUE'
                          },
-                         desc: 'Sets a param for a worker' do |str|
-                           prefix, value = str.split('=',2)
-                           worker, name  = prefix.split('.',2)
-
-                           @worker_params[worker][name.to_sym] = value
+                         desc: 'Sets a param for a worker' do |str,worker,param_name,param_value|
+                           @worker_params[worker][param_name.to_sym] = param_value
                          end
 
           option :concurrency, short: '-c',
                                value: {
-                                 type:  /\A[^\.\=\s]+=\d+\z/,
+                                 type:  /\A([^\.\=\s]+)=(\d+)\z/,
                                  usage: 'WORKER=NUM'
                                },
-                               desc: 'Sets the concurrency of a worker' do |str|
-                                 worker, concurrency = str.split('=',2)
-
+                               desc: 'Sets the concurrency of a worker' do |str,worker,concurrency|
                                  @worker_concurrency[worker] = concurrency.to_i
                                end
 
