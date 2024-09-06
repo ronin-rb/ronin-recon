@@ -88,22 +88,27 @@ List all available recon workers:
 
 ```shell
 $ ronin-recon workers
-  api/crt_sh
-  dns/lookup
-  dns/mailservers
-  dns/nameservers
-  dns/reverse_lookup
-  dns/srv_enum
-  dns/subdomain_enum
-  dns/suffix_enum
-  net/cert_enum
-  net/cert_grab
-  net/ip_range_enum
-  net/port_scan
-  net/service_id
-  web/dir_enum
-  web/email_addresses
-  web/spider
+  api/built_with                    
+  api/crt_sh                        
+  api/hunter_io                     
+  api/security_trails               
+  api/zoom_eye                      
+  dns/lookup             [enabled]  
+  dns/mailservers        [enabled]  
+  dns/nameservers        [enabled]  
+  dns/reverse_lookup     [enabled]  
+  dns/srv_enum           [enabled]  
+  dns/subdomain_enum     [enabled]  
+  dns/suffix_enum        [enabled]  
+  net/ip_range_enum      [enabled]  
+  net/port_scan          [enabled]  
+  net/service_id         [enabled]  
+  ssl/cert_enum          [enabled]  
+  ssl/cert_grab          [enabled]  
+  web/dir_enum           [enabled]  
+  web/email_addresses    [enabled]  
+  web/screenshot                    
+  web/spider             [enabled]  
 ```
 
 Print info about a specific recon worker:
