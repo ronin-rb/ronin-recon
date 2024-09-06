@@ -30,15 +30,15 @@ module Ronin
         #
         # ## Usage
         #
-        #    ronin-recon help [options]
+        #     ronin-recon help [options]
         #
         # ## Options
         #
-        #    -h, --help                       Print help information
+        #     -h, --help                       Print help information
         #
         # ## Arguments
         #
-        #    [COMMAND]                        Command name to lookup
+        #     [COMMAND]                        Command name to lookup
         #
         class Workers < Command
 
