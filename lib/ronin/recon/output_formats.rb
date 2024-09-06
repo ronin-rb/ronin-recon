@@ -23,6 +23,8 @@ require_relative 'output_formats/dot'
 require_relative 'output_formats/svg'
 require_relative 'output_formats/png'
 require_relative 'output_formats/pdf'
+require_relative 'output_formats/archive'
+require_relative 'output_formats/git_archive'
 
 require 'ronin/core/output_formats'
 
@@ -35,15 +37,17 @@ module Ronin
     module OutputFormats
       include Core::OutputFormats
 
-      register :txt,    '.txt',    TXT
-      register :csv,    '.csv',    CSV
-      register :json,   '.json',   JSON
-      register :ndjson, '.ndjson', NDJSON
-      register :dir,    '',        Dir
-      register :dot,    '.dot',    Dot
-      register :svg,    '.svg',    SVG
-      register :png,    '.png',    PNG
-      register :pdf,    '.pdf',    PDF
+      register :txt,             '.txt',    TXT
+      register :csv,             '.csv',    CSV
+      register :json,            '.json',   JSON
+      register :ndjson,          '.ndjson', NDJSON
+      register :dir,             '',        Dir
+      register :dot,             '.dot',    Dot
+      register :svg,             '.svg',    SVG
+      register :png,             '.png',    PNG
+      register :pdf,             '.pdf',    PDF
+      register :web_archive,     '',        Archive
+      register :web_git_archive, '',        GitArchive
     end
   end
 end
