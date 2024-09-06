@@ -20,6 +20,9 @@
 
 require_relative '../command'
 require_relative '../../registry'
+require_relative '../../config'
+
+require 'command_kit/printing/tables'
 
 module Ronin
   module Recon
@@ -42,6 +45,8 @@ module Ronin
         #
         class Workers < Command
 
+          include CommandKit::Printing::Tables
+
           usage '[options] [DIR]'
 
           argument :dir, required: false,
@@ -58,19 +63,23 @@ module Ronin
           #   The optional recon worker directory to list.
           #
           def run(dir=nil)
-            files = if dir
-                      dir = "#{dir}/" unless dir.end_with?('/')
+            config = Ronin::Recon::Config.default
 
-                      Ronin::Recon.list_files.select do |file|
-                        file.start_with?(dir)
+            workers = if dir
+                        dir = "#{dir}/" unless dir.end_with?('/')
+
+                        Ronin::Recon.list_files.select do |file|
+                          file.start_with?(dir)
+                        end
+                      else
+                        Ronin::Recon.list_files
                       end
-                    else
-                      Ronin::Recon.list_files
-                    end
 
-            files.each do |file|
-              puts "  #{file}"
+            columns = workers.map do |worker|
+              [worker, ('[enabled]' if config.workers.include?(worker))]
             end
+
+            print_table(columns, padding: 2)
           end
 
         end
