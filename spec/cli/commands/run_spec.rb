@@ -162,6 +162,17 @@ describe Ronin::Recon::CLI::Commands::Run do
       end
     end
 
+    context "when the '--output-dir' option is given" do
+      let(:path) { 'path/to/dir' }
+      let(:argv) { ['--output-dir', path] }
+
+      it "must add the output directory path to #outputs" do
+        expect(subject.outputs).to eq([
+          [path, Ronin::Recon::OutputFormats::Dir]
+        ])
+      end
+    end
+
     context "when the '--ignore' option is given" do
       let(:value1) { Ronin::Recon::Values::Host.new('staging.example.com') }
       let(:value2) { Ronin::Recon::Values::Host.new('dev.example.com') }

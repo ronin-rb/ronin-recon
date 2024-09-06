@@ -70,6 +70,9 @@ Runs the recon engine with one or more initial values.
 : The output format. If not specified, the output format will be inferred from
   the `--output` *FILE* extension.
 
+`--output-dir` *DIR*
+: Writes the output to a directory of separate files for each value type.
+
 `--import`
 : Imports each newly discovered value into the Ronin database.
 
