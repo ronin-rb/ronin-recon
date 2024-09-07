@@ -122,6 +122,8 @@ module Ronin
         # The "hash" value of the open port.
         #
         # @return [Integer]
+        #   The hash value derived from the class, {#address}, {#number},
+        #   {#protocol}, {#service}, and {#ssl}.
         #
         def hash
           [self.class, @address, @number, @protocol, @service, @ssl].hash
