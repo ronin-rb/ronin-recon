@@ -155,10 +155,10 @@ module Ronin
         end
 
         #
-        # The "hash" value of the wildcard host name.
+        # The "hash" value of the website value.
         #
         # @return [Integer]
-        #   The hash value of {#host} and {#port}.
+        #   The hash value of class, {#scheme}, {#host}, and {#port}.
         #
         def hash
           [self.class, @scheme, @host, @port].hash
