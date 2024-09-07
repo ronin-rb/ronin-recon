@@ -91,7 +91,7 @@ module Ronin
         # The "hash" value of the wildcard host name.
         #
         # @return [Integer]
-        #   The hash value of {#template}.
+        #   The hash value derived from the class and the {#template}.
         #
         def hash
           [self.class, @template].hash

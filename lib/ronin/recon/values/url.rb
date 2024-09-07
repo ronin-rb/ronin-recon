@@ -161,7 +161,7 @@ module Ronin
         # The "hash" value of the URL.
         #
         # @return [Integer]
-        #   The hash value of {#uri}.
+        #   The hash value derived from the class and the {#uri}.
         #
         def hash
           [self.class, @uri].hash

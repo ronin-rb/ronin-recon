@@ -158,7 +158,7 @@ module Ronin
         # The "hash" value of the website value.
         #
         # @return [Integer]
-        #   The hash value of class, {#scheme}, {#host}, and {#port}.
+        #   The hash value of the class, {#scheme}, {#host}, and {#port}.
         #
         def hash
           [self.class, @scheme, @host, @port].hash

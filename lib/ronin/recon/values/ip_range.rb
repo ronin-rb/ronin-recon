@@ -106,7 +106,7 @@ module Ronin
         # The "hash" value of the IP range.
         #
         # @return [Integer]
-        #   The hash value of {#range}.
+        #   The hash value derived from the class and the {#range}.
         #
         def hash
           [self.class, @range].hash

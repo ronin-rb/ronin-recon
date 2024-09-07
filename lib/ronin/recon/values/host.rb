@@ -91,7 +91,7 @@ module Ronin
         # The "hash" value of the host name.
         #
         # @return [Integer]
-        #   The hash of the {#name}.
+        #   The hash value derived from the class and the {#name}.
         #
         def hash
           [self.class, @name].hash

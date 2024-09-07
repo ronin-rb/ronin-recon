@@ -65,7 +65,7 @@ module Ronin
         # The "hash" value for the email address.
         #
         # @return [Integer]
-        #   The hash of the {#address}.
+        #   The hash value derived from the class and the {#address}.
         #
         def hash
           [self.class, @address].hash
