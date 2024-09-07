@@ -116,6 +116,8 @@ module Ronin
         # The "hash" value of the certificate.
         #
         # @return [Integer]
+        #   The hash value derived from the class and the parsed certificates
+        #   serial number.
         #
         def hash
           [self.class, @cert.serial].hash
