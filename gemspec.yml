@@ -39,6 +39,7 @@ generated_files:
 required_ruby_version: ">= 3.1.0"
 
 dependencies:
+  csv: ~> 3.0
   thread-local: ~> 1.0
   async-io: ~> 1.0
   async-dns: ~> 1.0
