@@ -22,6 +22,7 @@ describe Ronin::Recon::Web::Screenshot do
     end
 
     it "must visit a website and take a screenshot of it" do
+      skip "GitHub Actions causes the Ferrum process to timeout sometimes" if ENV['CI']
       subject.process(url)
 
       expect(File.exist?(path)).to be(true)
