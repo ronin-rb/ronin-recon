@@ -51,6 +51,9 @@ module Ronin
         #
         # Initializes the recon value.
         #
+        # @param [Value] value
+        #   The value object.
+        #
         # @param [Value, nil] parent
         #   The associated parent value.
         #
