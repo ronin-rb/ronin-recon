@@ -28,9 +28,9 @@ module Ronin
       #
       class Value
 
-        # The value's object.
+        # The value object.
         #
-        # @return [Object]
+        # @return [Value]
         attr_reader :value
 
         # The associated parent value.
