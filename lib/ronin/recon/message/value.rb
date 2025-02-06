@@ -43,7 +43,7 @@ module Ronin
         # @return [Integer]
         attr_reader :depth
 
-        # The ID of the recond worker which produced the value.
+        # The ID of the recon worker which produced the value.
         #
         # @return [Worker, nil]
         attr_reader :worker
