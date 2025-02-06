@@ -45,6 +45,30 @@ module Ronin
         accepts Website
         outputs URL
 
+        param :limit, Integer, desc: 'The maximum number of pages to visit.'
+
+        param :max_depth, Integer, desc: 'The maximum link depth to follow.'
+
+        param :delay, Integer, desc: 'The number of seconds to pause between each request.'
+
+        param :open_timeout, Integer, desc: 'Optional open connection timeout.'
+
+        param :read_timeout, Integer, desc: 'Optional read timeout.'
+
+        param :ssl_timeout, Integer, desc: 'Optional SSL connection timeout.'
+
+        param :continue_timeout, Integer, desc: 'Optional continue timeout.'
+
+        param :keep_alive_timeout, Integer, desc: 'Optional `Keep-Alive` timeout.'
+
+        param :proxy, URI, desc: 'The proxy information to use.'
+
+        param :referer, String, desc: 'The `Referer` URL to send with each request.'
+
+        param :user_agent, String, desc: 'The `User-Agent` string to send with each requests.'
+
+        param :robots, Boolean, desc: 'Specifies whether `robots.txt` should be honored.'
+
         #
         # Spiders a website and yields every spidered URL.
         #
@@ -60,7 +84,7 @@ module Ronin
         def process(website)
           base_uri = website.to_uri
 
-          Ronin::Web::Spider.site(base_uri) do |agent|
+          Ronin::Web::Spider.site(base_uri, **agent_kwargs) do |agent|
             agent.every_page do |page|
               if VALID_STATUS_CODES.include?(page.code)
                 yield URL.new(page.url, status:  page.code,
@@ -89,6 +113,13 @@ module Ronin
               end
             end
           end
+        end
+
+        #
+        # Returns Hash based on the params
+        #
+        def agent_kwargs
+          params.slice(:limit, :max_depth, :delay, :open_timeout, :read_timeout, :ssl_timeout, :continue_timeout, :keep_alive_timeout, :proxy, :referer, :user_agent, :robots)
         end
 
       end
