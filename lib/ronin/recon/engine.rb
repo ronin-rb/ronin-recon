@@ -420,7 +420,7 @@ module Ronin
       end
 
       #
-      # Processes a message.
+      # Processes a message from the output queue.
       #
       # @param [Message::WorkerStarted, Message::WorkerStopped, Message::JobStarted, Message::JobCompleted, Message::JobFailed, Message::Value] mesg
       #   A queue message to process.
