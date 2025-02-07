@@ -39,11 +39,6 @@ module Ronin
     #
     class WorkerPool
 
-      # The recon worker's ID.
-      #
-      # @return [String]
-      attr_reader :id
-
       # The number of async worker tasks to spawn.
       #
       # @return [Integer]
