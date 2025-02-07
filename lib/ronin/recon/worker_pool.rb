@@ -116,7 +116,7 @@ module Ronin
       # Runs the worker.
       #
       def run
-        # HACK: for some reason `until (mesg = ...) == Message::SHUTDOWn)`
+        # HACK: for some reason `until (mesg = ...) == Message::SHUTDOWN)`
         # causes `Message::SHUTDOWN` objects to slip by. Changing it to a
         # `loop do` fixes this for some reason.
         loop do
