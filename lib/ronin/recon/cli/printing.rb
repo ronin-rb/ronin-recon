@@ -44,7 +44,7 @@ module Ronin
           Values::Cert         => 'SSL/TLS certificate',
           Values::Website      => 'website',
           Values::URL          => 'URL',
-          Values::EmailAddress => 'email addresse'
+          Values::EmailAddress => 'email address'
         }
 
         #
