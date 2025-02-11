@@ -18,7 +18,7 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require_relative '../values'
+require_relative 'text'
 
 require 'ronin/core/cli/logging'
 
@@ -29,71 +29,8 @@ module Ronin
       # Helper methods for printing {Values Value} objects.
       #
       module Printing
+        include Text
         include Core::CLI::Logging
-
-        # Mapping of {Value} classes to printable names.
-        VALUE_CLASS_NAMES = {
-          Values::Domain       => 'domain',
-          Values::Mailserver   => 'mailserver',
-          Values::Nameserver   => 'nameserver',
-          Values::Wildcard     => 'wildcard host name',
-          Values::Host         => 'host',
-          Values::IP           => 'IP address',
-          Values::IPRange      => 'IP range',
-          Values::OpenPort     => 'open port',
-          Values::Cert         => 'SSL/TLS certificate',
-          Values::Website      => 'website',
-          Values::URL          => 'URL',
-          Values::EmailAddress => 'email addresse'
-        }
-
-        #
-        # Converts the value class into a printable name.
-        #
-        # @param [Class<Value>] value_class
-        #   The value class.
-        #
-        # @return [String]
-        #   The descriptive name for the value class.
-        #
-        # @raise [NotImplementedError]
-        #
-        def value_class_name(value_class)
-          VALUE_CLASS_NAMES.fetch(value_class) do
-            raise(NotImplementedError,"unknown value class: #{value_class.inspect}")
-          end
-        end
-
-        #
-        # Formats a value object into a human readable string.
-        #
-        # @param [Value] value
-        #   The value object to format.
-        #
-        # @return [String]
-        #   The formatted value.
-        #
-        # @raise [NotImplementedError]
-        #   The given value object was not supported.
-        #
-        def format_value(value)
-          case value
-          when Values::Domain       then "domain #{value}"
-          when Values::Mailserver   then "mailserver #{value}"
-          when Values::Nameserver   then "nameserver #{value}"
-          when Values::Wildcard     then "wildcard host name #{value}"
-          when Values::Host         then "host #{value}"
-          when Values::IP           then "IP address #{value}"
-          when Values::IPRange      then "IP range #{value}"
-          when Values::OpenPort     then "open #{value.protocol.upcase} port #{value}"
-          when Values::Cert         then "SSL/TLS certificate #{value.subject}"
-          when Values::Website      then "website #{value}"
-          when Values::URL          then "URL #{value}"
-          when Values::EmailAddress then "email address #{value}"
-          else
-            raise(NotImplementedError,"value class #{value.class} not supported")
-          end
-        end
 
         #
         # Prints a newly discovered value.
