@@ -3,13 +3,13 @@ require 'ronin/recon/cli/printing'
 require 'ronin/recon/cli/command'
 
 describe Ronin::Recon::CLI::Printing do
-  module TestPrinting
+  module TestCLIPrinting
     class TestCommand < Ronin::Recon::CLI::Command
       include Ronin::Recon::CLI::Printing
     end
   end
 
-  let(:command_class) { TestPrinting::TestCommand }
+  let(:command_class) { TestCLIPrinting::TestCommand }
   subject { command_class.new }
 
   let(:fixtures_dir) { File.join(__dir__,'..','fixtures') }
