@@ -1,0 +1,7 @@
+---
+ronin-recon worker: &worker_ids
+  - $(ronin-recon workers)
+ronin-recon run*-w: *worker_ids
+ronin-recon run*-e: *worker_ids
+ronin-recon run*-d: *worker_ids
+ronin-recon test: *worker_ids

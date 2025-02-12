@@ -68,6 +68,7 @@ require 'command_kit/completion/task'
 CommandKit::Completion::Task.new(
   class_file:  'ronin/recon/cli',
   class_name:  'Ronin::Recon::CLI',
+  input_file:  'data/completions/ronin-recon.yml',
   output_file: 'data/completions/ronin-recon'
 )
 
