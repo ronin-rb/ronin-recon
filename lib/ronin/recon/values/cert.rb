@@ -40,7 +40,7 @@ module Ronin
         #
         # Initializes the certificate value.
         #
-        # @param [OpenSSL::X509::Certificate] cert
+        # @param [Ronin::Support::Crypto::Cert, OpenSSL::X509::Certificate] cert
         #   The decoded X509 certificate.
         #
         def initialize(cert)
@@ -77,7 +77,7 @@ module Ronin
         #
         # The certificate issuer's information.
         #
-        # @return [OpenSSL::X509::Name]
+        # @return [Ronin::Support::Crypto::Cert::Name]
         #
         def issuer
           @cert.issuer
@@ -86,7 +86,7 @@ module Ronin
         #
         # The certificate subject's information.
         #
-        # @return [OpenSSL::X509::Name]
+        # @return [Ronin::Support::Crypto::Cert::Name]
         #
         def subject
           @cert.subject
