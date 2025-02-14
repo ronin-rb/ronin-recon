@@ -243,12 +243,12 @@ $ git push
 Defining a custom recon worker:
 
 ```ruby
-require 'ronin/recon/worker'
+require 'ronin/recon/dns_worker'
 
 module Ronin
   module Recon
     module DNS
-      class FooBar
+      class FooBar < DNSWorker
 
         register 'dns/foo_bar'
 
