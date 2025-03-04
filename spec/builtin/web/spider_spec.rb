@@ -463,4 +463,41 @@ describe Ronin::Recon::Web::Spider do
       end
     end
   end
+
+  describe "#agent_kwargs" do
+    context "when there are params" do
+      let(:params_hash) do
+        {
+          limit: 10,
+          max_depth: 2,
+          delay: 5,
+          open_timeout: 10,
+          read_timeout: 10,
+          ssl_timeout: 10,
+          continue_timeout: 10,
+          keep_alive_timeout: 10,
+          proxy: URI('http://proxy.example.com:8080'),
+          referer: 'http://example.com/',
+          user_agent: 'Test User Agent',
+          robots: true
+        }
+      end
+
+      subject { described_class.new(params: params_hash) }
+
+      it "must return a Hash with the params" do
+        expect(subject.agent_kwargs).to eq(params_hash)
+      end
+    end
+
+    context "when there are no params" do
+      let(:params_hash) { {} }
+
+      subject { described_class.new(params: params_hash) }
+
+      it "must return an empty Hash" do
+        expect(subject.agent_kwargs).to eq(params_hash)
+      end
+    end
+  end
 end
