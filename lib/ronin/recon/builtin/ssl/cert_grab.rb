@@ -20,7 +20,7 @@
 
 require_relative '../../worker'
 
-require 'async/io'
+require 'io/endpoint'
 
 module Ronin
   module Recon
@@ -64,7 +64,7 @@ module Ronin
 
             address  = open_port.address
             port     = open_port.number
-            endpoint = Async::IO::Endpoint.ssl(address,port, ssl_context: context)
+            endpoint = IO::Endpoint.ssl(address,port, ssl_context: context)
 
             begin
               endpoint.connect do |socket|

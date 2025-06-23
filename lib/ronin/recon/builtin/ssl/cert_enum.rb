@@ -21,8 +21,6 @@
 require_relative '../../worker'
 require_relative '../../value/parser'
 
-require 'async/io'
-
 module Ronin
   module Recon
     module SSL

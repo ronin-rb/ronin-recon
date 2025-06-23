@@ -306,7 +306,7 @@ end
 * [nmap] >= 5.00
 * [GraphViz][graphviz] (for SVG, PNG, or PDF output)
 * [thread-local] ~> 1.0
-* [async-io] ~> 1.0
+* [io-endpoint] ~> 0.15
 * [async-dns] ~> 1.0
 * [async-http] ~> 0.60
 * [wordlist] ~> 1.0, >= 1.0.3
@@ -381,7 +381,7 @@ along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 [graphviz]: https://graphviz.org/
 [nmap]: http://www.insecure.org/
 [thread-local]: https://github.com/socketry/thread-local#readme
-[async-io]: https://github.com/socketry/async-io#readme
+[io-endpoint]: https://github.com/socketry/io-endpoint#readme
 [async-dns]: https://github.com/socketry/async-dns#readme
 [async-http]: https://github.com/socketry/async-http#readme
 [wordlist]: https://github.com/postmodern/wordlist.rb#readme
