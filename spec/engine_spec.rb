@@ -473,7 +473,7 @@ describe Ronin::Recon::Engine do
             host_value2,
             host_value3,
             open_port_value1,
-            open_port_value2,
+            open_port_value2
           ]
         )
 

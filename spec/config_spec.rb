@@ -592,7 +592,7 @@ describe Ronin::Recon::Config do
         Set[
           'test/worker1',
           'test/worker2',
-          'test/worker3',
+          'test/worker3'
         ]
       )
     end
@@ -645,7 +645,7 @@ describe Ronin::Recon::Config do
           described_class::Workers.new(
             Set[
               'test/worker1',
-              'test/worker3',
+              'test/worker3'
             ]
           )
         end
@@ -714,7 +714,7 @@ describe Ronin::Recon::Config do
           described_class::Workers.new(
             Set[
               'test/worker1',
-              'test/worker3',
+              'test/worker3'
             ]
           )
         end
