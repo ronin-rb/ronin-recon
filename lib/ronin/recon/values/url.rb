@@ -2,7 +2,7 @@
 #
 # ronin-recon - A micro-framework and tool for performing reconnaissance.
 #
-# Copyright (c) 2023-2024 Hal Brodigan (postmodern.mod3@gmail.com)
+# Copyright (c) 2023-2026 Hal Brodigan (postmodern.mod3@gmail.com)
 #
 # ronin-recon is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published
