@@ -29,7 +29,6 @@ require 'ronin/core/cli/generator/options/reference'
 require 'ronin/core/git'
 
 require 'command_kit/inflector'
-require 'set'
 
 module Ronin
   module Recon

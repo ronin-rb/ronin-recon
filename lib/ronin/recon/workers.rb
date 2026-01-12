@@ -20,8 +20,6 @@
 
 require_relative 'registry'
 
-require 'set'
-
 module Ronin
   module Recon
     #

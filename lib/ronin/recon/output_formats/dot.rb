@@ -33,7 +33,6 @@ require_relative '../values/website'
 require_relative '../values/wildcard'
 
 require 'ronin/core/output_formats/output_file'
-require 'set'
 
 module Ronin
   module Recon

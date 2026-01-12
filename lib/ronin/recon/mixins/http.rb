@@ -19,7 +19,6 @@
 #
 
 require 'async/http'
-require 'set'
 
 module Ronin
   module Recon

@@ -21,7 +21,6 @@
 require_relative '../values'
 
 require 'ronin/core/output_formats/output_dir'
-require 'set'
 
 module Ronin
   module Recon

@@ -32,7 +32,6 @@ require_relative 'message/job_failed'
 require_relative 'message/value'
 require_relative 'message/shutdown'
 
-require 'set'
 require 'console/logger'
 require 'async'
 require 'async/queue'

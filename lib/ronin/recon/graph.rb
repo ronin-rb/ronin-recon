@@ -18,8 +18,6 @@
 # along with ronin-recon.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'set'
-
 module Ronin
   module Recon
     #

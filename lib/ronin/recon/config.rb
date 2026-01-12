@@ -21,7 +21,6 @@
 require_relative 'exceptions'
 
 require 'ronin/core/home'
-require 'set'
 
 module Ronin
   module Recon
