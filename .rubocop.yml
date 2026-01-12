@@ -1,7 +1,7 @@
 AllCops:
   NewCops: disable
   SuggestExtensions: false
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.2
 
 inherit_gem:
   rubocop-ronin: rubocop.yml
