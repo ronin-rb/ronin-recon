@@ -51,8 +51,15 @@ describe Ronin::Recon::WorkerPool do
       it "must enqueue Message::Shutdown into #input_queue 2 times" do
         Async { subject.enqueue_mesg(mesg_value) }
 
-        expect(subject.input_queue.items).to all(be_kind_of(Ronin::Recon::Message::Shutdown))
-        expect(subject.input_queue.items.size).to be(2)
+        subject.input_queue.close
+
+        expect(subject.input_queue.size).to be(2)
+        expect { |b|
+          subject.input_queue.each(&b)
+        }.to yield_successive_args(
+          Ronin::Recon::Message::Shutdown,
+          Ronin::Recon::Message::Shutdown
+        )
       end
     end
 
@@ -63,7 +70,11 @@ describe Ronin::Recon::WorkerPool do
       it "must enqueue Message into #input_queue" do
         Async { subject.enqueue_mesg(mesg_value) }
 
-        expect(subject.input_queue.items).to eq([mesg_value])
+        subject.input_queue.close
+
+        expect { |b|
+          subject.input_queue.each(&b)
+        }.to yield_successive_args(mesg_value)
       end
     end
   end
@@ -81,7 +92,9 @@ describe Ronin::Recon::WorkerPool do
           subject.run
         end
 
-        expect(subject.input_queue.items.size).to eq(1)
+        subject.input_queue.close
+
+        expect(subject.input_queue.size).to eq(1)
       end
     end
 
@@ -93,10 +106,17 @@ describe Ronin::Recon::WorkerPool do
           subject.run
         end
 
-        expect(subject.output_queue.items.size).to eq(4)
-        expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::JobStarted)
-        expect(subject.output_queue.items[1]).to be_kind_of(Ronin::Recon::Message::Value)
-        expect(subject.output_queue.items[2]).to be_kind_of(Ronin::Recon::Message::JobCompleted)
+        subject.output_queue.close
+
+        expect(subject.output_queue.size).to eq(4)
+        expect { |b|
+          subject.output_queue.each(&b)
+        }.to yield_successive_args(
+          Ronin::Recon::Message::JobStarted,
+          Ronin::Recon::Message::Value,
+          Ronin::Recon::Message::JobCompleted,
+          Ronin::Recon::Message::WorkerStopped
+        )
       end
     end
   end
@@ -122,8 +142,12 @@ describe Ronin::Recon::WorkerPool do
     it "must enqueue Message::WorkerStarted instance into #output_queue" do
       Async { subject.started! }
 
-      expect(subject.output_queue.items.size).to eq(1)
-      expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStarted)
+      subject.output_queue.close
+
+      expect(subject.output_queue.size).to eq(1)
+      expect { |b|
+        subject.output_queue.each(&b)
+      }.to yield_successive_args(Ronin::Recon::Message::WorkerStarted)
     end
   end
 
@@ -133,8 +157,12 @@ describe Ronin::Recon::WorkerPool do
     it "must enqueue Message::WorkerStopped instance into #output_queue" do
       Async { subject.stopped! }
 
-      expect(subject.output_queue.items.size).to eq(1)
-      expect(subject.output_queue.items[0]).to be_kind_of(Ronin::Recon::Message::WorkerStopped)
+      subject.output_queue.close
+
+      expect(subject.output_queue.size).to eq(1)
+      expect { |b|
+        subject.output_queue.each(&b)
+      }.to yield_successive_args(Ronin::Recon::Message::WorkerStopped)
     end
   end
 
@@ -145,8 +173,12 @@ describe Ronin::Recon::WorkerPool do
     it "must enqueue Message into #output_queue" do
       Async { subject.send(:enqueue, mesg) }
 
-      expect(subject.output_queue.items.size).to eq(1)
-      expect(subject.output_queue.items[0]).to be(Ronin::Recon::Message::JobFailed)
+      subject.output_queue.close
+
+      expect(subject.output_queue.size).to eq(1)
+      expect { |b|
+        subject.output_queue.each(&b)
+      }.to yield_successive_args(Ronin::Recon::Message::JobFailed)
     end
   end
 end
