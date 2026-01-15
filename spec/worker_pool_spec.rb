@@ -8,14 +8,18 @@ describe Ronin::Recon::WorkerPool do
 
   module TestWorkerPool
     class TestWorker < Ronin::Recon::Worker
+
       def process(value)
         yield Ronin::Recon::Values::Domain.new('example.com')
       end
+
     end
 
     class TestWorkerWithConcurrency < Ronin::Recon::Worker
       concurrency 2
-      def process(value); end
+
+      def process(value)
+      end
     end
   end
 
@@ -44,30 +48,47 @@ describe Ronin::Recon::WorkerPool do
   end
 
   describe "#enqueue_mesg" do
-    context "for Message::SHUTDOWN" do
-      let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
-      let(:worker)     { TestWorkerPool::TestWorkerWithConcurrency.new }
+    context "when given Message::SHUTDOWN" do
+      context "when the Worker class has a concurrency of 1" do
+        let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
+        let(:worker)     { TestWorkerPool::TestWorker.new }
 
-      it "must enqueue Message::Shutdown into #input_queue 2 times" do
-        Async { subject.enqueue_mesg(mesg_value) }
+        it "must enqueue Message::SHUTDOWN into #input_queue once" do
+          Async { subject.enqueue_mesg(mesg_value) }
 
-        subject.input_queue.close
+          subject.input_queue.close
 
-        expect(subject.input_queue.size).to be(2)
-        expect { |b|
-          subject.input_queue.each(&b)
-        }.to yield_successive_args(
-          Ronin::Recon::Message::Shutdown,
-          Ronin::Recon::Message::Shutdown
-        )
+          expect(subject.input_queue.size).to be(1)
+          expect { |b|
+            subject.input_queue.each(&b)
+          }.to yield_successive_args(Ronin::Recon::Message::SHUTDOWN)
+        end
+      end
+
+      context "when the Worker class has a concurrency greater than 1" do
+        let(:mesg_value) { Ronin::Recon::Message::SHUTDOWN }
+        let(:worker)     { TestWorkerPool::TestWorkerWithConcurrency.new }
+
+        it "must enqueue Message::SHUTDOWN into #input_queue the same number of times as the Worker class'es concurrency" do
+          Async { subject.enqueue_mesg(mesg_value) }
+
+          subject.input_queue.close
+
+          expect(subject.input_queue.size).to be(worker.class.concurrency)
+          expect { |b|
+            subject.input_queue.each(&b)
+          }.to yield_successive_args(
+            *[Ronin::Recon::Message::SHUTDOWN] * worker.class.concurrency
+          )
+        end
       end
     end
 
-    context "for other Message's" do
+    context "when given Message::Value" do
       let(:mesg_value) { Ronin::Recon::Message::Value }
       let(:worker)     { TestWorkerPool::TestWorker.new }
 
-      it "must enqueue Message into #input_queue" do
+      it "must enqueue Message into #input_queue once" do
         Async { subject.enqueue_mesg(mesg_value) }
 
         subject.input_queue.close
@@ -75,6 +96,21 @@ describe Ronin::Recon::WorkerPool do
         expect { |b|
           subject.input_queue.each(&b)
         }.to yield_successive_args(mesg_value)
+      end
+
+      context "and when the Worker class has a concurrency greater than 1" do
+        let(:worker) { TestWorkerPool::TestWorkerWithConcurrency.new }
+
+        it "must still enqueue Message::Value into #input_queue once" do
+          Async { subject.enqueue_mesg(mesg_value) }
+
+          subject.input_queue.close
+
+          expect(subject.input_queue.size).to be(1)
+          expect { |b|
+            subject.input_queue.each(&b)
+          }.to yield_successive_args(mesg_value)
+        end
       end
     end
   end
@@ -84,8 +120,8 @@ describe Ronin::Recon::WorkerPool do
     let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
     let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
-    context "if Message::SHUTDOWN is next in the queue" do
-      it "must breaks the loop and not process other messages" do
+    context "if Message::SHUTDOWN is the next message in the queue" do
+      it "must break the loop and not process other messages" do
         Async do
           subject.enqueue_mesg(shutdown_mesg)
           subject.enqueue_mesg(value_mesg)
@@ -95,11 +131,14 @@ describe Ronin::Recon::WorkerPool do
         subject.input_queue.close
 
         expect(subject.input_queue.size).to eq(1)
+        expect { |b|
+          subject.input_queue.each(&b)
+        }.to yield_successive_args(value_mesg)
       end
     end
 
-    context "if other Message is next in the queue" do
-      it "must enqueue Message::JobStarted, yielded value and MessageJob::Completed" do
+    context "if a Message::Value is the next message in the queue" do
+      it "must enqueue Message::JobStarted, a Message::Value for the yielded value from the worker, and finally a Message::JobCompleted message" do
         Async do
           subject.enqueue_mesg(value_mesg)
           subject.enqueue_mesg(shutdown_mesg)
@@ -122,17 +161,36 @@ describe Ronin::Recon::WorkerPool do
   end
 
   describe "#start" do
-    let(:worker)        { TestWorkerPool::TestWorkerWithConcurrency.new }
-    let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
-    let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
+    context "when the Worker class has a concurrency of 1" do
+      let(:worker)        { TestWorkerPool::TestWorker.new }
+      let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
+      let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
 
-    it "must add tasks to #tasks" do
-      Async do
-        subject.enqueue_mesg(shutdown_mesg)
-        subject.start
+      it "must add one Async::Task to #tasks" do
+        Async do
+          subject.enqueue_mesg(shutdown_mesg)
+          subject.start
+        end
+
+        expect(subject.instance_variable_get(:@tasks).size).to eq(1)
       end
+    end
 
-      expect(subject.instance_variable_get(:@tasks).size).to eq(2)
+    context "when the Worker class has a concurrency greater than 1" do
+      let(:worker)        { TestWorkerPool::TestWorkerWithConcurrency.new }
+      let(:shutdown_mesg) { Ronin::Recon::Message::SHUTDOWN }
+      let(:value_mesg)    { Ronin::Recon::Message::Value.new("value") }
+
+      it "must add the same number of Async::Tasks to #tasks as the Worker class'es concurrency" do
+        Async do
+          subject.enqueue_mesg(shutdown_mesg)
+          subject.start
+        end
+
+        expect(subject.instance_variable_get(:@tasks).size).to eq(
+          worker.class.concurrency
+        )
+      end
     end
   end
 
@@ -170,7 +228,7 @@ describe Ronin::Recon::WorkerPool do
     let(:worker) { TestWorkerPool::TestWorker.new }
     let(:mesg)   { Ronin::Recon::Message::JobFailed }
 
-    it "must enqueue Message into #output_queue" do
+    it "must enqueue the message into #output_queue" do
       Async { subject.send(:enqueue, mesg) }
 
       subject.output_queue.close
